@@ -6,7 +6,7 @@ Pseudo.NET compile du pseudocode *libre* en C# grâce à un modèle de langage *
 Aucune syntaxe n'est imposée : écrivez en français, anglais, espagnol, chinois… avec des accolades, avec de la
 seule indentation, ou en phrases. Pas de compte, pas de clé d'API, rien ne quitte votre machine.
 
-[English](README.md) · [Site](https://pseudonet-lang.github.io/fr/) · [Soutenir le projet](#soutenir)
+[English](README.md) · [Marketplace](https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet) · [Site](https://pseudonet-lang.github.io/fr/) · [Soutenir le projet](#soutenir)
 
 ![Tetris écrit en pseudocode](docs/demo-tetris.gif)
 
@@ -64,8 +64,9 @@ sa liberté, et le C# généré est un vrai programme que l'élève peut ensuite
    ```bash
    ollama pull qwen2.5-coder:7b
    ```
-3. Installez l'extension : téléchargez `PseudoNet.Vsix.vsix` depuis la page [Releases](../../releases) et
-   double-cliquez dessus.
+3. Installez l'extension depuis le **[Marketplace de Visual Studio](https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet)**, ou directement dans Visual Studio :
+   *Extensions → Gérer les extensions* → cherchez **Pseudo.NET** → *Installer*. (Sinon, téléchargez
+   `PseudoNet.Vsix.vsix` depuis la page [Releases](../../releases) et double-cliquez dessus.)
 4. *Fichier → Nouveau → Projet* → cherchez **Pseudo** → *PseudoCode*, *PseudrawCode* ou un exemple. **F5**.
 
 ### Ou en ligne de commande (tout éditeur, SDK .NET 8+)

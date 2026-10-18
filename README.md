@@ -6,7 +6,7 @@ Pseudo.NET compiles *free-form* pseudocode to C# using a **local** language mode
 There is no imposed syntax: write in English, French, Spanish, Chinese… with braces, with indentation only, or just
 sentences. No account, no API key, nothing leaves your machine.
 
-[Français](README.fr.md) · [Website](https://pseudonet-lang.github.io/) · [Support the project](#support)
+[Français](README.fr.md) · [Marketplace](https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet) · [Website](https://pseudonet-lang.github.io/) · [Support the project](#support)
 
 ![Tetris written in pseudocode](docs/demo-tetris.gif)
 
@@ -64,8 +64,9 @@ generated C# is a real program the learner can open and read afterwards.
    ```bash
    ollama pull qwen2.5-coder:7b
    ```
-3. Install the extension: download `PseudoNet.Vsix.vsix` from the [Releases](../../releases) page and double-click it
-   (or search *Pseudo.NET* in *Extensions → Manage Extensions* once published).
+3. Install the extension from the **[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet)**, or directly in Visual Studio:
+   *Extensions → Manage Extensions* → search **Pseudo.NET** → *Install*. (Alternatively, download
+   `PseudoNet.Vsix.vsix` from the [Releases](../../releases) page and double-click it.)
 4. *File → New → Project* → search **Pseudo** → pick *PseudoCode*, *PseudrawCode* or a sample. Press **F5**.
 
 ### Or from the command line (any editor, .NET 8+ SDK)
