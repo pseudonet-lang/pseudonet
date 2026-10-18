@@ -117,6 +117,10 @@ The presentation website lives in its own folder/repository, separate from this 
 - Windows + Visual Studio only for now.
 - First generation of a *new* program takes seconds to minutes depending on your hardware.
 
+## Feedback
+
+Questions, ideas, programs that break or that you would like as samples: [start a discussion](https://github.com/pseudonet-lang/pseudonet/discussions).
+
 ## Support
 
 Pseudo.NET is free and MIT-licensed, and will stay that way. If it helped you or your students and you would like to

@@ -99,6 +99,10 @@ Noms courts : `pseudocode`, `pseudrawcode` (Windows), et les exemples `pseudo-sn
 - Windows et Visual Studio uniquement pour l'instant.
 - La première génération d'un *nouveau* programme prend de quelques secondes à quelques minutes selon la machine.
 
+## Votre avis
+
+Questions, idées, programmes qui échouent ou que vous aimeriez en exemple : [ouvrez une discussion](https://github.com/pseudonet-lang/pseudonet/discussions) (en français ou en anglais).
+
 ## Soutenir
 
 Pseudo.NET est gratuit, sous licence MIT, et le restera. Si l'outil vous a servi, à vous ou à vos élèves, et que vous
