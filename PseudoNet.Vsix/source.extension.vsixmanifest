@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="PseudoNet.Vsix" Version="0.4.2" Language="en-US" Publisher="Malek AIT OUARET" />
     <DisplayName>Pseudo.NET</DisplayName>
-    <Description xml:space="preserve">Write free-form pseudocode (English, French, any wording; no imposed syntax) and let a local LLM (Ollama) compile it to C#. Two project templates: PseudoCode (console) and PseudrawCode (window, drawing, small games).</Description>
+    <Description xml:space="preserve">Write pseudocode in your own words, in any language, and run it as a program. Includes project templates and runnable samples to learn and teach algorithms.</Description>
     <MoreInfo>https://pseudonet-lang.github.io/</MoreInfo>
     <License>LICENSE.txt</License>
     <GettingStartedGuide>https://pseudonet-lang.github.io/#install</GettingStartedGuide>

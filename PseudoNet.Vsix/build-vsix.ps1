@@ -1,6 +1,6 @@
 # Builds the NuGet package, then the VSIX (needs Visual Studio with the "Visual Studio extension development" workload).
 #   -SkipPack   reuse the package already in PseudoNet.Build\artifacts\feed
-param([switch]$SkipPack)
+param([switch]$SkipPack, [switch]$NoFeed)
 $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 if (-not $SkipPack) { & (Join-Path $repo 'PseudoNet.Build\pack.ps1') }
@@ -25,8 +25,10 @@ foreach ($d in $dirs) {
     if (-not $vst) { continue }
     $target = Join-Path $stage $d.Name
     Copy-Item $d.FullName $target -Recurse
-    New-Item -ItemType Directory (Join-Path $target 'nuget-feed') -Force | Out-Null
-    Copy-Item $nupkg.FullName (Join-Path $target 'nuget-feed')
+    if (-not $NoFeed) {
+        New-Item -ItemType Directory (Join-Path $target 'nuget-feed') -Force | Out-Null
+        Copy-Item $nupkg.FullName (Join-Path $target 'nuget-feed')
+    }
     [IO.Compression.ZipFile]::CreateFromDirectory($target, (Join-Path $zips "$($d.Name).zip"), [IO.Compression.CompressionLevel]::Optimal, $false)
 }
 Write-Host ("{0} template(s) staged with {1}" -f @(Get-ChildItem $zips -Filter *.zip).Count, $nupkg.Name)
