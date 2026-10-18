@@ -19,6 +19,12 @@ Write **free-form pseudocode** (English, French, Spanish, Chinese… no imposed 
 
 *File → New → Project*, search **Pseudo**, choose a template, press **F5**.
 
+## Links
+
+- Website (English / Français): https://pseudonet-lang.github.io/
+- Source code and issues: https://github.com/pseudonet-lang/pseudonet
+- `dotnet new` templates (no Visual Studio needed): `dotnet new install PseudoNet.Templates`
+
 ## Free and open source
 
 MIT license. If it helps you or your students, a voluntary donation to say thanks is welcome (link in the

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="PseudoNet.Vsix" Version="0.4.1" Language="en-US" Publisher="Malek AIT OUARET" />
+    <Identity Id="PseudoNet.Vsix" Version="0.4.2" Language="en-US" Publisher="Malek AIT OUARET" />
     <DisplayName>Pseudo.NET</DisplayName>
     <Description xml:space="preserve">Write free-form pseudocode (English, French, any wording; no imposed syntax) and let a local LLM (Ollama) compile it to C#. Two project templates: PseudoCode (console) and PseudrawCode (window, drawing, small games).</Description>
+    <MoreInfo>https://pseudonet-lang.github.io/</MoreInfo>
     <License>LICENSE.txt</License>
+    <GettingStartedGuide>https://pseudonet-lang.github.io/#install</GettingStartedGuide>
+    <ReleaseNotes>https://github.com/pseudonet-lang/pseudonet/releases</ReleaseNotes>
     <Icon>Resources/icon.png</Icon>
     <PreviewImage>Resources/preview.png</PreviewImage>
     <Tags>pseudocode, pseudo, LLM, Ollama, Pseudraw, teaching</Tags>
