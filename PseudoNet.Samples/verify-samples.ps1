@@ -135,4 +135,12 @@ foreach ($d in $folders) {
 $failed = @($results | Where-Object Status -eq 'FAIL').Count
 Write-Host ''
 Write-Host ("{0} sample(s): {1} passed, {2} failed" -f $results.Count, ($results.Count - $failed), $failed)
+# The regexes and the smoke run cannot see logic errors (the Snake sample once "passed" while its snake could not move).
+# A window sample is only validated once a human has PLAYED it.
+$windowSamples = @($folders | Where-Object { (Get-Content (Join-Path $_.FullName 'sample.json') -Raw -Encoding UTF8 | ConvertFrom-Json).kind -eq 'window' } | ForEach-Object { $_.Name })
+if ($windowSamples.Count -gt 0) {
+    Write-Host ''
+    Write-Host ('REMINDER: play each window sample for at least 20 seconds before shipping it: ' + ($windowSamples -join ', ') + '.') -ForegroundColor Yellow
+    Write-Host '          Steer, rotate, restart, lose, and check that the score and the rules behave as the pseudocode says.' -ForegroundColor Yellow
+}
 if ($failed -gt 0) { exit 1 }

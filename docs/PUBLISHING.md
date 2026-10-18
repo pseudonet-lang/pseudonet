@@ -4,6 +4,20 @@ GitHub organisation: `pseudonet-lang` (repos `pseudonet` and `pseudonet-lang.git
 No placeholder left (Marketplace publisher ID `pseudonet-lang`, donations via Ko-fi `pseudonetlang`).
 (`grep -r "YOUR-" . ../PseudoNet-Site`).
 
+## Before shipping any change to a sample or to the prompt
+
+The automatic checks (`verify-samples.ps1`) only prove that certain code is present; they cannot prove the program
+behaves. The Snake sample once passed them while its snake could not move (the model had collapsed an
+if / else-if chain into a nonsense formula).
+
+1. Run `PseudoNet.Samples\verify-samples.ps1 -NoCache` (fresh model answers) and fix anything red.
+2. **Play every window sample for at least 20 seconds** (Tetris, Snake, Bounce): use every key, lose, restart, and
+   compare the behaviour with the pseudocode. Read the generated C# of the main rule when something looks odd.
+3. Run the console samples with their documented input and read the output.
+4. Only then regenerate the shipped answers, rebuild the packages and publish.
+5. When a regex cannot express a rule, add one that checks the *behaviour-critical* lines of the generated C#
+   (see `PseudoNet.Samples\snake\sample.json`).
+
 ## 1. GitHub repository (this folder = repository root)
 - Create the repo, push this folder. `bin/`, `obj/`, `artifacts/`, `TestOutput/` must not be committed (see `.gitignore`).
 - Uncomment the line in `.github/FUNDING.yml` to show the Sponsor button.
