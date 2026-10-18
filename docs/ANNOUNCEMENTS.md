@@ -48,6 +48,34 @@ I'd really value feedback from teachers: what is missing, what gets in the way, 
 
 ---
 
+## 1b. r/AIEducation (angle: a local LLM as a parser, privacy, classroom use)
+
+Post a few days after section 1; read the community's rules first and do not post the same text elsewhere the same day.
+
+**Title:** A local LLM used as a compiler front end, not a chatbot: running students' pseudocode offline (feedback wanted)
+
+Hi all,
+
+Most AI-in-education discussion is about chatbots. I tried a different use of an LLM: as a **parser**. Pseudo.NET turns free-form pseudocode into a program, and the model never talks to the student.
+
+How it works: the student writes pseudocode however they like (English, French, Spanish, braces or only indentation, plain sentences). A small **local** model (Ollama, qwen2.5-coder:7b) converts it into a structured tree, which is checked by an ordinary validator, and a deterministic generator then writes C#. The model's job ends at the structured tree.
+
+Why this might suit a classroom:
+- **Nothing leaves the machine.** No accounts, no API keys, no student text sent to a third party.
+- **Free** and MIT licensed; works offline once the ~5 GB model is downloaded.
+- **Reproducible:** answers are cached by hash of the pseudocode, so the same program gives the same result every time.
+- The generated C# is a real program the student can open afterwards.
+- Six samples (Snake, Tetris, bubble sort, primes...) run without the model at all.
+
+Limits, up front: Windows only for now; a 7B model is good but not perfect, so very long or ambiguous programs may need rewording; the first generation of a new program takes seconds to minutes depending on the hardware.
+
+The question I'd most like your view on: a model can be charitable. If a student writes something ambiguous or slightly wrong, the tool may interpret the intent instead of flagging the mistake. For teaching, is that a feature (lower barrier) or a risk (hides misconceptions)? I'm considering showing the interpreted structure back to the student so it can be checked.
+
+https://pseudonet-lang.github.io/
+Source: https://github.com/pseudonet-lang/pseudonet
+
+---
+
 ## 2. r/csharp (flair: Showcase) and r/dotnet
 
 **Title:** I built a free-form pseudocode-to-C# compiler that uses a local LLM (Visual Studio extension + dotnet new)
