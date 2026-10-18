@@ -1,7 +1,7 @@
 # Publishing checklist
 
 GitHub organisation: `pseudonet-lang` (repos `pseudonet` and `pseudonet-lang.github.io`, already filled in).
-Placeholder left before going public: `YOUR-MARKETPLACE-PUBLISHER-ID` (donations: Ko-fi `pseudonetlang`, already wired in)
+No placeholder left (Marketplace publisher ID `pseudonet-lang`, donations via Ko-fi `pseudonetlang`).
 (`grep -r "YOUR-" . ../PseudoNet-Site`).
 
 ## 1. GitHub repository (this folder = repository root)

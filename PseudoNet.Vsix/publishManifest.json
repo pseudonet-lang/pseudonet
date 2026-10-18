@@ -7,7 +7,7 @@
   },
   "overview": "overview.md",
   "priceCategory": "free",
-  "publisher": "YOUR-MARKETPLACE-PUBLISHER-ID",
+  "publisher": "pseudonet-lang",
   "private": false,
   "qna": true,
   "repo": "https://github.com/pseudonet-lang/pseudonet"
