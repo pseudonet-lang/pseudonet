@@ -97,6 +97,32 @@ Feedback welcome, especially on where it breaks.
 
 ---
 
+## 2b. r/dotnet (angle: tooling, MSBuild, templates; different text from r/csharp, a day apart)
+
+**Title:** Pseudo.NET: an MSBuild package + dotnet new templates that compile free-form pseudocode to C# with a local LLM
+
+Hi r/dotnet,
+
+I built a small build-time compiler for pseudocode with no fixed syntax, and I'd like feedback from people who care about .NET tooling.
+
+**The .NET side of it**
+- `dotnet new install PseudoNet.Templates` gives eight templates: `pseudocode` (console), `pseudrawcode` (WinForms: drawing, keyboard, timer) and six samples (Snake, Tetris, bubble sort, primes...).
+- A `Program.pseudo` file is compiled at build time by an MSBuild package (`PseudoNet.Build`, shipped inside each template, so restore needs no extra feed). The compiler is a small F# tool on .NET 8.
+- The generated C# is hidden in `obj` by default. A property makes it visible and editable next to the `.pseudo` file; if you edit it, it is not overwritten until the pseudocode changes (the old file is kept as `.cs.bak`).
+- Build errors use the standard MSBuild format, so they show up in the Visual Studio Error List.
+- It is also a Visual Studio extension (2026 tested, 2022 untested) on the Marketplace.
+
+**How the compiler works**
+A local model (Ollama, qwen2.5-coder:7b) turns the pseudocode into a JSON AST, which is validated and repaired, and a deterministic backend emits the C#. Answers are cached by a hash of the pseudocode, model and prompt, so rebuilds are instant and the same input always gives the same C#. The samples ship their cached answer, so the first build needs no model.
+
+**Limits:** Windows only for now, a 7B model is good but not perfect on long or ambiguous programs, and a new program's first generation takes seconds to minutes. It is meant for teaching algorithms, not production code.
+
+MIT. Source: https://github.com/pseudonet-lang/pseudonet
+Marketplace: https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet
+Site: https://pseudonet-lang.github.io/
+
+---
+
 ## 3. r/ProgrammingLanguages (language-design angle; read the sub's rules first)
 
 **Title:** A language with no fixed grammar: an LLM as the front end, a validated AST as the contract
