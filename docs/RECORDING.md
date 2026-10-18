@@ -1,8 +1,9 @@
 # Recording the demo GIF
 
-A first version (`demo-tetris.gif`, 290 KB) was captured automatically from the Tetris sample: the window is
-grabbed frame by frame with `PrintWindow` and no keyboard or mouse input, so it only shows the pieces falling by
-themselves. A hand-played recording (below) would be nicer.
+`demo-tetris.gif` (290 KB) was captured from the running Tetris sample with `tools/record-gif.ps1`: the window is
+grabbed frame by frame with `PrintWindow`, and the assistant sends no keyboard or mouse input itself. Anything that
+moves the pieces comes from the person at the keyboard while it records. The same script produced the Snake and
+Bounce captures of the site gallery.
 
 The README expects `docs/demo-tetris.gif` (and the site expects `assets/demo-tetris.gif`). Suggested recipe:
 
