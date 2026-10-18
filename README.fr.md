@@ -103,7 +103,7 @@ Noms courts : `pseudocode`, `pseudrawcode` (Windows), et les exemples `pseudo-sn
 Pseudo.NET est gratuit, sous licence MIT, et le restera. Si l'outil vous a servi, à vous ou à vos élèves, et que vous
 souhaitez remercier pour l'idée, un don volontaire est le bienvenu, jamais obligatoire :
 
-**[Faire un don via PayPal](https://www.paypal.me/YOUR-PAYPAL-HANDLE)**
+**[Soutenir sur Ko-fi](https://ko-fi.com/pseudonetlang)** (PayPal ou carte)
 
 Les étoiles, rapports de bugs, tables de langues et programmes d'exemple aident tout autant.
 

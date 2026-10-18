@@ -121,7 +121,7 @@ The presentation website lives in its own folder/repository, separate from this 
 Pseudo.NET is free and MIT-licensed, and will stay that way. If it helped you or your students and you would like to
 say thanks for the idea, a voluntary donation is very welcome, never required:
 
-**[Donate via PayPal](https://www.paypal.me/YOUR-PAYPAL-HANDLE)**
+**[Support on Ko-fi](https://ko-fi.com/pseudonetlang)** (PayPal or card)
 
 Stars, bug reports, new language tables and sample programs help just as much.
 
