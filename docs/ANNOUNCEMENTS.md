@@ -1,69 +1,54 @@
 # Announcement drafts
 
-Ready-to-adapt texts, one per audience. Facts to keep accurate in every post: Windows only; tested on Visual Studio 2026
-(2022 targeted, untested); needs Ollama + a ~5 GB model for your own programs (the six samples run without it); a 7B
-local model is good, not perfect; MIT; the generated C# is a real program. Do not claim more than that.
+Ready-to-adapt texts, all in English, aimed at an international audience (educators, .NET developers, language
+enthusiasts). The language feature itself is part of the pitch: the same pseudocode can be written in English, French,
+Spanish, Chinese, or any other language the model understands.
+
+Facts to keep accurate in every post: Windows only; tested on Visual Studio 2026 (2022 targeted, untested); needs
+Ollama + a ~5 GB model for your own programs (the six samples run without it); a 7B local model is good, not perfect;
+MIT; the generated C# is a real program. Do not claim more than that.
 
 Links to reuse
-- Site: https://pseudonet-lang.github.io/ (French: https://pseudonet-lang.github.io/fr/)
+- Site: https://pseudonet-lang.github.io/
 - Marketplace: https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet
 - Source: https://github.com/pseudonet-lang/pseudonet
 - `dotnet new install PseudoNet.Templates`
-- Support (optional): https://ko-fi.com/pseudonetlang  (only where self-promotion rules allow it, never in the title)
+- Support (optional): https://ko-fi.com/pseudonetlang (only where self-promotion rules allow it, never in a title)
 
-Suggested order: teachers first (core audience), then Developpez, then r/csharp, then r/ProgrammingLanguages, then
-Show HN last (needs the most polish; ideally after a hand-played GIF and a VS 2022 report). One venue per day, answer
-every comment within the first hours.
-
----
-
-## 1. Teachers (French): NSI forums, mailing lists, LinkedIn, Mastodon
-
-**Titre :** Un pseudocode libre, en français, qui s'exécute vraiment (gratuit, sans compte)
-
-Bonjour,
-
-Je viens de publier Pseudo.NET, un outil pour que le pseudocode d'un élève **s'exécute tel qu'il l'a écrit**, sans
-syntaxe imposée : en français, avec ou sans accolades, avec la seule indentation, ou en phrases.
-
-- Un modèle de langage **local** (Ollama) traduit le pseudocode en C#. Aucun compte, aucune clé d'API, rien ne quitte
-  l'ordinateur : pas de donnée d'élève envoyée à un service externe.
-- Deux types de projet : console (algorithmique) et fenêtre (dessin, clavier, petits jeux).
-- Six exemples fournis, qui tournent sans rien installer de plus : Snake, Tétris, balle rebondissante, nombres premiers,
-  tri à bulles, devine le nombre.
-- Le C# généré est un vrai programme que l'élève peut ouvrir ensuite, ce qui fait le pont avec un langage « réel ».
-- Gratuit, licence MIT. S'installe depuis Visual Studio (Marketplace) ou en ligne de commande (`dotnet new`).
-
-Limites à connaître : Windows uniquement pour l'instant ; il faut installer Ollama et télécharger un modèle de 5 Go pour
-ses propres programmes ; un modèle local de 7 milliards de paramètres est bon mais pas parfait, un programme très long
-ou ambigu peut demander une reformulation.
-
-Site (en français) : https://pseudonet-lang.github.io/fr/
-Je serais ravi d'avoir vos retours d'enseignants : ce qui manque, ce qui gêne, des exercices à ajouter en exemples.
+Suggested order: educators first (core audience), then r/csharp and r/dotnet, then r/ProgrammingLanguages, then Show HN
+last (needs the most polish; ideally after a hand-played GIF and a VS 2022 report). One venue per day, and answer every
+comment within the first hours. Read each community's self-promotion rules before posting.
 
 ---
 
-## 2. Developpez.com (French, developer audience)
+## 1. Educators: r/csteachers, CS education forums, LinkedIn, Mastodon (#csed #edtech)
 
-**Titre :** Pseudo.NET : compiler du pseudocode libre en C# avec un LLM local (Visual Studio, `dotnet new`)
+**Title:** Pseudocode that actually runs, in your own words and your own language (free, local, no accounts)
 
-Pseudo.NET est un compilateur dont la « grammaire » est un modèle de langage local : on écrit du pseudocode sans syntaxe
-imposée (français, anglais, indentation seule…), le modèle produit un AST JSON, qui est **validé et normalisé**
-(avec une boucle de correction si le modèle se trompe), puis un générateur déterministe écrit le C#.
+Hi all,
 
-Points techniques qui pourraient vous intéresser :
-- Cache des réponses du LLM par empreinte du pseudocode : un programme inchangé ne rappelle jamais le modèle.
-- Le C# est caché par défaut, visible et éditable sur option ; une modification manuelle n'est pas écrasée tant que le
-  pseudocode ne change pas.
-- Intégration MSBuild (paquet NuGet `PseudoNet.Build`), extension Visual Studio, paquet de modèles `dotnet new`.
-- Tables JSON par langue pour les couleurs et les touches : ajouter une langue = écrire un fichier.
+Pseudocode is how most of us teach algorithms (it shows up in many curricula, from Cambridge and IB to AP CSP), yet it has
+never been executable. I built Pseudo.NET so a student's pseudocode **runs as written**, with no imposed syntax:
+braces or indentation only, "if ... then", or plain sentences, in English, French, Spanish, Chinese and more.
 
-Code source (F#, MIT) : https://github.com/pseudonet-lang/pseudonet
-Limites : Windows ; qualité dépendante d'un modèle 7B ; Visual Studio 2022 non testé.
+- A **local** language model (Ollama) turns the pseudocode into C#. No accounts, no API keys, and nothing leaves the
+  machine, so no student data goes to an outside service.
+- Two project types: console (algorithms, exercises) and window (drawing, keyboard, small games).
+- Six ready-to-run samples: Snake, Tetris, a bouncing ball, prime numbers, bubble sort, guess-the-number.
+  They run without installing anything else.
+- The generated C# is a real program students can open afterwards, a bridge to "real" code.
+- Free, MIT licensed. Install from the Visual Studio Marketplace or with `dotnet new`.
+
+Things to know: Windows only for now; for your own programs you need Ollama and a ~5 GB model download; a 7B local
+model is good but not perfect, so a very long or ambiguous program may need rewording.
+
+https://pseudonet-lang.github.io/
+
+I'd really value feedback from teachers: what is missing, what gets in the way, which exercises should be samples.
 
 ---
 
-## 3. r/csharp (flair: Showcase)
+## 2. r/csharp (flair: Showcase) and r/dotnet
 
 **Title:** I built a free-form pseudocode-to-C# compiler that uses a local LLM (Visual Studio extension + dotnet new)
 
@@ -84,7 +69,7 @@ Feedback welcome, especially on where it breaks.
 
 ---
 
-## 4. r/ProgrammingLanguages (language-design angle; read the sub's rules first)
+## 3. r/ProgrammingLanguages (language-design angle; read the sub's rules first)
 
 **Title:** A language with no fixed grammar: an LLM as the front end, a validated AST as the contract
 
@@ -106,7 +91,7 @@ Happy to discuss the trade-offs, including why this is probably a bad idea for a
 
 ---
 
-## 5. Show HN
+## 4. Show HN
 
 **Title:** Show HN: Pseudo.NET, pseudocode with no fixed syntax that compiles to C# via a local LLM
 
@@ -128,10 +113,18 @@ I'd love to hear where it fails.
 
 ---
 
-## 6. Short posts (Mastodon / X / LinkedIn)
+## 5. Other venues worth considering
 
-English:
+- **dev.to / Hashnode:** a longer article built from section 3 ("What an LLM front end taught me about language design").
+- **Hacker News alternatives:** Lobsters needs an invitation; skip unless you already have one.
+- **Education newsletters and communities:** CS Teachers Association chapters, Computing At School (UK), Code.org
+  teacher forums; send the educator text (section 1), shortened.
+
+---
+
+## 6. Short posts (Mastodon / X / LinkedIn / Bluesky)
+
 > Pseudo.NET: write pseudocode in your own words, in any language, and run it. A local LLM compiles it to C#; no account, no API key, nothing leaves your machine. Free, MIT. Visual Studio extension + `dotnet new`. https://pseudonet-lang.github.io/
 
-Français :
-> Pseudo.NET : écrivez votre pseudocode avec vos mots, dans votre langue, et exécutez-le. Un LLM local le compile en C# : pas de compte, pas de clé d'API, rien ne quitte votre machine. Gratuit, MIT. Extension Visual Studio + `dotnet new`. https://pseudonet-lang.github.io/fr/
+Variant for educators:
+> Pseudocode is how we teach algorithms, but it never ran. Pseudo.NET makes a student's pseudocode executable, in any language and style, offline. Free and open source. https://pseudonet-lang.github.io/ #csed
