@@ -23,6 +23,7 @@ Write **free-form pseudocode** (English, French, Spanish, Chinese… no imposed 
 
 - Website (English / Français): https://pseudonet-lang.github.io/
 - Source code and issues: https://github.com/pseudonet-lang/pseudonet
+- Questions, feedback and sample requests: https://github.com/pseudonet-lang/pseudonet/discussions
 - `dotnet new` templates (no Visual Studio needed): `dotnet new install PseudoNet.Templates`
 
 ## Free and open source
