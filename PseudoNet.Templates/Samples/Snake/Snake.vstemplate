@@ -3,7 +3,7 @@
     <Name>PseudrawCode Sample - Snake</Name>
     <Description>Classic Snake: steer with the arrow keys, eat the apples, avoid the walls and your own tail. R restarts. Entirely free-form pseudocode.</Description>
     <ProjectType>CSharp</ProjectType>
-    <SortOrder>2040</SortOrder>
+    <SortOrder>2000</SortOrder>
     <CreateNewFolder>true</CreateNewFolder>
     <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
     <DefaultName>SnakeSample</DefaultName>
@@ -20,7 +20,7 @@
     <Project TargetFileName="$safeprojectname$.csproj" File="Snake.csproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="false" TargetFileName="Program.pseudo" OpenInEditor="true">Program.pseudo</ProjectItem>
       <Folder Name="pseudo-cache" TargetFolderName="pseudo-cache">
-        <ProjectItem ReplaceParameters="false" TargetFileName="d54b9593352bd940c1bf0b3d71a4dab15f5b9e8d7637f1618490fa4eb044f0b4.json">d54b9593352bd940c1bf0b3d71a4dab15f5b9e8d7637f1618490fa4eb044f0b4.json</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="ca0b679fc3a46cd166e4f1a4b2a2d10988f6043f86ff370c5e8abcc6fc2fae3f.json">ca0b679fc3a46cd166e4f1a4b2a2d10988f6043f86ff370c5e8abcc6fc2fae3f.json</ProjectItem>
       </Folder>
       <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
         <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.1.nupkg">PseudoNet.Build.0.3.1.nupkg</ProjectItem>

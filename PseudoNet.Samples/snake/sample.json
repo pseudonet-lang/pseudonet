@@ -27,11 +27,30 @@
     },
     {
       "pattern": "Contains\\(new PointF"
+    },
+    {
+      "pattern": "moveX = 1;"
+    },
+    {
+      "pattern": "moveX = -1;"
+    },
+    {
+      "pattern": "moveY = 1;"
+    },
+    {
+      "pattern": "moveY = -1;"
+    },
+    {
+      "pattern": "nx = \\(headX \\+ moveX\\)"
+    },
+    {
+      "pattern": "ny = \\(headY \\+ moveY\\)"
     }
   ],
   "mustNotMatch": [
     "_timer\\.Stop\\(\\)",
-    "(died|gameOver|hitWall|selfHit) (!=|==) false"
+    "(died|gameOver|hitWall|selfHit) (!=|==) false",
+    "direction \\* -1"
   ],
   "description": "Classic Snake: steer with the arrow keys, eat the apples, avoid the walls and your own tail. R restarts. Entirely free-form pseudocode."
 }

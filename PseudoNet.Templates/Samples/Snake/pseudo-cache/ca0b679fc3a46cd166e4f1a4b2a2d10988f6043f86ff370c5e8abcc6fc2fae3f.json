@@ -337,8 +337,9 @@
           },
           "then": [
             {
-              "kind": "Call",
-              "name": "restart game"
+              "kind": "FunctionCallStmt",
+              "name": "restart game",
+              "args": []
             }
           ]
         },
@@ -356,9 +357,22 @@
             {
               "kind": "If",
               "condition": {
-                "kind": "PseudrawKeyPressed",
-                "key": "up",
-                "press": "pressed"
+                "kind": "BinaryOp",
+                "op": "and",
+                "left": {
+                  "kind": "PseudrawKeyPressed",
+                  "key": "up",
+                  "press": "held"
+                },
+                "right": {
+                  "kind": "BinaryOp",
+                  "op": "!=",
+                  "left": {
+                    "kind": "Identifier",
+                    "name": "direction"
+                  },
+                  "right": 1
+                }
               },
               "then": [
                 {
@@ -371,9 +385,22 @@
             {
               "kind": "If",
               "condition": {
-                "kind": "PseudrawKeyPressed",
-                "key": "down",
-                "press": "pressed"
+                "kind": "BinaryOp",
+                "op": "and",
+                "left": {
+                  "kind": "PseudrawKeyPressed",
+                  "key": "down",
+                  "press": "held"
+                },
+                "right": {
+                  "kind": "BinaryOp",
+                  "op": "!=",
+                  "left": {
+                    "kind": "Identifier",
+                    "name": "direction"
+                  },
+                  "right": 3
+                }
               },
               "then": [
                 {
@@ -386,9 +413,22 @@
             {
               "kind": "If",
               "condition": {
-                "kind": "PseudrawKeyPressed",
-                "key": "left",
-                "press": "pressed"
+                "kind": "BinaryOp",
+                "op": "and",
+                "left": {
+                  "kind": "PseudrawKeyPressed",
+                  "key": "left",
+                  "press": "held"
+                },
+                "right": {
+                  "kind": "BinaryOp",
+                  "op": "!=",
+                  "left": {
+                    "kind": "Identifier",
+                    "name": "direction"
+                  },
+                  "right": 0
+                }
               },
               "then": [
                 {
@@ -401,15 +441,114 @@
             {
               "kind": "If",
               "condition": {
-                "kind": "PseudrawKeyPressed",
-                "key": "right",
-                "press": "pressed"
+                "kind": "BinaryOp",
+                "op": "and",
+                "left": {
+                  "kind": "PseudrawKeyPressed",
+                  "key": "right",
+                  "press": "held"
+                },
+                "right": {
+                  "kind": "BinaryOp",
+                  "op": "!=",
+                  "left": {
+                    "kind": "Identifier",
+                    "name": "direction"
+                  },
+                  "right": 2
+                }
               },
               "then": [
                 {
                   "kind": "Assign",
                   "target": "direction",
                   "value": 0
+                }
+              ]
+            },
+            {
+              "kind": "Assign",
+              "target": "moveX",
+              "value": 0
+            },
+            {
+              "kind": "Assign",
+              "target": "moveY",
+              "value": 0
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "=",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "direction"
+                },
+                "right": 0
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "moveX",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "=",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "direction"
+                },
+                "right": 1
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "moveY",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "=",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "direction"
+                },
+                "right": 2
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "moveX",
+                  "value": -1
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "=",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "direction"
+                },
+                "right": 3
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "moveY",
+                  "value": -1
                 }
               ]
             },
@@ -424,13 +563,8 @@
                   "name": "headX"
                 },
                 "right": {
-                  "kind": "BinaryOp",
-                  "op": "*",
-                  "left": {
-                    "kind": "Identifier",
-                    "name": "direction"
-                  },
-                  "right": -1
+                  "kind": "Identifier",
+                  "name": "moveX"
                 }
               }
             },
@@ -445,13 +579,8 @@
                   "name": "headY"
                 },
                 "right": {
-                  "kind": "BinaryOp",
-                  "op": "*",
-                  "left": {
-                    "kind": "Identifier",
-                    "name": "direction"
-                  },
-                  "right": -1
+                  "kind": "Identifier",
+                  "name": "moveY"
                 }
               }
             },
@@ -543,7 +672,10 @@
             },
             {
               "kind": "If",
-              "condition": "hitWall",
+              "condition": {
+                "kind": "Identifier",
+                "name": "hitWall"
+              },
               "then": [
                 {
                   "kind": "Assign",
@@ -578,7 +710,10 @@
             },
             {
               "kind": "If",
-              "condition": "selfHit",
+              "condition": {
+                "kind": "Identifier",
+                "name": "selfHit"
+              },
               "then": [
                 {
                   "kind": "Assign",
@@ -589,7 +724,10 @@
             },
             {
               "kind": "If",
-              "condition": "died",
+              "condition": {
+                "kind": "Identifier",
+                "name": "died"
+              },
               "then": [
                 {
                   "kind": "Assign",
@@ -597,8 +735,9 @@
                   "value": true
                 },
                 {
-                  "kind": "Call",
-                  "name": "show game over"
+                  "kind": "FunctionCallStmt",
+                  "name": "show game over",
+                  "args": []
                 }
               ]
             },
@@ -659,7 +798,10 @@
                 },
                 {
                   "kind": "If",
-                  "condition": "onApple",
+                  "condition": {
+                    "kind": "Identifier",
+                    "name": "onApple"
+                  },
                   "then": [
                     {
                       "kind": "Assign",
@@ -692,19 +834,8 @@
                         "max": 19
                       }
                     }
-                  ]
-                },
-                {
-                  "kind": "If",
-                  "condition": {
-                    "kind": "UnaryOp",
-                    "op": "not",
-                    "operand": {
-                      "kind": "Identifier",
-                      "name": "onApple"
-                    }
-                  },
-                  "then": [
+                  ],
+                  "else": [
                     {
                       "kind": "MethodCall",
                       "target": "snake",
@@ -736,8 +867,9 @@
                   "value": "ny"
                 },
                 {
-                  "kind": "Call",
-                  "name": "draw game"
+                  "kind": "FunctionCallStmt",
+                  "name": "draw game",
+                  "args": []
                 }
               ]
             }
