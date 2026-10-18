@@ -19,10 +19,15 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <NoDefaultExcludes>true</NoDefaultExcludes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://pseudonet-lang.github.io/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pseudonet-lang/pseudonet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <NoWarn>$(NoWarn);NU5128;NU5110;NU5111</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="..\PseudoNet.Vsix\Resources\icon.png" Pack="true" PackagePath="" Visible="false" />
     <Content Include="content\**\*" Exclude="content\**\bin\**;content\**\obj\**" PackagePath="content" />
   </ItemGroup>
 </Project>

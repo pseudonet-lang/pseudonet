@@ -21,4 +21,4 @@ Samples ship their pre-computed LLM answer: their first `dotnet run` needs no Ol
 Ollama and run `ollama pull qwen2.5-coder:7b` once.
 
 The compiler itself is the `PseudoNet.Build` package, referenced by the generated project.
-MIT licensed. Source: see the repository.
+MIT licensed. Source and docs: https://github.com/pseudonet-lang/pseudonet · Website: https://pseudonet-lang.github.io/
