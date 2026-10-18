@@ -6,7 +6,7 @@ Pseudo.NET compile du pseudocode *libre* en C# grâce à un modèle de langage *
 Aucune syntaxe n'est imposée : écrivez en français, anglais, espagnol, chinois… avec des accolades, avec de la
 seule indentation, ou en phrases. Pas de compte, pas de clé d'API, rien ne quitte votre machine.
 
-[English](README.md) · [Marketplace](https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet) · [Site](https://pseudonet-lang.github.io/fr/) · [Soutenir le projet](#soutenir)
+[English](README.md) · [Galerie d'exemples](https://pseudonet-lang.github.io/gallery/) · [Marketplace](https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet) · [Site](https://pseudonet-lang.github.io/fr/) · [Soutenir le projet](#soutenir)
 
 ![Tetris écrit en pseudocode](docs/demo-tetris.gif)
 

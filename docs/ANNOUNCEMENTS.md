@@ -10,6 +10,7 @@ MIT; the generated C# is a real program. Do not claim more than that.
 
 Links to reuse
 - Site: https://pseudonet-lang.github.io/
+- Gallery (pseudocode next to the running result and the generated C#, six samples): https://pseudonet-lang.github.io/gallery/  <- lead with this one
 - Marketplace: https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet
 - Source: https://github.com/pseudonet-lang/pseudonet
 - `dotnet new install PseudoNet.Templates`
@@ -43,6 +44,7 @@ Things to know: Windows only for now; for your own programs you need Ollama and 
 model is good but not perfect, so a very long or ambiguous program may need rewording.
 
 https://pseudonet-lang.github.io/
+See what students write and what runs (six samples, side by side): https://pseudonet-lang.github.io/gallery/
 
 I'd really value feedback from teachers: what is missing, what gets in the way, which exercises should be samples.
 
@@ -163,6 +165,7 @@ Limits, up front: Windows only, tested on Visual Studio 2026 (2022 untested), a 
 long programs, and the first generation of a new program takes seconds to minutes depending on hardware.
 
 Site: https://pseudonet-lang.github.io/  Source (MIT): https://github.com/pseudonet-lang/pseudonet
+The fastest way to see what it does: https://pseudonet-lang.github.io/gallery/ (pseudocode, running result and generated C# side by side).
 I'd love to hear where it fails.
 
 ---
@@ -178,7 +181,7 @@ I'd love to hear where it fails.
 
 ## 6. Short posts (Mastodon / X / LinkedIn / Bluesky)
 
-> Pseudo.NET: write pseudocode in your own words, in any language, and run it. A local LLM compiles it to C#; no account, no API key, nothing leaves your machine. Free, MIT. Visual Studio extension + `dotnet new`. https://pseudonet-lang.github.io/
+> Pseudo.NET: write pseudocode in your own words, in any language, and run it. A local LLM compiles it to C#; no account, no API key, nothing leaves your machine. Free, MIT. Visual Studio extension + `dotnet new`. See six samples side by side: https://pseudonet-lang.github.io/gallery/
 
 Variant for educators:
 > Pseudocode is how we teach algorithms, but it never ran. Pseudo.NET makes a student's pseudocode executable, in any language and style, offline. Free and open source. https://pseudonet-lang.github.io/ #csed

@@ -6,7 +6,7 @@ Pseudo.NET compiles *free-form* pseudocode to C# using a **local** language mode
 There is no imposed syntax: write in English, French, Spanish, Chinese… with braces, with indentation only, or just
 sentences. No account, no API key, nothing leaves your machine.
 
-[Français](README.fr.md) · [Marketplace](https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet) · [Website](https://pseudonet-lang.github.io/) · [Support the project](#support)
+[Français](README.fr.md) · [Samples gallery](https://pseudonet-lang.github.io/gallery/) · [Marketplace](https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet) · [Website](https://pseudonet-lang.github.io/) · [Support the project](#support)
 
 ![Tetris written in pseudocode](docs/demo-tetris.gif)
 
