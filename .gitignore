@@ -1,0 +1,9 @@
+bin/
+obj/
+artifacts/
+TestOutput/
+nuget-feed/
+.vs/
+*.user
+*.cs.bak
+PseudoNet.DotnetNew/content/

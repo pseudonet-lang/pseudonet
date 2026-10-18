@@ -1,0 +1,18 @@
+{
+  "arriba": "Up",
+  "abajo": "Down",
+  "izquierda": "Left",
+  "derecha": "Right",
+  "espacio": "Space",
+  "entrar": "Enter",
+  "intro": "Enter",
+  "escape": "Escape",
+  "esc": "Escape",
+  "retroceso": "Back",
+  "suprimir": "Delete",
+  "supr": "Delete",
+  "tabulador": "Tab",
+  "mayúsculas": "ShiftKey",
+  "mayusculas": "ShiftKey",
+  "control": "ControlKey"
+}

@@ -1,0 +1,7 @@
+make a window 400 by 300
+title "My first window"
+background black
+
+draw a filled rectangle at (50, 50) size (100, 60) color blue
+draw a circle at (250, 150) radius 40 color yellow
+display the text "Hello Pseudraw" at (20, 220) color white size 16

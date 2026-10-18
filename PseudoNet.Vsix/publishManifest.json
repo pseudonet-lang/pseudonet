@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/vsix-publish",
+  "categories": [ "coding", "other" ],
+  "identity": {
+    "internalName": "pseudonet",
+    "tags": [ "pseudocode", "teaching", "LLM", "Ollama", "WinForms", "education" ]
+  },
+  "overview": "overview.md",
+  "priceCategory": "free",
+  "publisher": "YOUR-MARKETPLACE-PUBLISHER-ID",
+  "private": false,
+  "qna": true,
+  "repo": "https://github.com/pseudonet-lang/pseudonet"
+}

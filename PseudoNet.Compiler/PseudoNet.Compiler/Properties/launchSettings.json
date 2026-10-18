@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PseudoNet.Compiler": {
+      "commandName": "Project",
+      "commandLineArgs": "tribulle.pseudo"
+    }
+  }
+}

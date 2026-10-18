@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RollForward>Major</RollForward>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="samples\hello.pseudo" />
+    <None Include="Samples\pseudraw_static.pseudo" />
+    <None Include="Samples\pseudraw_bounce.pseudo" />
+    <Compile Include="Ast.fs" />
+    <Compile Include="Messages.fs" />
+    <Compile Include="OllamaClient.fs" />
+    <Compile Include="LlmCache.fs" />
+    <Compile Include="AstNormalize.fs" />
+    <Compile Include="AstValidate.fs" />
+    <Compile Include="Deserializer.fs" />
+    <Compile Include="TypeInferrer.fs" />
+    <Compile Include="Backend.fs" />
+    <Compile Include="PseudrawBackend.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Samples\" />
+    <None Include="Colors\*.json" CopyToOutputDirectory="PreserveNewest" LinkBase="Colors" />
+    <None Include="Keys\*.json" CopyToOutputDirectory="PreserveNewest" LinkBase="Keys" />
+    <None Include="Messages\*.json" CopyToOutputDirectory="PreserveNewest" LinkBase="Messages" />
+  </ItemGroup>
+
+</Project>

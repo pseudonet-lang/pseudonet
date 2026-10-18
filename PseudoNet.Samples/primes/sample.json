@@ -1,0 +1,16 @@
+{
+  "title": "Prime numbers",
+  "kind": "console",
+  "language": "en",
+  "expectedOutput": [
+    "Prime numbers up to 50",
+    "(?s)2\\s+3\\s+5\\s+7\\s+11\\s+13\\s+17\\s+19\\s+23\\s+29\\s+31\\s+37\\s+41\\s+43\\s+47\\s*$"
+  ],
+  "mustMatch": [
+    {
+      "pattern": "static bool \\w+\\(",
+      "min": 1
+    }
+  ],
+  "description": "Finds the prime numbers up to 50 with a function, loops and a list. Indentation only: no braces, no end keywords."
+}

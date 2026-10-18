@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- VSIX "contenu seul" (aucun code) : modèles de projet zippés + paquet NuGet PseudoNet.Build
+       embarqué. À construire avec le MSBuild de Visual Studio (pas `dotnet build`) : voir build-vsix.ps1 -->
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">17.0</VisualStudioVersion>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{5C2C3F6A-8D1B-4E7B-9A52-2F1E6B7D9C40}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PseudoNet.Vsix</RootNamespace>
+    <AssemblyName>PseudoNet.Vsix</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+    <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+    <DeployExtension>false</DeployExtension>
+    <NoWarn>$(NoWarn);CS2008</NoWarn>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <TemplatesRoot>$(MSBuildThisFileDirectory)..\PseudoNet.Templates\</TemplatesRoot>
+    <PackagesFeed>$(MSBuildThisFileDirectory)..\PseudoNet.Build\artifacts\feed\</PackagesFeed>
+    <ZipDir>$(MSBuildThisFileDirectory)obj\templates\</ZipDir>
+    <StageDir>$(MSBuildThisFileDirectory)obj\stage\</StageDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest"><SubType>Designer</SubType></None>
+    <Content Include="..\LICENSE.txt"><Link>LICENSE.txt</Link><IncludeInVSIX>true</IncludeInVSIX></Content>
+    <Content Include="Resources\icon.png"><IncludeInVSIX>true</IncludeInVSIX><VSIXSubPath>Resources</VSIXSubPath></Content>
+    <Content Include="Resources\preview.png"><IncludeInVSIX>true</IncludeInVSIX><VSIXSubPath>Resources</VSIXSubPath></Content>
+    <!-- Un zip par modèle (PseudoCode, PseudrawCode et chaque exemple), produits par build-vsix.ps1 dans obj\templates\ -->
+    <Content Include="obj\templates\*.zip"><IncludeInVSIX>true</IncludeInVSIX><VSIXSubPath>ProjectTemplates</VSIXSubPath></Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="Exists('$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets')" />
+
+  <!-- Chaque modèle embarque son propre flux NuGet local (nuget-feed\PseudoNet.Build.x.nupkg) :
+       l'assistant NuGet des modèles ne fonctionne pas avec les projets SDK. build-vsix.ps1 met chaque
+       modèle en scène (fichiers + paquet) et le zippe dans obj\templates\ AVANT cette compilation. -->
+  <Target Name="CheckTemplateZips" BeforeTargets="BeforeBuild">
+    <ItemGroup><_TemplateZip Include="$(MSBuildThisFileDirectory)obj\templates\*.zip" /></ItemGroup>
+    <Error Condition="'@(_TemplateZip)' == ''" Text="Aucun modèle zippé dans obj\templates : lancez build-vsix.ps1 (et non MSBuild directement)." />
+  </Target>
+</Project>

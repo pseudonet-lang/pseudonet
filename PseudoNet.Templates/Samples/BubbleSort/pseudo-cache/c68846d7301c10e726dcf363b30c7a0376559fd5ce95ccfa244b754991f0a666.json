@@ -1,0 +1,255 @@
+﻿{
+  "kind": "Program",
+  "statements": [
+    {
+      "kind": "Assign",
+      "target": "numbers",
+      "value": {
+        "kind": "NewList"
+      }
+    },
+    {
+      "kind": "MethodCall",
+      "target": "numbers",
+      "method": "Add",
+      "args": [
+        {
+          "kind": "Literal",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "kind": "MethodCall",
+      "target": "numbers",
+      "method": "Add",
+      "args": [
+        {
+          "kind": "Literal",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "kind": "MethodCall",
+      "target": "numbers",
+      "method": "Add",
+      "args": [
+        {
+          "kind": "Literal",
+          "value": 9
+        }
+      ]
+    },
+    {
+      "kind": "MethodCall",
+      "target": "numbers",
+      "method": "Add",
+      "args": [
+        {
+          "kind": "Literal",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "kind": "MethodCall",
+      "target": "numbers",
+      "method": "Add",
+      "args": [
+        {
+          "kind": "Literal",
+          "value": 7
+        }
+      ]
+    },
+    {
+      "kind": "MethodCall",
+      "target": "numbers",
+      "method": "Add",
+      "args": [
+        {
+          "kind": "Literal",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "kind": "Print",
+      "value": {
+        "kind": "Literal",
+        "value": "Before sorting:"
+      }
+    },
+    {
+      "kind": "ForEach",
+      "variable": "n",
+      "collection": {
+        "kind": "Identifier",
+        "name": "numbers"
+      },
+      "body": [
+        {
+          "kind": "Print",
+          "value": {
+            "kind": "Identifier",
+            "name": "n"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "Loop",
+      "variable": "pass",
+      "from_": {
+        "kind": "Literal",
+        "value": 1
+      },
+      "to": {
+        "kind": "Literal",
+        "value": 5
+      },
+      "body": [
+        {
+          "kind": "Loop",
+          "variable": "i",
+          "from_": {
+            "kind": "Literal",
+            "value": 0
+          },
+          "to": {
+            "kind": "Literal",
+            "value": 4
+          },
+          "body": [
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">",
+                "left": {
+                  "kind": "ArrayAccess",
+                  "array": {
+                    "kind": "Identifier",
+                    "name": "numbers"
+                  },
+                  "index": {
+                    "kind": "Identifier",
+                    "name": "i"
+                  }
+                },
+                "right": {
+                  "kind": "ArrayAccess",
+                  "array": {
+                    "kind": "Identifier",
+                    "name": "numbers"
+                  },
+                  "index": {
+                    "kind": "BinaryOp",
+                    "op": "+",
+                    "left": {
+                      "kind": "Identifier",
+                      "name": "i"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 1
+                    }
+                  }
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "temp",
+                  "value": {
+                    "kind": "ArrayAccess",
+                    "array": {
+                      "kind": "Identifier",
+                      "name": "numbers"
+                    },
+                    "index": {
+                      "kind": "Identifier",
+                      "name": "i"
+                    }
+                  }
+                },
+                {
+                  "kind": "IndexedAssign",
+                  "target": "numbers",
+                  "index": {
+                    "kind": "Identifier",
+                    "name": "i"
+                  },
+                  "value": {
+                    "kind": "ArrayAccess",
+                    "array": {
+                      "kind": "Identifier",
+                      "name": "numbers"
+                    },
+                    "index": {
+                      "kind": "BinaryOp",
+                      "op": "+",
+                      "left": {
+                        "kind": "Identifier",
+                        "name": "i"
+                      },
+                      "right": {
+                        "kind": "Literal",
+                        "value": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "IndexedAssign",
+                  "target": "numbers",
+                  "index": {
+                    "kind": "BinaryOp",
+                    "op": "+",
+                    "left": {
+                        "kind": "Identifier",
+                        "name": "i"
+                      },
+                      "right": {
+                        "kind": "Literal",
+                        "value": 1
+                      }
+                    },
+                  "value": {
+                    "kind": "Identifier",
+                    "name": "temp"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "Print",
+      "value": {
+        "kind": "Literal",
+        "value": "After sorting:"
+      }
+    },
+    {
+      "kind": "ForEach",
+      "variable": "n",
+      "collection": {
+        "kind": "Identifier",
+        "name": "numbers"
+      },
+      "body": [
+        {
+          "kind": "Print",
+          "value": {
+            "kind": "Identifier",
+            "name": "n"
+          }
+        }
+      ]
+    }
+  ]
+}

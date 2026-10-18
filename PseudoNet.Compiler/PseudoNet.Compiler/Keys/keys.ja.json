@@ -1,0 +1,15 @@
+{
+  "上": "Up",
+  "下": "Down",
+  "左": "Left",
+  "右": "Right",
+  "スペース": "Space",
+  "エンター": "Enter",
+  "リターン": "Enter",
+  "エスケープ": "Escape",
+  "バックスペース": "Back",
+  "デリート": "Delete",
+  "タブ": "Tab",
+  "シフト": "ShiftKey",
+  "コントロール": "ControlKey"
+}

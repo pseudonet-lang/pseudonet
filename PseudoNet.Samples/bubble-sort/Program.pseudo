@@ -1,0 +1,22 @@
+numbers = a new list
+add 5 to numbers
+add 2 to numbers
+add 9 to numbers
+add 1 to numbers
+add 7 to numbers
+add 3 to numbers
+
+print the text "Before sorting:"
+for each n in numbers
+	print n
+
+repeat pass from 1 to 5
+	repeat i from 0 to 4
+		if numbers[i] is greater than numbers[i + 1] then
+			temp = numbers[i]
+			numbers[i] = numbers[i + 1]
+			numbers[i + 1] = temp
+
+print the text "After sorting:"
+for each n in numbers
+	print n

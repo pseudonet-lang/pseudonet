@@ -1,0 +1,2 @@
+ask the user for their name, with the question "What is your name?"
+print "Hello, " followed by the name

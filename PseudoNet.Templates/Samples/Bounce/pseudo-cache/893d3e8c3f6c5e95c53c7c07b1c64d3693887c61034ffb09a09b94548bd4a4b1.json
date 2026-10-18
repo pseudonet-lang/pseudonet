@@ -1,0 +1,222 @@
+﻿{
+  "kind": "Program",
+  "body": [
+    {
+      "kind": "PseudrawWidth",
+      "value": 400
+    },
+    {
+      "kind": "PseudrawHeight",
+      "value": 300
+    },
+    {
+      "kind": "PseudrawTitle",
+      "value": "Bounce"
+    },
+    {
+      "kind": "PseudrawBackground",
+      "color": "black"
+    },
+    {
+      "kind": "Assign",
+      "target": "ballX",
+      "value": 200
+    },
+    {
+      "kind": "Assign",
+      "target": "ballY",
+      "value": 150
+    },
+    {
+      "kind": "Assign",
+      "target": "speedX",
+      "value": 3
+    },
+    {
+      "kind": "Assign",
+      "target": "speedY",
+      "value": 2
+    },
+    {
+      "kind": "Assign",
+      "target": "ballRadius",
+      "value": 15
+    },
+    {
+      "kind": "PseudrawOnTick",
+      "intervalMs": 30,
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "ballX",
+          "value": {
+            "kind": "BinaryOp",
+            "op": "+",
+            "left": {
+              "kind": "Identifier",
+              "name": "ballX"
+            },
+            "right": {
+              "kind": "Identifier",
+              "name": "speedX"
+            }
+          }
+        },
+        {
+          "kind": "Assign",
+          "target": "ballY",
+          "value": {
+            "kind": "BinaryOp",
+            "op": "+",
+            "left": {
+              "kind": "Identifier",
+              "name": "ballY"
+            },
+            "right": {
+              "kind": "Identifier",
+              "name": "speedY"
+            }
+          }
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "or",
+            "left": {
+              "kind": "BinaryOp",
+              "op": "<",
+              "left": {
+                "kind": "BinaryOp",
+                "op": "-",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "ballX"
+                },
+                "right": {
+                  "kind": "Identifier",
+                  "name": "ballRadius"
+                }
+              },
+              "right": 0
+            },
+            "right": {
+              "kind": "BinaryOp",
+              "op": ">",
+              "left": {
+                "kind": "BinaryOp",
+                "op": "+",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "ballX"
+                },
+                "right": {
+                  "kind": "Identifier",
+                  "name": "ballRadius"
+                }
+              },
+              "right": {
+                "kind": "Identifier",
+                "name": "width"
+              }
+            }
+          },
+          "then": [
+            {
+              "kind": "Assign",
+              "target": "speedX",
+              "value": {
+                "kind": "BinaryOp",
+                "op": "*",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "speedX"
+                },
+                "right": -1
+              }
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "or",
+            "left": {
+              "kind": "BinaryOp",
+              "op": "<",
+              "left": {
+                "kind": "BinaryOp",
+                "op": "-",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "ballY"
+                },
+                "right": {
+                  "kind": "Identifier",
+                  "name": "ballRadius"
+                }
+              },
+              "right": 0
+            },
+            "right": {
+              "kind": "BinaryOp",
+              "op": ">",
+              "left": {
+                "kind": "BinaryOp",
+                "op": "+",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "ballY"
+                },
+                "right": {
+                  "kind": "Identifier",
+                  "name": "ballRadius"
+                }
+              },
+              "right": {
+                "kind": "Identifier",
+                "name": "height"
+              }
+            }
+          },
+          "then": [
+            {
+              "kind": "Assign",
+              "target": "speedY",
+              "value": {
+                "kind": "BinaryOp",
+                "op": "*",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "speedY"
+                },
+                "right": -1
+              }
+            }
+          ]
+        },
+        {
+          "kind": "PseudrawClear"
+        },
+        {
+          "kind": "PseudrawDrawCircle",
+          "style": "filled",
+          "x": {
+            "kind": "Identifier",
+            "name": "ballX"
+          },
+          "y": {
+            "kind": "Identifier",
+            "name": "ballY"
+          },
+          "radius": {
+            "kind": "Identifier",
+            "name": "ballRadius"
+          },
+          "color": "red"
+        }
+      ]
+    }
+  ]
+}

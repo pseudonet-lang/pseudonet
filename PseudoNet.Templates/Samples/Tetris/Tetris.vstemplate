@@ -1,0 +1,30 @@
+﻿<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>PseudrawCode Sample - Tetris</Name>
+    <Description>Tetris with coloured pieces, next-piece preview, score and sound. Arrows move (hold to repeat), Up rotates, R restarts.</Description>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>2050</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+    <DefaultName>TetrisSample</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.png</Icon>
+    <LanguageTag>csharp</LanguageTag>
+    <PlatformTag>windows</PlatformTag>
+    <ProjectTypeTag>games</ProjectTypeTag>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.csproj" File="Tetris.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="Program.pseudo" OpenInEditor="true">Program.pseudo</ProjectItem>
+      <Folder Name="pseudo-cache" TargetFolderName="pseudo-cache">
+        <ProjectItem ReplaceParameters="false" TargetFileName="d4b65cbaa53fcd61c2886d75ddb811538f24836adec9bf629ee443d6b7cba10e.json">d4b65cbaa53fcd61c2886d75ddb811538f24836adec9bf629ee443d6b7cba10e.json</ProjectItem>
+      </Folder>
+      <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
+        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.1.nupkg">PseudoNet.Build.0.3.1.nupkg</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

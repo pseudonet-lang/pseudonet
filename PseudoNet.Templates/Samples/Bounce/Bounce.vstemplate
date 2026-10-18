@@ -1,0 +1,30 @@
+﻿<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>PseudrawCode Sample - Bouncing ball</Name>
+    <Description>A ball bouncing off the four walls of a window.</Description>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>2000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+    <DefaultName>BounceSample</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.png</Icon>
+    <LanguageTag>csharp</LanguageTag>
+    <PlatformTag>windows</PlatformTag>
+    <ProjectTypeTag>games</ProjectTypeTag>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.csproj" File="Bounce.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="Program.pseudo" OpenInEditor="true">Program.pseudo</ProjectItem>
+      <Folder Name="pseudo-cache" TargetFolderName="pseudo-cache">
+        <ProjectItem ReplaceParameters="false" TargetFileName="893d3e8c3f6c5e95c53c7c07b1c64d3693887c61034ffb09a09b94548bd4a4b1.json">893d3e8c3f6c5e95c53c7c07b1c64d3693887c61034ffb09a09b94548bd4a4b1.json</ProjectItem>
+      </Folder>
+      <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
+        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.1.nupkg">PseudoNet.Build.0.3.1.nupkg</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,749 @@
+﻿{
+  "kind": "Program",
+  "body": [
+    {
+      "kind": "PseudrawWidth",
+      "value": 400
+    },
+    {
+      "kind": "PseudrawHeight",
+      "value": 400
+    },
+    {
+      "kind": "PseudrawTitle",
+      "value": "Snake"
+    },
+    {
+      "kind": "PseudrawBackground",
+      "color": "black"
+    },
+    {
+      "kind": "PseudrawTick",
+      "intervalMs": 150
+    },
+    {
+      "kind": "Assign",
+      "target": "snake",
+      "value": {
+        "kind": "NewList"
+      }
+    },
+    {
+      "kind": "MethodCall",
+      "target": "snake",
+      "method": "Add",
+      "args": [
+        {
+          "kind": "PseudrawPoint",
+          "x": 10,
+          "y": 10
+        }
+      ]
+    },
+    {
+      "kind": "MethodCall",
+      "target": "snake",
+      "method": "Add",
+      "args": [
+        {
+          "kind": "PseudrawPoint",
+          "x": 9,
+          "y": 10
+        }
+      ]
+    },
+    {
+      "kind": "MethodCall",
+      "target": "snake",
+      "method": "Add",
+      "args": [
+        {
+          "kind": "PseudrawPoint",
+          "x": 8,
+          "y": 10
+        }
+      ]
+    },
+    {
+      "kind": "Assign",
+      "target": "headX",
+      "value": 10
+    },
+    {
+      "kind": "Assign",
+      "target": "headY",
+      "value": 10
+    },
+    {
+      "kind": "Assign",
+      "target": "direction",
+      "value": 0
+    },
+    {
+      "kind": "Assign",
+      "target": "score",
+      "value": 0
+    },
+    {
+      "kind": "Assign",
+      "target": "gameOver",
+      "value": false
+    },
+    {
+      "kind": "Assign",
+      "target": "appleX",
+      "value": {
+        "kind": "RandomNumber",
+        "min": 0,
+        "max": 19
+      }
+    },
+    {
+      "kind": "Assign",
+      "target": "appleY",
+      "value": {
+        "kind": "RandomNumber",
+        "min": 0,
+        "max": 19
+      }
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "draw game",
+      "params": [],
+      "body": [
+        {
+          "kind": "PseudrawClear"
+        },
+        {
+          "kind": "ForEach",
+          "variable": "seg",
+          "collection": "snake",
+          "body": [
+            {
+              "kind": "PseudrawDrawRect",
+              "style": "filled",
+              "x": {
+                "kind": "BinaryOp",
+                "op": "*",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "seg.x"
+                },
+                "right": 20
+              },
+              "y": {
+                "kind": "BinaryOp",
+                "op": "*",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "seg.y"
+                },
+                "right": 20
+              },
+              "w": 18,
+              "h": 18,
+              "color": "green"
+            }
+          ]
+        },
+        {
+          "kind": "PseudrawDrawRect",
+          "style": "filled",
+          "x": {
+            "kind": "BinaryOp",
+            "op": "*",
+            "left": {
+              "kind": "Identifier",
+              "name": "appleX"
+            },
+            "right": 20
+          },
+          "y": {
+            "kind": "BinaryOp",
+            "op": "*",
+            "left": {
+              "kind": "Identifier",
+              "name": "appleY"
+            },
+            "right": 20
+          },
+          "w": 18,
+          "h": 18,
+          "color": "red"
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": {
+            "kind": "BinaryOp",
+            "op": "+",
+            "left": "Score : ",
+            "right": {
+              "kind": "Identifier",
+              "name": "score"
+            }
+          },
+          "x": 5,
+          "y": 5,
+          "color": "white",
+          "fontSize": 14
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "show game over",
+      "params": [],
+      "body": [
+        {
+          "kind": "PseudrawClear"
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": "Game Over",
+          "x": 110,
+          "y": 160,
+          "color": "red",
+          "fontSize": 32
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": {
+            "kind": "BinaryOp",
+            "op": "+",
+            "left": "Score : ",
+            "right": {
+              "kind": "Identifier",
+              "name": "score"
+            }
+          },
+          "x": 135,
+          "y": 210,
+          "color": "white",
+          "fontSize": 18
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": "Press R to restart",
+          "x": 95,
+          "y": 250,
+          "color": "gray",
+          "fontSize": 14
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "restart game",
+      "params": [],
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "snake",
+          "value": {
+            "kind": "NewList"
+          }
+        },
+        {
+          "kind": "MethodCall",
+          "target": "snake",
+          "method": "Add",
+          "args": [
+            {
+              "kind": "PseudrawPoint",
+              "x": 10,
+              "y": 10
+            }
+          ]
+        },
+        {
+          "kind": "MethodCall",
+          "target": "snake",
+          "method": "Add",
+          "args": [
+            {
+              "kind": "PseudrawPoint",
+              "x": 9,
+              "y": 10
+            }
+          ]
+        },
+        {
+          "kind": "MethodCall",
+          "target": "snake",
+          "method": "Add",
+          "args": [
+            {
+              "kind": "PseudrawPoint",
+              "x": 8,
+              "y": 10
+            }
+          ]
+        },
+        {
+          "kind": "Assign",
+          "target": "headX",
+          "value": 10
+        },
+        {
+          "kind": "Assign",
+          "target": "headY",
+          "value": 10
+        },
+        {
+          "kind": "Assign",
+          "target": "direction",
+          "value": 0
+        },
+        {
+          "kind": "Assign",
+          "target": "score",
+          "value": 0
+        },
+        {
+          "kind": "Assign",
+          "target": "gameOver",
+          "value": false
+        },
+        {
+          "kind": "Assign",
+          "target": "appleX",
+          "value": {
+            "kind": "RandomNumber",
+            "min": 0,
+            "max": 19
+          }
+        },
+        {
+          "kind": "Assign",
+          "target": "appleY",
+          "value": {
+            "kind": "RandomNumber",
+            "min": 0,
+            "max": 19
+          }
+        }
+      ]
+    },
+    {
+      "kind": "PseudrawOnTick",
+      "body": [
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "PseudrawKeyPressed",
+            "key": "r",
+            "press": "just_pressed"
+          },
+          "then": [
+            {
+              "kind": "Call",
+              "name": "restart game"
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "UnaryOp",
+            "op": "not",
+            "operand": {
+              "kind": "Identifier",
+              "name": "gameOver"
+            }
+          },
+          "then": [
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawKeyPressed",
+                "key": "up",
+                "press": "pressed"
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "direction",
+                  "value": 3
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawKeyPressed",
+                "key": "down",
+                "press": "pressed"
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "direction",
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawKeyPressed",
+                "key": "left",
+                "press": "pressed"
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "direction",
+                  "value": 2
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawKeyPressed",
+                "key": "right",
+                "press": "pressed"
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "direction",
+                  "value": 0
+                }
+              ]
+            },
+            {
+              "kind": "Assign",
+              "target": "nx",
+              "value": {
+                "kind": "BinaryOp",
+                "op": "+",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "headX"
+                },
+                "right": {
+                  "kind": "BinaryOp",
+                  "op": "*",
+                  "left": {
+                    "kind": "Identifier",
+                    "name": "direction"
+                  },
+                  "right": -1
+                }
+              }
+            },
+            {
+              "kind": "Assign",
+              "target": "ny",
+              "value": {
+                "kind": "BinaryOp",
+                "op": "+",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "headY"
+                },
+                "right": {
+                  "kind": "BinaryOp",
+                  "op": "*",
+                  "left": {
+                    "kind": "Identifier",
+                    "name": "direction"
+                  },
+                  "right": -1
+                }
+              }
+            },
+            {
+              "kind": "Assign",
+              "target": "died",
+              "value": false
+            },
+            {
+              "kind": "Assign",
+              "target": "hitWall",
+              "value": false
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "<",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "nx"
+                },
+                "right": 0
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "hitWall",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "nx"
+                },
+                "right": 20
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "hitWall",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "<",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "ny"
+                },
+                "right": 0
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "hitWall",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "ny"
+                },
+                "right": 20
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "hitWall",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": "hitWall",
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "died",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "kind": "Assign",
+              "target": "selfHit",
+              "value": false
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawIsIn",
+                "value": {
+                  "kind": "PseudrawPoint",
+                  "x": "nx",
+                  "y": "ny"
+                },
+                "collection": "snake"
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "selfHit",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": "selfHit",
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "died",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": "died",
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "gameOver",
+                  "value": true
+                },
+                {
+                  "kind": "Call",
+                  "name": "show game over"
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "UnaryOp",
+                "op": "not",
+                "operand": {
+                  "kind": "Identifier",
+                  "name": "died"
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "onApple",
+                  "value": false
+                },
+                {
+                  "kind": "If",
+                  "condition": {
+                    "kind": "BinaryOp",
+                    "op": "=",
+                    "left": {
+                      "kind": "Identifier",
+                      "name": "nx"
+                    },
+                    "right": {
+                      "kind": "Identifier",
+                      "name": "appleX"
+                    }
+                  },
+                  "then": [
+                    {
+                      "kind": "If",
+                      "condition": {
+                        "kind": "BinaryOp",
+                        "op": "=",
+                        "left": {
+                          "kind": "Identifier",
+                          "name": "ny"
+                        },
+                        "right": {
+                          "kind": "Identifier",
+                          "name": "appleY"
+                        }
+                      },
+                      "then": [
+                        {
+                          "kind": "Assign",
+                          "target": "onApple",
+                          "value": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "If",
+                  "condition": "onApple",
+                  "then": [
+                    {
+                      "kind": "Assign",
+                      "target": "score",
+                      "value": {
+                        "kind": "BinaryOp",
+                        "op": "+",
+                        "left": {
+                          "kind": "Identifier",
+                          "name": "score"
+                        },
+                        "right": 1
+                      }
+                    },
+                    {
+                      "kind": "Assign",
+                      "target": "appleX",
+                      "value": {
+                        "kind": "RandomNumber",
+                        "min": 0,
+                        "max": 19
+                      }
+                    },
+                    {
+                      "kind": "Assign",
+                      "target": "appleY",
+                      "value": {
+                        "kind": "RandomNumber",
+                        "min": 0,
+                        "max": 19
+                      }
+                    }
+                  ]
+                },
+                {
+                  "kind": "If",
+                  "condition": {
+                    "kind": "UnaryOp",
+                    "op": "not",
+                    "operand": {
+                      "kind": "Identifier",
+                      "name": "onApple"
+                    }
+                  },
+                  "then": [
+                    {
+                      "kind": "MethodCall",
+                      "target": "snake",
+                      "method": "RemoveFirst",
+                      "args": []
+                    }
+                  ]
+                },
+                {
+                  "kind": "MethodCall",
+                  "target": "snake",
+                  "method": "Add",
+                  "args": [
+                    {
+                      "kind": "PseudrawPoint",
+                      "x": "nx",
+                      "y": "ny"
+                    }
+                  ]
+                },
+                {
+                  "kind": "Assign",
+                  "target": "headX",
+                  "value": "nx"
+                },
+                {
+                  "kind": "Assign",
+                  "target": "headY",
+                  "value": "ny"
+                },
+                {
+                  "kind": "Call",
+                  "name": "draw game"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+We want to find all the prime numbers up to 50.
+
+primes = a new list
+
+define whether counter is prime, which returns a boolean
+	isPrime = true
+	if counter is less than 2 then
+		isPrime = false
+	repeat divisor from 2 to 50
+		if divisor is less than counter then
+			remainder = counter modulo divisor
+			if remainder is equal to 0 then
+				isPrime = false
+	return isPrime
+
+repeat counter from 2 to 50
+	candidate = whether counter is prime
+	if candidate then
+		add counter to primes
+
+print the text "Prime numbers up to 50:"
+for each number in primes
+	print number

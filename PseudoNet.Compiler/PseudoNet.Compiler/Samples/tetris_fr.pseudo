@@ -1,0 +1,283 @@
+fenêtre de 400 sur 450
+titre "Tetris"
+fond noir
+actualiser toutes les 400 millisecondes
+
+plateau = une nouvelle liste
+cellulesPiece = une nouvelle liste
+cellulesTemp = une nouvelle liste
+cellulesSuivante = une nouvelle liste
+score = 0
+partieTerminee = faux
+formeActuelle = un nombre aléatoire entre 0 et 6
+formeSuivante = un nombre aléatoire entre 0 et 6
+rotationActuelle = 0
+pieceX = 4
+pieceY = 0
+remplir cellulesPiece avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (pieceX, pieceY)
+remplir cellulesSuivante avec les cellules de la forme formeSuivante à la rotation 0 placée en (0, 0)
+
+définir déplacer la pièce vers la gauche, qui retourne un booléen {
+    nouveauX = pieceX - 1
+    remplir cellulesTemp avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (nouveauX, pieceY)
+    ok = vrai
+    pour chaque cellule dans cellulesTemp {
+        si cellule.x < 0 {
+            ok = faux
+        }
+        si cellule.x >= 10 {
+            ok = faux
+        }
+        si cellule.y >= 20 {
+            ok = faux
+        }
+        si le point (cellule.x, cellule.y) est dans plateau {
+            ok = faux
+        }
+    }
+    si ok {
+        pieceX = nouveauX
+        remplir cellulesPiece avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (pieceX, pieceY)
+    }
+    retourner ok
+}
+
+définir déplacer la pièce vers la droite, qui retourne un booléen {
+    nouveauX = pieceX + 1
+    remplir cellulesTemp avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (nouveauX, pieceY)
+    ok = vrai
+    pour chaque cellule dans cellulesTemp {
+        si cellule.x < 0 {
+            ok = faux
+        }
+        si cellule.x >= 10 {
+            ok = faux
+        }
+        si cellule.y >= 20 {
+            ok = faux
+        }
+        si le point (cellule.x, cellule.y) est dans plateau {
+            ok = faux
+        }
+    }
+    si ok {
+        pieceX = nouveauX
+        remplir cellulesPiece avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (pieceX, pieceY)
+    }
+    retourner ok
+}
+
+définir déplacer la pièce vers le bas, qui retourne un booléen {
+    nouveauY = pieceY + 1
+    remplir cellulesTemp avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (pieceX, nouveauY)
+    ok = vrai
+    pour chaque cellule dans cellulesTemp {
+        si cellule.x < 0 {
+            ok = faux
+        }
+        si cellule.x >= 10 {
+            ok = faux
+        }
+        si cellule.y >= 20 {
+            ok = faux
+        }
+        si le point (cellule.x, cellule.y) est dans plateau {
+            ok = faux
+        }
+    }
+    si ok {
+        pieceY = nouveauY
+        remplir cellulesPiece avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (pieceX, pieceY)
+    }
+    retourner ok
+}
+
+définir tourner la pièce, qui retourne un booléen {
+    nouvelleRotation = rotationActuelle + 1
+    remplir cellulesTemp avec les cellules de la forme formeActuelle à la rotation nouvelleRotation placée en (pieceX, pieceY)
+    ok = vrai
+    pour chaque cellule dans cellulesTemp {
+        si cellule.x < 0 {
+            ok = faux
+        }
+        si cellule.x >= 10 {
+            ok = faux
+        }
+        si cellule.y >= 20 {
+            ok = faux
+        }
+        si le point (cellule.x, cellule.y) est dans plateau {
+            ok = faux
+        }
+    }
+    si ok {
+        rotationActuelle = nouvelleRotation
+        remplir cellulesPiece avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (pieceX, pieceY)
+    }
+    retourner ok
+}
+
+définir verrouiller la pièce {
+    pour chaque cellule dans cellulesPiece {
+        ajouter le point (cellule.x, cellule.y) à plateau
+    }
+}
+
+définir effacer les lignes {
+    répéter ligne de 0 à 19 {
+        compteDansLigne = 0
+        pour chaque cellule dans plateau {
+            si cellule.y = ligne {
+                compteDansLigne = compteDansLigne + 1
+            }
+        }
+        si compteDansLigne >= 10 {
+            nouveauPlateau = une nouvelle liste
+            pour chaque cellule dans plateau {
+                si cellule.y <> ligne {
+                    si cellule.y < ligne {
+                        ajouter le point (cellule.x, cellule.y + 1) à nouveauPlateau
+                    }
+                    si cellule.y > ligne {
+                        ajouter le point (cellule.x, cellule.y) à nouveauPlateau
+                    }
+                }
+            }
+            plateau = nouveauPlateau
+            score = score + 100
+            jouer une tonalité à 800 Hz pendant 100 ms
+        }
+    }
+}
+
+définir faire apparaître une nouvelle pièce, qui retourne un booléen {
+    formeActuelle = formeSuivante
+    formeSuivante = un nombre aléatoire entre 0 et 6
+    rotationActuelle = 0
+    pieceX = 4
+    pieceY = 0
+    remplir cellulesPiece avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (pieceX, pieceY)
+    remplir cellulesSuivante avec les cellules de la forme formeSuivante à la rotation 0 placée en (0, 0)
+    bloquee = faux
+    pour chaque cellule dans cellulesPiece {
+        si le point (cellule.x, cellule.y) est dans plateau {
+            bloquee = vrai
+        }
+    }
+    retourner bloquee
+}
+
+définir afficher l'écran de fin de partie {
+    effacer
+    afficher le texte "Partie terminée" en (50, 180) couleur rouge taille 28
+    afficher le texte "Score :" en (90, 230) couleur blanc taille 18
+    afficher score en (170, 230) couleur blanc taille 18
+    afficher le texte "Appuyez sur R pour recommencer" en (40, 270) couleur gris taille 14
+    jouer une tonalité à 150 Hz pendant 500 ms
+}
+
+définir recommencer la partie {
+    plateau = une nouvelle liste
+    score = 0
+    partieTerminee = faux
+    formeActuelle = un nombre aléatoire entre 0 et 6
+    formeSuivante = un nombre aléatoire entre 0 et 6
+    rotationActuelle = 0
+    pieceX = 4
+    pieceY = 0
+    remplir cellulesPiece avec les cellules de la forme formeActuelle à la rotation rotationActuelle placée en (pieceX, pieceY)
+    remplir cellulesSuivante avec les cellules de la forme formeSuivante à la rotation 0 placée en (0, 0)
+    jouer une tonalité à 440 Hz pendant 100 ms
+    jouer une tonalité à 660 Hz pendant 150 ms
+}
+
+définir dessiner la partie {
+    effacer
+    dessiner un rectangle en (0, 0) taille (200, 400) couleur gris
+
+    pour chaque cellule dans plateau {
+        dessiner un rectangle plein en (cellule.x * 20, cellule.y * 20) taille (18, 18) couleur bleu acier
+    }
+
+    si formeActuelle = 0 {
+        pour chaque cellule dans cellulesPiece {
+            dessiner un rectangle plein en (cellule.x * 20, cellule.y * 20) taille (18, 18) couleur cyan
+        }
+    }
+    si formeActuelle = 1 {
+        pour chaque cellule dans cellulesPiece {
+            dessiner un rectangle plein en (cellule.x * 20, cellule.y * 20) taille (18, 18) couleur jaune
+        }
+    }
+    si formeActuelle = 2 {
+        pour chaque cellule dans cellulesPiece {
+            dessiner un rectangle plein en (cellule.x * 20, cellule.y * 20) taille (18, 18) couleur violet
+        }
+    }
+    si formeActuelle = 3 {
+        pour chaque cellule dans cellulesPiece {
+            dessiner un rectangle plein en (cellule.x * 20, cellule.y * 20) taille (18, 18) couleur vert
+        }
+    }
+    si formeActuelle = 4 {
+        pour chaque cellule dans cellulesPiece {
+            dessiner un rectangle plein en (cellule.x * 20, cellule.y * 20) taille (18, 18) couleur rouge
+        }
+    }
+    si formeActuelle = 5 {
+        pour chaque cellule dans cellulesPiece {
+            dessiner un rectangle plein en (cellule.x * 20, cellule.y * 20) taille (18, 18) couleur bleu
+        }
+    }
+    si formeActuelle = 6 {
+        pour chaque cellule dans cellulesPiece {
+            dessiner un rectangle plein en (cellule.x * 20, cellule.y * 20) taille (18, 18) couleur orange
+        }
+    }
+
+    afficher le texte "Score" en (230, 20) couleur blanc taille 16
+    afficher score en (230, 45) couleur jaune taille 14
+    afficher le texte "Suivant" en (230, 90) couleur blanc taille 16
+    pour chaque cellule dans cellulesSuivante {
+        dessiner un rectangle plein en (230 + cellule.x * 16, 120 + cellule.y * 16) taille (14, 14) couleur jaune
+    }
+}
+
+à chaque tour {
+    si la touche R vient d'être appuyée {
+        recommencer la partie
+    }
+
+    si non partieTerminee {
+        si la touche gauche est enfoncée {
+            déplacer la pièce vers la gauche
+        }
+        si la touche droite est enfoncée {
+            déplacer la pièce vers la droite
+        }
+        si la touche haut vient d'être appuyée {
+            tourner la pièce
+        }
+        si la touche bas est enfoncée {
+            déplacer la pièce vers le bas
+        }
+
+        estTombee = déplacer la pièce vers le bas
+
+        si non estTombee {
+            verrouiller la pièce
+            effacer les lignes
+            bloquee = faire apparaître une nouvelle pièce
+            si bloquee {
+                partieTerminee = vrai
+            }
+            si partieTerminee {
+                afficher l'écran de fin de partie
+            }
+        }
+
+        si non partieTerminee {
+            dessiner la partie
+        }
+    }
+}

@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <PseudoProjectType>console</PseudoProjectType>
+    <PseudoCompiler>$(MSBuildProjectDirectory)\..\..\..\PseudoNet.Compiler\PseudoNet.Compiler\bin\Debug\net8.0\PseudoNet.Compiler.exe</PseudoCompiler>
+  </PropertyGroup>
+  <Import Project="$(MSBuildProjectDirectory)\..\..\PseudoNet.targets" />
+</Project>

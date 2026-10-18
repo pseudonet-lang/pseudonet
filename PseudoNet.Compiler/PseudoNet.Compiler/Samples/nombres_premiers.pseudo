@@ -1,0 +1,31 @@
+On veut trouver tous les nombres premiers jusqu'à 50.
+
+nombresPremiers = une nouvelle liste
+
+définir est-ce que compteur est premier, qui retourne un booléen {
+    estPremier = vrai
+    si compteur est inférieur à 2 {
+        estPremier = faux
+    }
+    répéter diviseur de 2 à 50 {
+        si diviseur est inférieur à compteur {
+            reste = compteur modulo diviseur
+            si reste est égal à 0 {
+                estPremier = faux
+            }
+        }
+    }
+    retourner estPremier
+}
+
+répéter compteur de 2 à 50 {
+    premier = est-ce que compteur est premier
+    si premier {
+        ajouter compteur à nombresPremiers
+    }
+}
+
+afficher le texte "Nombres premiers jusqu'à 50 :"
+pour chaque nombre dans nombresPremiers {
+    afficher nombre
+}

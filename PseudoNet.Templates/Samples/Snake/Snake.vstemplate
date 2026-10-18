@@ -1,0 +1,30 @@
+﻿<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>PseudrawCode Sample - Snake</Name>
+    <Description>Classic Snake: steer with the arrow keys, eat the apples, avoid the walls and your own tail. R restarts. Entirely free-form pseudocode.</Description>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>2040</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+    <DefaultName>SnakeSample</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.png</Icon>
+    <LanguageTag>csharp</LanguageTag>
+    <PlatformTag>windows</PlatformTag>
+    <ProjectTypeTag>games</ProjectTypeTag>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.csproj" File="Snake.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="Program.pseudo" OpenInEditor="true">Program.pseudo</ProjectItem>
+      <Folder Name="pseudo-cache" TargetFolderName="pseudo-cache">
+        <ProjectItem ReplaceParameters="false" TargetFileName="d54b9593352bd940c1bf0b3d71a4dab15f5b9e8d7637f1618490fa4eb044f0b4.json">d54b9593352bd940c1bf0b3d71a4dab15f5b9e8d7637f1618490fa4eb044f0b4.json</ProjectItem>
+      </Folder>
+      <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
+        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.1.nupkg">PseudoNet.Build.0.3.1.nupkg</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

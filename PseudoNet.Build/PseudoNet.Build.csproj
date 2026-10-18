@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Paquet NuGet "PseudoNet.Build" : les .targets + le compilateur. Un projet n'a qu'à écrire
+       <PackageReference Include="PseudoNet.Build" ... PrivateAssets="all" /> pour compiler ses
+       *.pseudo (dotnet build, Visual Studio, serveur de build). Construit par pack.ps1. -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>PseudoNet.Build</PackageId>
+    <Version>0.3.1</Version>
+    <Authors>Malek AIT OUARET</Authors>
+    <Copyright>Copyright (c) 2026 Malek AIT OUARET</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>Compile les fichiers .pseudo (pseudocode libre, via un LLM local Ollama) en C# au moment du build.</Description>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWarn>$(NoWarn);CS2008</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="PseudoNet.targets" Pack="true" PackagePath="build\PseudoNet.Build.targets" />
+    <None Include="..\LICENSE.txt" Pack="true" PackagePath="" />
+    <None Include="artifacts\compiler\**" Pack="true" PackagePath="tools\PseudoNet.Compiler\" />
+  </ItemGroup>
+</Project>

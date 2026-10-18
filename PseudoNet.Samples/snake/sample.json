@@ -1,0 +1,37 @@
+{
+  "title": "Snake",
+  "kind": "window",
+  "language": "en",
+  "mustMatch": [
+    {
+      "pattern": "_keysHeld\\.Contains\\(Keys\\.Up\\)"
+    },
+    {
+      "pattern": "_keysHeld\\.Contains\\(Keys\\.Down\\)"
+    },
+    {
+      "pattern": "_keysHeld\\.Contains\\(Keys\\.Left\\)"
+    },
+    {
+      "pattern": "_keysHeld\\.Contains\\(Keys\\.Right\\)"
+    },
+    {
+      "pattern": "_keysTapped\\.Contains\\(Keys\\.R\\)"
+    },
+    {
+      "pattern": "FillRectangle",
+      "min": 2
+    },
+    {
+      "pattern": "RemoveAt\\(0\\)"
+    },
+    {
+      "pattern": "Contains\\(new PointF"
+    }
+  ],
+  "mustNotMatch": [
+    "_timer\\.Stop\\(\\)",
+    "(died|gameOver|hitWall|selfHit) (!=|==) false"
+  ],
+  "description": "Classic Snake: steer with the arrow keys, eat the apples, avoid the walls and your own tail. R restarts. Entirely free-form pseudocode."
+}

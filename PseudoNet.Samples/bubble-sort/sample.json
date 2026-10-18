@@ -1,0 +1,9 @@
+{
+  "title": "Bubble sort",
+  "kind": "console",
+  "language": "en",
+  "expectedOutput": [
+    "(?s)Before sorting:\\s+5\\s+2\\s+9\\s+1\\s+7\\s+3\\s+After sorting:\\s+1\\s+2\\s+3\\s+5\\s+7\\s+9\\s*$"
+  ],
+  "description": "Sorts a list of numbers with the bubble sort algorithm, printing the list before and after."
+}

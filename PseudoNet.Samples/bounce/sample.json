@@ -1,0 +1,14 @@
+{
+  "title": "Bouncing ball",
+  "kind": "window",
+  "language": "en",
+  "mustMatch": [
+    {
+      "pattern": "FillEllipse"
+    },
+    {
+      "pattern": "_timer\\.Interval = 30"
+    }
+  ],
+  "description": "A ball bouncing off the four walls of a window."
+}

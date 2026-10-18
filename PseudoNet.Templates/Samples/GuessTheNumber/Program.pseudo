@@ -1,0 +1,10 @@
+secret = a random number between 1 and 100
+print the text "I am thinking of a number between 1 and 100."
+guess = 0
+while guess is different from secret
+	read guess, asking "Your guess? "
+	if guess is less than secret then
+		print the text "Too low."
+	if guess is greater than secret then
+		print the text "Too high."
+print the text "You found it!"

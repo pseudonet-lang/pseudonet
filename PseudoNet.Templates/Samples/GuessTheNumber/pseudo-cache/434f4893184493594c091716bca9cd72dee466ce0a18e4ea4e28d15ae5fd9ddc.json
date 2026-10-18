@@ -1,0 +1,108 @@
+﻿{
+  "kind": "Program",
+  "statements": [
+    {
+      "kind": "Assign",
+      "target": "secret",
+      "value": {
+        "kind": "RandomNumber",
+        "min": 1,
+        "max": 100
+      }
+    },
+    {
+      "kind": "Print",
+      "value": {
+        "kind": "Literal",
+        "value": "I am thinking of a number between 1 and 100."
+      }
+    },
+    {
+      "kind": "Assign",
+      "target": "guess",
+      "value": 0
+    },
+    {
+      "kind": "WhileLoop",
+      "condition": {
+        "kind": "BinaryOp",
+        "op": "!=",
+        "left": {
+          "kind": "Identifier",
+          "name": "guess"
+        },
+        "right": {
+          "kind": "Identifier",
+          "name": "secret"
+        }
+      },
+      "body": [
+        {
+          "kind": "Read",
+          "target": "guess",
+          "prompt": {
+            "kind": "Literal",
+            "value": "Your guess? "
+          }
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "<",
+            "left": {
+              "kind": "Identifier",
+              "name": "guess"
+            },
+            "right": {
+              "kind": "Identifier",
+              "name": "secret"
+            }
+          },
+          "then": [
+            {
+              "kind": "Print",
+              "value": {
+                "kind": "Literal",
+                "value": "Too low."
+              }
+            }
+          ],
+          "else_": null
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": ">",
+            "left": {
+              "kind": "Identifier",
+              "name": "guess"
+            },
+            "right": {
+              "kind": "Identifier",
+              "name": "secret"
+            }
+          },
+          "then": [
+            {
+              "kind": "Print",
+              "value": {
+                "kind": "Literal",
+                "value": "Too high."
+              }
+            }
+          ],
+          "else_": null
+        }
+      ]
+    },
+    {
+      "kind": "Print",
+      "value": {
+        "kind": "Literal",
+        "value": "You found it!"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <PseudoProjectType>window</PseudoProjectType>
+    <PseudoCompiler>$(MSBuildProjectDirectory)\..\..\..\PseudoNet.Compiler\PseudoNet.Compiler\bin\Debug\net8.0\PseudoNet.Compiler.exe</PseudoCompiler>
+  </PropertyGroup>
+  <Import Project="$(MSBuildProjectDirectory)\..\..\PseudoNet.targets" />
+</Project>

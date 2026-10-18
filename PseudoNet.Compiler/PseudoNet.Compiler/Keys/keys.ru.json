@@ -1,0 +1,17 @@
+{
+  "вверх": "Up",
+  "вниз": "Down",
+  "влево": "Left",
+  "вправо": "Right",
+  "пробел": "Space",
+  "ввод": "Enter",
+  "энтер": "Enter",
+  "esc": "Escape",
+  "escape": "Escape",
+  "backspace": "Back",
+  "удалить": "Delete",
+  "delete": "Delete",
+  "tab": "Tab",
+  "shift": "ShiftKey",
+  "ctrl": "ControlKey"
+}

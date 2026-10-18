@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>$safeprojectname$</RootNamespace>
+    <!-- window: the compiler rejects pseudocode with no window or drawing (PSEUDO004). -->
+    <PseudoProjectType>window</PseudoProjectType>
+    <!-- true: the generated C# becomes visible and editable next to Program.pseudo. -->
+    <PseudoEmitCSharp>false</PseudoEmitCSharp>
+    <!-- The LLM's answer for this sample ships with the project: the first build needs neither Ollama nor waiting. -->
+    <PseudoCacheDir>$(MSBuildProjectDirectory)/pseudo-cache</PseudoCacheDir>
+    <!-- The PseudoNet.Build package (the compiler) ships in this folder; it replaces the usual NuGet
+         sources (no network access needed). -->
+    <RestoreSources>$(MSBuildProjectDirectory)/nuget-feed</RestoreSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="nuget-feed\**" />
+    <None Remove="pseudo-cache\**" />
+    <PackageReference Include="PseudoNet.Build" Version="0.3.1" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>
+

@@ -1,0 +1,102 @@
+<Project>
+  <!--
+    Intégration MSBuild de Pseudo.NET : compile chaque *.pseudo du projet en C#
+    (via PseudoNet.Compiler) avant la compilation C# ordinaire.
+
+    Propriétés (à poser dans le .csproj, avant l'import de ce fichier) :
+      PseudoProjectType  console | window   Type attendu par le projet. Le compilateur refuse
+                                             un pseudocode qui décrit autre chose (PSEUDO004).
+                                             Vide = pas de vérification.
+      PseudoEmitCSharp   false (défaut)      C# caché dans obj\ (régénéré selon le .pseudo).
+                         true                C# visible à côté du .pseudo (Nom.cs), éditable :
+                                             conservé tant que le .pseudo n'a pas changé ;
+                                             sinon régénéré, l'ancien étant gardé en Nom.cs.bak.
+      PseudoCompiler     chemin de PseudoNet.Compiler.exe (défaut : celui du paquet NuGet, ..	ools\)
+      PseudoCacheDir     cache du JSON du LLM (défaut : %LOCALAPPDATA%\PseudoNet\cache, qui
+                         survit à Clean/Rebuild : régénérer coûte jusqu'à plusieurs minutes)
+  -->
+
+  <PropertyGroup>
+    <PseudoEmitCSharp Condition="'$(PseudoEmitCSharp)' == ''">false</PseudoEmitCSharp>
+    <PseudoCompiler Condition="'$(PseudoCompiler)' == ''">$(MSBuildThisFileDirectory)..\tools\PseudoNet.Compiler\PseudoNet.Compiler.exe</PseudoCompiler>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PseudoSource Include="**\*.pseudo" Exclude="$(BaseIntermediateOutputPath)**;$(BaseOutputPath)**" />
+  </ItemGroup>
+
+  <!-- Sorties : C# caché dans obj\...\pseudo\, ou Nom.cs à côté du .pseudo en mode visible. -->
+  <Target Name="_PseudoComputeOutputs">
+    <!-- Évalué ici et non en tête de fichier : IntermediateOutputPath n'est défini
+         qu'après l'import de ce fichier (par Microsoft.Common.targets). -->
+    <PropertyGroup>
+      <PseudoGeneratedDir>$(MSBuildProjectDirectory)\$(IntermediateOutputPath)pseudo\</PseudoGeneratedDir>
+    </PropertyGroup>
+    <ItemGroup Condition="'$(PseudoEmitCSharp)' != 'true'">
+      <_PseudoOutput Include="@(PseudoSource->'$(PseudoGeneratedDir)%(RecursiveDir)%(Filename).g.cs')" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(PseudoEmitCSharp)' == 'true'">
+      <_PseudoOutput Include="@(PseudoSource->'%(RootDir)%(Directory)%(Filename).cs')" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Garde-fou : en mode caché, un X.cs "visible" resté à côté de X.pseudo (reste d'un
+       passage en PseudoEmitCSharp=true) ferait doublon avec le C# caché (CS0101). -->
+  <Target Name="_PseudoCheckStaleVisible" BeforeTargets="PseudoGenerate" DependsOnTargets="_PseudoComputeOutputs"
+          Condition="'$(PseudoEmitCSharp)' != 'true' And '@(PseudoSource)' != ''">
+    <ItemGroup>
+      <_PseudoVisibleCandidate Include="@(PseudoSource->'%(RootDir)%(Directory)%(Filename).cs')" />
+      <_PseudoVisibleExisting Include="@(_PseudoVisibleCandidate)" Condition="Exists('%(FullPath)')" />
+    </ItemGroup>
+    <Error Condition="'@(_PseudoVisibleExisting)' != '' And $([System.IO.File]::ReadAllText('%(_PseudoVisibleExisting.FullPath)').StartsWith('// pseudo-source-hash:'))"
+           Code="PSEUDO006"
+           File="%(_PseudoVisibleExisting.FullPath)"
+           Text="This file is generated, visible C#, but PseudoEmitCSharp is not enabled: it would duplicate the hidden generated C#. Delete it, or add &lt;PseudoEmitCSharp&gt;true&lt;/PseudoEmitCSharp&gt; to the project." />
+  </Target>
+
+  <Target Name="PseudoGenerate"
+          BeforeTargets="CoreCompile"
+          DependsOnTargets="_PseudoComputeOutputs"
+          Condition="'@(PseudoSource)' != ''"
+          Inputs="@(PseudoSource);$(PseudoCompiler)"
+          Outputs="@(_PseudoOutput)">
+
+    <PropertyGroup>
+      <_PseudoEmitFlag Condition="'$(PseudoEmitCSharp)' == 'true'">--emit-csharp</_PseudoEmitFlag>
+      <_PseudoTypeFlag Condition="'$(PseudoProjectType)' != ''">--project-type $(PseudoProjectType)</_PseudoTypeFlag>
+      <_PseudoCacheFlag Condition="'$(PseudoCacheDir)' != ''">--cache-dir "$(PseudoCacheDir)"</_PseudoCacheFlag>
+    </PropertyGroup>
+
+    <Error Condition="!Exists('$(PseudoCompiler)')"
+           Code="PSEUDO005"
+           Text="PseudoNet.Compiler not found: $(PseudoCompiler)" />
+
+    <Message Importance="high" Text="Pseudo.NET: %(PseudoSource.Identity) -> C#" />
+    <MakeDir Directories="$(PseudoGeneratedDir)" Condition="'$(PseudoEmitCSharp)' != 'true'" />
+
+    <Exec Command="&quot;$(PseudoCompiler)&quot; &quot;%(PseudoSource.FullPath)&quot; --output &quot;%(PseudoSource.RootDir)%(PseudoSource.Directory)%(PseudoSource.Filename).cs&quot; $(_PseudoEmitFlag) $(_PseudoTypeFlag) $(_PseudoCacheFlag)"
+          Condition="'$(PseudoEmitCSharp)' == 'true'"
+          StdOutEncoding="utf-8" StdErrEncoding="utf-8" />
+
+    <Exec Command="&quot;$(PseudoCompiler)&quot; &quot;%(PseudoSource.FullPath)&quot; --output &quot;$(PseudoGeneratedDir)%(PseudoSource.RecursiveDir)%(PseudoSource.Filename).g.cs&quot; $(_PseudoTypeFlag) $(_PseudoCacheFlag)"
+          Condition="'$(PseudoEmitCSharp)' != 'true'"
+          StdOutEncoding="utf-8" StdErrEncoding="utf-8" />
+  </Target>
+
+  <!-- Injecte le C# dans la compilation. Séparé de PseudoGenerate pour que les sources
+       restent référencées même quand la génération est sautée (build incrémental). -->
+  <Target Name="PseudoIncludeGenerated"
+          BeforeTargets="CoreCompile"
+          AfterTargets="PseudoGenerate"
+          DependsOnTargets="_PseudoComputeOutputs"
+          Condition="'@(PseudoSource)' != ''">
+    <ItemGroup>
+      <Compile Include="@(_PseudoOutput)" Exclude="@(Compile->'%(FullPath)')" />
+    </ItemGroup>
+  </Target>
+
+  <!-- Clean : supprime le C# caché ; le C# visible (éditable) n'est JAMAIS supprimé. -->
+  <Target Name="PseudoClean" AfterTargets="Clean" DependsOnTargets="_PseudoComputeOutputs">
+    <RemoveDir Directories="$(PseudoGeneratedDir)" />
+  </Target>
+</Project>

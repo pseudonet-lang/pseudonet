@@ -1,0 +1,22 @@
+{
+  "hoch": "Up",
+  "oben": "Up",
+  "runter": "Down",
+  "unten": "Down",
+  "links": "Left",
+  "rechts": "Right",
+  "leertaste": "Space",
+  "eingabe": "Enter",
+  "eingabetaste": "Enter",
+  "escape": "Escape",
+  "esc": "Escape",
+  "rücktaste": "Back",
+  "rucktaste": "Back",
+  "entf": "Delete",
+  "löschen": "Delete",
+  "tabulator": "Tab",
+  "umschalt": "ShiftKey",
+  "umschalttaste": "ShiftKey",
+  "strg": "ControlKey",
+  "steuerung": "ControlKey"
+}

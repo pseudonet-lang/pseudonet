@@ -1,0 +1,30 @@
+﻿<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>PseudoCode Sample - Guess the number</Name>
+    <Description>Guess the secret number between 1 and 100; the program tells you whether you are too low or too high.</Description>
+    <ProjectType>CSharp</ProjectType>
+    <SortOrder>2020</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+    <DefaultName>GuessTheNumberSample</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.png</Icon>
+    <LanguageTag>csharp</LanguageTag>
+    <PlatformTag>windows</PlatformTag>
+    <ProjectTypeTag>console</ProjectTypeTag>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.csproj" File="GuessTheNumber.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="Program.pseudo" OpenInEditor="true">Program.pseudo</ProjectItem>
+      <Folder Name="pseudo-cache" TargetFolderName="pseudo-cache">
+        <ProjectItem ReplaceParameters="false" TargetFileName="434f4893184493594c091716bca9cd72dee466ce0a18e4ea4e28d15ae5fd9ddc.json">434f4893184493594c091716bca9cd72dee466ce0a18e4ea4e28d15ae5fd9ddc.json</ProjectItem>
+      </Folder>
+      <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
+        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.1.nupkg">PseudoNet.Build.0.3.1.nupkg</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

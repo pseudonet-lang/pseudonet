@@ -1,0 +1,128 @@
+window 400 by 400
+title "Snake"
+background black
+tick every 150 milliseconds
+
+snake = new list
+add point (10, 10) to snake
+add point (9, 10) to snake
+add point (8, 10) to snake
+
+headX = 10
+headY = 10
+direction = 0
+score = 0
+gameOver = false
+appleX = random number between 0 and 19
+appleY = random number between 0 and 19
+
+define draw game {
+    clear
+    for each seg in snake {
+        draw filled rectangle at (seg.x * 20, seg.y * 20) size (18, 18) color green
+    }
+    draw filled rectangle at (appleX * 20, appleY * 20) size (18, 18) color red
+    display text "Score : " + score at (5, 5) color white size 14
+}
+
+define show game over {
+    clear
+    display text "Game Over" at (110, 160) color red size 32
+    display text "Score : " + score at (135, 210) color white size 18
+    display text "Press R to restart" at (95, 250) color gray size 14
+}
+
+define restart game {
+    snake = new list
+    add point (10, 10) to snake
+    add point (9, 10) to snake
+    add point (8, 10) to snake
+    headX = 10
+    headY = 10
+    direction = 0
+    score = 0
+    gameOver = false
+    appleX = random number between 0 and 19
+    appleY = random number between 0 and 19
+}
+
+on tick {
+    if key R tapped {
+        restart game
+    }
+
+    if not gameOver {
+        if key up pressed and direction <> 1 then direction = 3
+        if key down pressed and direction <> 3 then direction = 1
+        if key left pressed and direction <> 0 then direction = 2
+        if key right pressed and direction <> 2 then direction = 0
+
+        if direction = 0 {
+            nx = headX + 1
+            ny = headY
+        } else if direction = 1 {
+            nx = headX
+            ny = headY + 1
+        } else if direction = 2 {
+            nx = headX - 1
+            ny = headY
+        } else {
+            nx = headX
+            ny = headY - 1
+        }
+
+        died = false
+
+        hitWall = false
+        if nx < 0 {
+            hitWall = true
+        }
+        if nx >= 20 {
+            hitWall = true
+        }
+        if ny < 0 {
+            hitWall = true
+        }
+        if ny >= 20 {
+            hitWall = true
+        }
+        if hitWall {
+            died = true
+        }
+
+        selfHit = false
+        if point (nx, ny) is in snake {
+            selfHit = true
+        }
+        if selfHit {
+            died = true
+        }
+
+        if died {
+            gameOver = true
+            show game over
+        }
+
+        if not died {
+            onApple = false
+            if nx = appleX {
+                if ny = appleY {
+                    onApple = true
+                }
+            }
+
+            if onApple {
+                score = score + 1
+                appleX = random number between 0 and 19
+                appleY = random number between 0 and 19
+            }
+            if not onApple {
+                remove the first element from snake
+            }
+            add point (nx, ny) to snake
+            headX = nx
+            headY = ny
+            draw game
+        }
+    }
+}

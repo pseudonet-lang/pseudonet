@@ -1,0 +1,2294 @@
+﻿{
+  "kind": "Program",
+  "body": [
+    {
+      "kind": "PseudrawWidth",
+      "value": 400
+    },
+    {
+      "kind": "PseudrawHeight",
+      "value": 450
+    },
+    {
+      "kind": "PseudrawTitle",
+      "value": "Tetris"
+    },
+    {
+      "kind": "PseudrawBackground",
+      "color": "black"
+    },
+    {
+      "kind": "PseudrawTick",
+      "intervalMs": 400
+    },
+    {
+      "kind": "Assign",
+      "target": "board",
+      "value": {
+        "kind": "NewList"
+      }
+    },
+    {
+      "kind": "Assign",
+      "target": "pieceCells",
+      "value": {
+        "kind": "NewList"
+      }
+    },
+    {
+      "kind": "Assign",
+      "target": "tempCells",
+      "value": {
+        "kind": "NewList"
+      }
+    },
+    {
+      "kind": "Assign",
+      "target": "nextCells",
+      "value": {
+        "kind": "NewList"
+      }
+    },
+    {
+      "kind": "Assign",
+      "target": "score",
+      "value": 0
+    },
+    {
+      "kind": "Assign",
+      "target": "gameOver",
+      "value": false
+    },
+    {
+      "kind": "Assign",
+      "target": "currentShape",
+      "value": {
+        "kind": "RandomNumber",
+        "min": 0,
+        "max": 6
+      }
+    },
+    {
+      "kind": "Assign",
+      "target": "nextShape",
+      "value": {
+        "kind": "RandomNumber",
+        "min": 0,
+        "max": 6
+      }
+    },
+    {
+      "kind": "Assign",
+      "target": "currentRotation",
+      "value": 0
+    },
+    {
+      "kind": "Assign",
+      "target": "pieceX",
+      "value": 4
+    },
+    {
+      "kind": "Assign",
+      "target": "pieceY",
+      "value": 0
+    },
+    {
+      "kind": "FunctionCallStmt",
+      "name": "PseudrawTetrominoCells",
+      "args": [
+        {
+          "kind": "Identifier",
+          "name": "currentShape"
+        },
+        {
+          "kind": "Identifier",
+          "name": "currentRotation"
+        },
+        {
+          "kind": "Literal",
+          "value": 4
+        },
+        {
+          "kind": "Literal",
+          "value": 0
+        },
+        {
+          "kind": "Identifier",
+          "name": "pieceCells"
+        }
+      ]
+    },
+    {
+      "kind": "FunctionCallStmt",
+      "name": "PseudrawTetrominoCells",
+      "args": [
+        {
+          "kind": "Identifier",
+          "name": "nextShape"
+        },
+        {
+          "kind": "Literal",
+          "value": 0
+        },
+        {
+          "kind": "Literal",
+          "value": 0
+        },
+        {
+          "kind": "Literal",
+          "value": 0
+        },
+        {
+          "kind": "Identifier",
+          "name": "nextCells"
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "move piece left",
+      "params": [],
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "newX",
+          "value": {
+            "kind": "BinaryOp",
+            "op": "-",
+            "left": {
+              "kind": "Identifier",
+              "name": "pieceX"
+            },
+            "right": {
+              "kind": "Literal",
+              "value": 1
+            }
+          }
+        },
+        {
+          "kind": "FunctionCallStmt",
+          "name": "PseudrawTetrominoCells",
+          "args": [
+            {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            {
+              "kind": "Identifier",
+              "name": "currentRotation"
+            },
+            {
+              "kind": "Identifier",
+              "name": "newX"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceY"
+            },
+            {
+              "kind": "Identifier",
+              "name": "tempCells"
+            }
+          ]
+        },
+        {
+          "kind": "Assign",
+          "target": "ok",
+          "value": true
+        },
+        {
+          "kind": "ForEach",
+          "variable": "cell",
+          "collection": {
+            "kind": "Identifier",
+            "name": "tempCells"
+          },
+          "body": [
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "<",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "x"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 0
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "x"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 10
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "y"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 20
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawIsIn",
+                "value": {
+                  "kind": "PseudrawPoint",
+                  "x": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "x"
+                  },
+                  "y": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "y"
+                  }
+                },
+                "collection": {
+                  "kind": "Identifier",
+                  "name": "board"
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "Identifier",
+            "name": "ok"
+          },
+          "then": [
+            {
+              "kind": "Assign",
+              "target": "pieceX",
+              "value": {
+                "kind": "Identifier",
+                "name": "newX"
+              }
+            },
+            {
+              "kind": "FunctionCallStmt",
+              "name": "PseudrawTetrominoCells",
+              "args": [
+                {
+                  "kind": "Identifier",
+                  "name": "currentShape"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "currentRotation"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceX"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceY"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceCells"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "Return",
+          "value": {
+            "kind": "Identifier",
+            "name": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "move piece right",
+      "params": [],
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "newX",
+          "value": {
+            "kind": "BinaryOp",
+            "op": "+",
+            "left": {
+              "kind": "Identifier",
+              "name": "pieceX"
+            },
+            "right": {
+              "kind": "Literal",
+              "value": 1
+            }
+          }
+        },
+        {
+          "kind": "FunctionCallStmt",
+          "name": "PseudrawTetrominoCells",
+          "args": [
+            {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            {
+              "kind": "Identifier",
+              "name": "currentRotation"
+            },
+            {
+              "kind": "Identifier",
+              "name": "newX"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceY"
+            },
+            {
+              "kind": "Identifier",
+              "name": "tempCells"
+            }
+          ]
+        },
+        {
+          "kind": "Assign",
+          "target": "ok",
+          "value": true
+        },
+        {
+          "kind": "ForEach",
+          "variable": "cell",
+          "collection": {
+            "kind": "Identifier",
+            "name": "tempCells"
+          },
+          "body": [
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "<",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "x"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 0
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "x"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 10
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "y"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 20
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawIsIn",
+                "value": {
+                  "kind": "PseudrawPoint",
+                  "x": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "x"
+                  },
+                  "y": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "y"
+                  }
+                },
+                "collection": {
+                  "kind": "Identifier",
+                  "name": "board"
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "Identifier",
+            "name": "ok"
+          },
+          "then": [
+            {
+              "kind": "Assign",
+              "target": "pieceX",
+              "value": {
+                "kind": "Identifier",
+                "name": "newX"
+              }
+            },
+            {
+              "kind": "FunctionCallStmt",
+              "name": "PseudrawTetrominoCells",
+              "args": [
+                {
+                  "kind": "Identifier",
+                  "name": "currentShape"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "currentRotation"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceX"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceY"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceCells"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "Return",
+          "value": {
+            "kind": "Identifier",
+            "name": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "move piece down",
+      "params": [],
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "newY",
+          "value": {
+            "kind": "BinaryOp",
+            "op": "+",
+            "left": {
+              "kind": "Identifier",
+              "name": "pieceY"
+            },
+            "right": {
+              "kind": "Literal",
+              "value": 1
+            }
+          }
+        },
+        {
+          "kind": "FunctionCallStmt",
+          "name": "PseudrawTetrominoCells",
+          "args": [
+            {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            {
+              "kind": "Identifier",
+              "name": "currentRotation"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceX"
+            },
+            {
+              "kind": "Identifier",
+              "name": "newY"
+            },
+            {
+              "kind": "Identifier",
+              "name": "tempCells"
+            }
+          ]
+        },
+        {
+          "kind": "Assign",
+          "target": "ok",
+          "value": true
+        },
+        {
+          "kind": "ForEach",
+          "variable": "cell",
+          "collection": {
+            "kind": "Identifier",
+            "name": "tempCells"
+          },
+          "body": [
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "<",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "x"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 0
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "x"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 10
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "y"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 20
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawIsIn",
+                "value": {
+                  "kind": "PseudrawPoint",
+                  "x": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "x"
+                  },
+                  "y": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "y"
+                  }
+                },
+                "collection": {
+                  "kind": "Identifier",
+                  "name": "board"
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "Identifier",
+            "name": "ok"
+          },
+          "then": [
+            {
+              "kind": "Assign",
+              "target": "pieceY",
+              "value": {
+                "kind": "Identifier",
+                "name": "newY"
+              }
+            },
+            {
+              "kind": "FunctionCallStmt",
+              "name": "PseudrawTetrominoCells",
+              "args": [
+                {
+                  "kind": "Identifier",
+                  "name": "currentShape"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "currentRotation"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceX"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceY"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceCells"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "Return",
+          "value": {
+            "kind": "Identifier",
+            "name": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "rotate piece",
+      "params": [],
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "newRotation",
+          "value": {
+            "kind": "BinaryOp",
+            "op": "+",
+            "left": {
+              "kind": "Identifier",
+              "name": "currentRotation"
+            },
+            "right": {
+              "kind": "Literal",
+              "value": 1
+            }
+          }
+        },
+        {
+          "kind": "FunctionCallStmt",
+          "name": "PseudrawTetrominoCells",
+          "args": [
+            {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            {
+              "kind": "Identifier",
+              "name": "newRotation"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceX"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceY"
+            },
+            {
+              "kind": "Identifier",
+              "name": "tempCells"
+            }
+          ]
+        },
+        {
+          "kind": "Assign",
+          "target": "ok",
+          "value": true
+        },
+        {
+          "kind": "ForEach",
+          "variable": "cell",
+          "collection": {
+            "kind": "Identifier",
+            "name": "tempCells"
+          },
+          "body": [
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "<",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "x"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 0
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "x"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 10
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "y"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 20
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawIsIn",
+                "value": {
+                  "kind": "PseudrawPoint",
+                  "x": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "x"
+                  },
+                  "y": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "y"
+                  }
+                },
+                "collection": {
+                  "kind": "Identifier",
+                  "name": "board"
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "ok",
+                  "value": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "Identifier",
+            "name": "ok"
+          },
+          "then": [
+            {
+              "kind": "Assign",
+              "target": "currentRotation",
+              "value": {
+                "kind": "Identifier",
+                "name": "newRotation"
+              }
+            },
+            {
+              "kind": "FunctionCallStmt",
+              "name": "PseudrawTetrominoCells",
+              "args": [
+                {
+                  "kind": "Identifier",
+                  "name": "currentShape"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "currentRotation"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceX"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceY"
+                },
+                {
+                  "kind": "Identifier",
+                  "name": "pieceCells"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "Return",
+          "value": {
+            "kind": "Identifier",
+            "name": "ok"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "lock piece",
+      "params": [],
+      "body": [
+        {
+          "kind": "ForEach",
+          "variable": "cell",
+          "collection": {
+            "kind": "Identifier",
+            "name": "pieceCells"
+          },
+          "body": [
+            {
+              "kind": "MethodCall",
+              "target": "board",
+              "method": "Add",
+              "args": [
+                {
+                  "kind": "PseudrawPoint",
+                  "x": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "x"
+                  },
+                  "y": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "y"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "clear lines",
+      "params": [],
+      "body": [
+        {
+          "kind": "Loop",
+          "variable": "row",
+          "from_": 0,
+          "to": 19,
+          "body": [
+            {
+              "kind": "Assign",
+              "target": "countInRow",
+              "value": 0
+            },
+            {
+              "kind": "ForEach",
+              "variable": "cell",
+              "collection": {
+                "kind": "Identifier",
+                "name": "board"
+              },
+              "body": [
+                {
+                  "kind": "If",
+                  "condition": {
+                    "kind": "BinaryOp",
+                    "op": "=",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "y"
+                    },
+                    "right": {
+                      "kind": "Identifier",
+                      "name": "row"
+                    }
+                  },
+                  "then": [
+                    {
+                      "kind": "Assign",
+                      "target": "countInRow",
+                      "value": {
+                        "kind": "BinaryOp",
+                        "op": "+",
+                        "left": {
+                          "kind": "Identifier",
+                          "name": "countInRow"
+                        },
+                        "right": {
+                          "kind": "Literal",
+                          "value": 1
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": ">=",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "countInRow"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 10
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "newBoard",
+                  "value": {
+                    "kind": "NewList"
+                  }
+                },
+                {
+                  "kind": "ForEach",
+                  "variable": "cell",
+                  "collection": {
+                    "kind": "Identifier",
+                    "name": "board"
+                  },
+                  "body": [
+                    {
+                      "kind": "If",
+                      "condition": {
+                        "kind": "BinaryOp",
+                        "op": "<>",
+                        "left": {
+                          "kind": "PropertyAccess",
+                          "obj": "cell",
+                          "property": "y"
+                        },
+                        "right": {
+                          "kind": "Identifier",
+                          "name": "row"
+                        }
+                      },
+                      "then": [
+                        {
+                          "kind": "If",
+                          "condition": {
+                            "kind": "BinaryOp",
+                            "op": "<",
+                            "left": {
+                              "kind": "PropertyAccess",
+                              "obj": "cell",
+                              "property": "y"
+                            },
+                            "right": {
+                              "kind": "Identifier",
+                              "name": "row"
+                            }
+                          },
+                          "then": [
+                            {
+                              "kind": "MethodCall",
+                              "target": "newBoard",
+                              "method": "Add",
+                              "args": [
+                                {
+                                  "kind": "PseudrawPoint",
+                                  "x": {
+                                    "kind": "PropertyAccess",
+                                    "obj": "cell",
+                                    "property": "x"
+                                  },
+                                  "y": {
+                                    "kind": "BinaryOp",
+                                    "op": "+",
+                                    "left": {
+                                      "kind": "PropertyAccess",
+                                      "obj": "cell",
+                                      "property": "y"
+                                    },
+                                    "right": {
+                                      "kind": "Literal",
+                                      "value": 1
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "If",
+                          "condition": {
+                            "kind": "BinaryOp",
+                            "op": ">",
+                            "left": {
+                              "kind": "PropertyAccess",
+                              "obj": "cell",
+                              "property": "y"
+                            },
+                            "right": {
+                              "kind": "Identifier",
+                              "name": "row"
+                            }
+                          },
+                          "then": [
+                            {
+                              "kind": "MethodCall",
+                              "target": "newBoard",
+                              "method": "Add",
+                              "args": [
+                                {
+                                  "kind": "PseudrawPoint",
+                                  "x": {
+                                    "kind": "PropertyAccess",
+                                    "obj": "cell",
+                                    "property": "x"
+                                  },
+                                  "y": {
+                                    "kind": "PropertyAccess",
+                                    "obj": "cell",
+                                    "property": "y"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "Assign",
+                  "target": "board",
+                  "value": {
+                    "kind": "Identifier",
+                    "name": "newBoard"
+                  }
+                },
+                {
+                  "kind": "Assign",
+                  "target": "score",
+                  "value": {
+                    "kind": "BinaryOp",
+                    "op": "+",
+                    "left": {
+                      "kind": "Identifier",
+                      "name": "score"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 100
+                    }
+                  }
+                },
+                {
+                  "kind": "PseudrawPlayTone",
+                  "frequency": 800,
+                  "durationMs": 100
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "spawn piece",
+      "params": [],
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "currentShape",
+          "value": {
+            "kind": "Identifier",
+            "name": "nextShape"
+          }
+        },
+        {
+          "kind": "Assign",
+          "target": "nextShape",
+          "value": {
+            "kind": "RandomNumber",
+            "min": 0,
+            "max": 6
+          }
+        },
+        {
+          "kind": "Assign",
+          "target": "currentRotation",
+          "value": 0
+        },
+        {
+          "kind": "Assign",
+          "target": "pieceX",
+          "value": 4
+        },
+        {
+          "kind": "Assign",
+          "target": "pieceY",
+          "value": 0
+        },
+        {
+          "kind": "FunctionCallStmt",
+          "name": "PseudrawTetrominoCells",
+          "args": [
+            {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            {
+              "kind": "Identifier",
+              "name": "currentRotation"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceX"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceY"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceCells"
+            }
+          ]
+        },
+        {
+          "kind": "FunctionCallStmt",
+          "name": "PseudrawTetrominoCells",
+          "args": [
+            {
+              "kind": "Identifier",
+              "name": "nextShape"
+            },
+            {
+              "kind": "Literal",
+              "value": 0
+            },
+            {
+              "kind": "Literal",
+              "value": 0
+            },
+            {
+              "kind": "Literal",
+              "value": 0
+            },
+            {
+              "kind": "Identifier",
+              "name": "nextCells"
+            }
+          ]
+        },
+        {
+          "kind": "Assign",
+          "target": "blocked",
+          "value": false
+        },
+        {
+          "kind": "ForEach",
+          "variable": "cell",
+          "collection": {
+            "kind": "Identifier",
+            "name": "pieceCells"
+          },
+          "body": [
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawIsIn",
+                "value": {
+                  "kind": "PseudrawPoint",
+                  "x": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "x"
+                  },
+                  "y": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "y"
+                  }
+                },
+                "collection": {
+                  "kind": "Identifier",
+                  "name": "board"
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "blocked",
+                  "value": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "Return",
+          "value": {
+            "kind": "Identifier",
+            "name": "blocked"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "show game over",
+      "params": [],
+      "body": [
+        {
+          "kind": "PseudrawClear"
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": "Game Over",
+          "x": 60,
+          "y": 180,
+          "color": "red",
+          "fontSize": 28
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": "Score :",
+          "x": 90,
+          "y": 230,
+          "color": "white",
+          "fontSize": 18
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": {
+            "kind": "Identifier",
+            "name": "score"
+          },
+          "x": 170,
+          "y": 230,
+          "color": "white",
+          "fontSize": 18
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": "Press R to restart",
+          "x": 60,
+          "y": 270,
+          "color": "gray",
+          "fontSize": 14
+        },
+        {
+          "kind": "PseudrawPlayTone",
+          "frequency": 150,
+          "durationMs": 500
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "restart game",
+      "params": [],
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "board",
+          "value": {
+            "kind": "NewList"
+          }
+        },
+        {
+          "kind": "Assign",
+          "target": "score",
+          "value": 0
+        },
+        {
+          "kind": "Assign",
+          "target": "gameOver",
+          "value": false
+        },
+        {
+          "kind": "Assign",
+          "target": "currentShape",
+          "value": {
+            "kind": "RandomNumber",
+            "min": 0,
+            "max": 6
+          }
+        },
+        {
+          "kind": "Assign",
+          "target": "nextShape",
+          "value": {
+            "kind": "RandomNumber",
+            "min": 0,
+            "max": 6
+          }
+        },
+        {
+          "kind": "Assign",
+          "target": "currentRotation",
+          "value": 0
+        },
+        {
+          "kind": "Assign",
+          "target": "pieceX",
+          "value": 4
+        },
+        {
+          "kind": "Assign",
+          "target": "pieceY",
+          "value": 0
+        },
+        {
+          "kind": "FunctionCallStmt",
+          "name": "PseudrawTetrominoCells",
+          "args": [
+            {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            {
+              "kind": "Identifier",
+              "name": "currentRotation"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceX"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceY"
+            },
+            {
+              "kind": "Identifier",
+              "name": "pieceCells"
+            }
+          ]
+        },
+        {
+          "kind": "FunctionCallStmt",
+          "name": "PseudrawTetrominoCells",
+          "args": [
+            {
+              "kind": "Identifier",
+              "name": "nextShape"
+            },
+            {
+              "kind": "Literal",
+              "value": 0
+            },
+            {
+              "kind": "Literal",
+              "value": 0
+            },
+            {
+              "kind": "Literal",
+              "value": 0
+            },
+            {
+              "kind": "Identifier",
+              "name": "nextCells"
+            }
+          ]
+        },
+        {
+          "kind": "PseudrawPlayTone",
+          "frequency": 440,
+          "durationMs": 100
+        },
+        {
+          "kind": "PseudrawPlayTone",
+          "frequency": 660,
+          "durationMs": 150
+        }
+      ]
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "draw game",
+      "params": [],
+      "body": [
+        {
+          "kind": "PseudrawClear"
+        },
+        {
+          "kind": "PseudrawDrawRect",
+          "style": "filled",
+          "x": 0,
+          "y": 0,
+          "w": 200,
+          "h": 400,
+          "color": "gray"
+        },
+        {
+          "kind": "ForEach",
+          "variable": "cell",
+          "collection": {
+            "kind": "Identifier",
+            "name": "board"
+          },
+          "body": [
+            {
+              "kind": "PseudrawDrawRect",
+              "style": "filled",
+              "x": {
+                "kind": "BinaryOp",
+                "op": "*",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "x"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 20
+                }
+              },
+              "y": {
+                "kind": "BinaryOp",
+                "op": "*",
+                "left": {
+                  "kind": "PropertyAccess",
+                  "obj": "cell",
+                  "property": "y"
+                },
+                "right": {
+                  "kind": "Literal",
+                  "value": 20
+                }
+              },
+              "w": 18,
+              "h": 18,
+              "color": "steelblue"
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "=",
+            "left": {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            "right": 0
+          },
+          "then": [
+            {
+              "kind": "ForEach",
+              "variable": "cell",
+              "collection": {
+                "kind": "Identifier",
+                "name": "pieceCells"
+              },
+              "body": [
+                {
+                  "kind": "PseudrawDrawRect",
+                  "style": "filled",
+                  "x": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "x"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "y": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "y"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "w": 18,
+                  "h": 18,
+                  "color": "cyan"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "=",
+            "left": {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            "right": 1
+          },
+          "then": [
+            {
+              "kind": "ForEach",
+              "variable": "cell",
+              "collection": {
+                "kind": "Identifier",
+                "name": "pieceCells"
+              },
+              "body": [
+                {
+                  "kind": "PseudrawDrawRect",
+                  "style": "filled",
+                  "x": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "x"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "y": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "y"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "w": 18,
+                  "h": 18,
+                  "color": "yellow"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "=",
+            "left": {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            "right": 2
+          },
+          "then": [
+            {
+              "kind": "ForEach",
+              "variable": "cell",
+              "collection": {
+                "kind": "Identifier",
+                "name": "pieceCells"
+              },
+              "body": [
+                {
+                  "kind": "PseudrawDrawRect",
+                  "style": "filled",
+                  "x": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "x"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "y": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "y"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "w": 18,
+                  "h": 18,
+                  "color": "purple"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "=",
+            "left": {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            "right": 3
+          },
+          "then": [
+            {
+              "kind": "ForEach",
+              "variable": "cell",
+              "collection": {
+                "kind": "Identifier",
+                "name": "pieceCells"
+              },
+              "body": [
+                {
+                  "kind": "PseudrawDrawRect",
+                  "style": "filled",
+                  "x": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "x"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "y": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "y"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "w": 18,
+                  "h": 18,
+                  "color": "green"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "=",
+            "left": {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            "right": 4
+          },
+          "then": [
+            {
+              "kind": "ForEach",
+              "variable": "cell",
+              "collection": {
+                "kind": "Identifier",
+                "name": "pieceCells"
+              },
+              "body": [
+                {
+                  "kind": "PseudrawDrawRect",
+                  "style": "filled",
+                  "x": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "x"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "y": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "y"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "w": 18,
+                  "h": 18,
+                  "color": "red"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "=",
+            "left": {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            "right": 5
+          },
+          "then": [
+            {
+              "kind": "ForEach",
+              "variable": "cell",
+              "collection": {
+                "kind": "Identifier",
+                "name": "pieceCells"
+              },
+              "body": [
+                {
+                  "kind": "PseudrawDrawRect",
+                  "style": "filled",
+                  "x": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "x"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "y": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "y"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "w": 18,
+                  "h": 18,
+                  "color": "blue"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "=",
+            "left": {
+              "kind": "Identifier",
+              "name": "currentShape"
+            },
+            "right": 6
+          },
+          "then": [
+            {
+              "kind": "ForEach",
+              "variable": "cell",
+              "collection": {
+                "kind": "Identifier",
+                "name": "pieceCells"
+              },
+              "body": [
+                {
+                  "kind": "PseudrawDrawRect",
+                  "style": "filled",
+                  "x": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "x"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "y": {
+                    "kind": "BinaryOp",
+                    "op": "*",
+                    "left": {
+                      "kind": "PropertyAccess",
+                      "obj": "cell",
+                      "property": "y"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 20
+                    }
+                  },
+                  "w": 18,
+                  "h": 18,
+                  "color": "orange"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": "Score",
+          "x": 230,
+          "y": 20,
+          "color": "white",
+          "fontSize": 16
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": {
+            "kind": "Identifier",
+            "name": "score"
+          },
+          "x": 230,
+          "y": 45,
+          "color": "yellow",
+          "fontSize": 14
+        },
+        {
+          "kind": "PseudrawDrawText",
+          "value": "Next",
+          "x": 230,
+          "y": 90,
+          "color": "white",
+          "fontSize": 16
+        },
+        {
+          "kind": "ForEach",
+          "variable": "cell",
+          "collection": {
+            "kind": "Identifier",
+            "name": "nextCells"
+          },
+          "body": [
+            {
+              "kind": "PseudrawDrawRect",
+              "style": "filled",
+              "x": {
+                "kind": "BinaryOp",
+                "op": "+",
+                "left": {
+                  "kind": "Literal",
+                  "value": 230
+                },
+                "right": {
+                  "kind": "BinaryOp",
+                  "op": "*",
+                  "left": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "x"
+                  },
+                  "right": {
+                    "kind": "Literal",
+                    "value": 16
+                  }
+                }
+              },
+              "y": {
+                "kind": "BinaryOp",
+                "op": "+",
+                "left": {
+                  "kind": "Literal",
+                  "value": 120
+                },
+                "right": {
+                  "kind": "BinaryOp",
+                  "op": "*",
+                  "left": {
+                    "kind": "PropertyAccess",
+                    "obj": "cell",
+                    "property": "y"
+                  },
+                  "right": {
+                    "kind": "Literal",
+                    "value": 16
+                  }
+                }
+              },
+              "w": 14,
+              "h": 14,
+              "color": "yellow"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "PseudrawOnTick",
+      "body": [
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "PseudrawKeyPressed",
+            "key": "r",
+            "press": "just_pressed"
+          },
+          "then": [
+            {
+              "kind": "FunctionCallStmt",
+              "name": "restart game"
+            }
+          ]
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "UnaryOp",
+            "op": "not",
+            "operand": {
+              "kind": "Identifier",
+              "name": "gameOver"
+            }
+          },
+          "then": [
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawKeyPressed",
+                "key": "left",
+                "press": "held"
+              },
+              "then": [
+                {
+                  "kind": "FunctionCallStmt",
+                  "name": "move piece left"
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawKeyPressed",
+                "key": "right",
+                "press": "held"
+              },
+              "then": [
+                {
+                  "kind": "FunctionCallStmt",
+                  "name": "move piece right"
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawKeyPressed",
+                "key": "up",
+                "press": "just_pressed"
+              },
+              "then": [
+                {
+                  "kind": "FunctionCallStmt",
+                  "name": "rotate piece"
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "PseudrawKeyPressed",
+                "key": "down",
+                "press": "held"
+              },
+              "then": [
+                {
+                  "kind": "FunctionCallStmt",
+                  "name": "move piece down"
+                }
+              ]
+            },
+            {
+              "kind": "Assign",
+              "target": "fell",
+              "value": {
+                "kind": "FunctionCallStmt",
+                "name": "move piece down"
+              }
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "UnaryOp",
+                "op": "not",
+                "operand": {
+                  "kind": "Identifier",
+                  "name": "fell"
+                }
+              },
+              "then": [
+                {
+                  "kind": "FunctionCallStmt",
+                  "name": "lock piece"
+                },
+                {
+                  "kind": "FunctionCallStmt",
+                  "name": "clear lines"
+                },
+                {
+                  "kind": "Assign",
+                  "target": "blocked",
+                  "value": {
+                    "kind": "FunctionCallStmt",
+                    "name": "spawn piece"
+                  }
+                },
+                {
+                  "kind": "If",
+                  "condition": {
+                    "kind": "Identifier",
+                    "name": "blocked"
+                  },
+                  "then": [
+                    {
+                      "kind": "Assign",
+                      "target": "gameOver",
+                      "value": true
+                    }
+                  ]
+                },
+                {
+                  "kind": "If",
+                  "condition": {
+                    "kind": "Identifier",
+                    "name": "gameOver"
+                  },
+                  "then": [
+                    {
+                      "kind": "FunctionCallStmt",
+                      "name": "show game over"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "UnaryOp",
+                "op": "not",
+                "operand": {
+                  "kind": "Identifier",
+                  "name": "gameOver"
+                }
+              },
+              "then": [
+                {
+                  "kind": "FunctionCallStmt",
+                  "name": "draw game"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

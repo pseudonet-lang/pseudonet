@@ -1,0 +1,15 @@
+{
+  "cima": "Up",
+  "baixo": "Down",
+  "esquerda": "Left",
+  "direita": "Right",
+  "espaço": "Space",
+  "espaco": "Space",
+  "enter": "Enter",
+  "esc": "Escape",
+  "backspace": "Back",
+  "apagar": "Delete",
+  "del": "Delete",
+  "shift": "ShiftKey",
+  "ctrl": "ControlKey"
+}

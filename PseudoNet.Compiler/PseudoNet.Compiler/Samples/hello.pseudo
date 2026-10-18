@@ -1,0 +1,4 @@
+ask for your name
+print "Hello, " + name
+ask for a number
+print "Double : " + number * 2

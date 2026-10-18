@@ -1,0 +1,27 @@
+window 300 by 300
+title "Tetromino Test"
+background black
+tick every 200 milliseconds
+
+pieceCells = new list
+currentShape = 2
+currentRotation = 0
+pieceX = 3
+pieceY = 3
+set pieceCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, pieceY)
+
+play a tone at 440 Hz for 150 ms
+play a tone at 554 Hz for 150 ms
+play a tone at 659 Hz for 300 ms
+
+on tick {
+    if key space tapped {
+        currentRotation = currentRotation + 1
+        set pieceCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, pieceY)
+        play a tone at 300 Hz for 80 ms
+    }
+    clear
+    for each cell in pieceCells {
+        draw filled rectangle at (cell.x * 20, cell.y * 20) size (18, 18) color cyan
+    }
+}

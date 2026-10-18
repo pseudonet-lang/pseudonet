@@ -1,0 +1,283 @@
+window 400 by 450
+title "Tetris"
+background black
+tick every 400 milliseconds
+
+board = new list
+pieceCells = new list
+tempCells = new list
+nextCells = new list
+score = 0
+gameOver = false
+currentShape = random number between 0 and 6
+nextShape = random number between 0 and 6
+currentRotation = 0
+pieceX = 4
+pieceY = 0
+set pieceCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, pieceY)
+set nextCells to the cells of shape nextShape at rotation 0 positioned at (0, 0)
+
+define move piece left returning bool {
+    newX = pieceX - 1
+    set tempCells to the cells of shape currentShape at rotation currentRotation positioned at (newX, pieceY)
+    ok = true
+    for each cell in tempCells {
+        if cell.x < 0 {
+            ok = false
+        }
+        if cell.x >= 10 {
+            ok = false
+        }
+        if cell.y >= 20 {
+            ok = false
+        }
+        if point (cell.x, cell.y) is in board {
+            ok = false
+        }
+    }
+    if ok {
+        pieceX = newX
+        set pieceCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, pieceY)
+    }
+    return ok
+}
+
+define move piece right returning bool {
+    newX = pieceX + 1
+    set tempCells to the cells of shape currentShape at rotation currentRotation positioned at (newX, pieceY)
+    ok = true
+    for each cell in tempCells {
+        if cell.x < 0 {
+            ok = false
+        }
+        if cell.x >= 10 {
+            ok = false
+        }
+        if cell.y >= 20 {
+            ok = false
+        }
+        if point (cell.x, cell.y) is in board {
+            ok = false
+        }
+    }
+    if ok {
+        pieceX = newX
+        set pieceCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, pieceY)
+    }
+    return ok
+}
+
+define move piece down returning bool {
+    newY = pieceY + 1
+    set tempCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, newY)
+    ok = true
+    for each cell in tempCells {
+        if cell.x < 0 {
+            ok = false
+        }
+        if cell.x >= 10 {
+            ok = false
+        }
+        if cell.y >= 20 {
+            ok = false
+        }
+        if point (cell.x, cell.y) is in board {
+            ok = false
+        }
+    }
+    if ok {
+        pieceY = newY
+        set pieceCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, pieceY)
+    }
+    return ok
+}
+
+define rotate piece returning bool {
+    newRotation = currentRotation + 1
+    set tempCells to the cells of shape currentShape at rotation newRotation positioned at (pieceX, pieceY)
+    ok = true
+    for each cell in tempCells {
+        if cell.x < 0 {
+            ok = false
+        }
+        if cell.x >= 10 {
+            ok = false
+        }
+        if cell.y >= 20 {
+            ok = false
+        }
+        if point (cell.x, cell.y) is in board {
+            ok = false
+        }
+    }
+    if ok {
+        currentRotation = newRotation
+        set pieceCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, pieceY)
+    }
+    return ok
+}
+
+define lock piece {
+    for each cell in pieceCells {
+        add point (cell.x, cell.y) to board
+    }
+}
+
+define clear lines {
+    loop row from 0 to 19 {
+        countInRow = 0
+        for each cell in board {
+            if cell.y = row {
+                countInRow = countInRow + 1
+            }
+        }
+        if countInRow >= 10 {
+            newBoard = new list
+            for each cell in board {
+                if cell.y <> row {
+                    if cell.y < row {
+                        add point (cell.x, cell.y + 1) to newBoard
+                    }
+                    if cell.y > row {
+                        add point (cell.x, cell.y) to newBoard
+                    }
+                }
+            }
+            board = newBoard
+            score = score + 100
+            play a tone at 800 Hz for 100 ms
+        }
+    }
+}
+
+define spawn piece returning bool {
+    currentShape = nextShape
+    nextShape = random number between 0 and 6
+    currentRotation = 0
+    pieceX = 4
+    pieceY = 0
+    set pieceCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, pieceY)
+    set nextCells to the cells of shape nextShape at rotation 0 positioned at (0, 0)
+    blocked = false
+    for each cell in pieceCells {
+        if point (cell.x, cell.y) is in board {
+            blocked = true
+        }
+    }
+    return blocked
+}
+
+define show game over {
+    clear
+    display text "Game Over" at (60, 180) color red size 28
+    display text "Score :" at (90, 230) color white size 18
+    display text score at (170, 230) color white size 18
+    display text "Press R to restart" at (60, 270) color gray size 14
+    play a tone at 150 Hz for 500 ms
+}
+
+define restart game {
+    board = new list
+    score = 0
+    gameOver = false
+    currentShape = random number between 0 and 6
+    nextShape = random number between 0 and 6
+    currentRotation = 0
+    pieceX = 4
+    pieceY = 0
+    set pieceCells to the cells of shape currentShape at rotation currentRotation positioned at (pieceX, pieceY)
+    set nextCells to the cells of shape nextShape at rotation 0 positioned at (0, 0)
+    play a tone at 440 Hz for 100 ms
+    play a tone at 660 Hz for 150 ms
+}
+
+define draw game {
+    clear
+    draw rectangle at (0, 0) size (200, 400) color gray
+
+    for each cell in board {
+        draw filled rectangle at (cell.x * 20, cell.y * 20) size (18, 18) color steelblue
+    }
+
+    if currentShape = 0 {
+        for each cell in pieceCells {
+            draw filled rectangle at (cell.x * 20, cell.y * 20) size (18, 18) color cyan
+        }
+    }
+    if currentShape = 1 {
+        for each cell in pieceCells {
+            draw filled rectangle at (cell.x * 20, cell.y * 20) size (18, 18) color yellow
+        }
+    }
+    if currentShape = 2 {
+        for each cell in pieceCells {
+            draw filled rectangle at (cell.x * 20, cell.y * 20) size (18, 18) color purple
+        }
+    }
+    if currentShape = 3 {
+        for each cell in pieceCells {
+            draw filled rectangle at (cell.x * 20, cell.y * 20) size (18, 18) color green
+        }
+    }
+    if currentShape = 4 {
+        for each cell in pieceCells {
+            draw filled rectangle at (cell.x * 20, cell.y * 20) size (18, 18) color red
+        }
+    }
+    if currentShape = 5 {
+        for each cell in pieceCells {
+            draw filled rectangle at (cell.x * 20, cell.y * 20) size (18, 18) color blue
+        }
+    }
+    if currentShape = 6 {
+        for each cell in pieceCells {
+            draw filled rectangle at (cell.x * 20, cell.y * 20) size (18, 18) color orange
+        }
+    }
+
+    display text "Score" at (230, 20) color white size 16
+    display text score at (230, 45) color yellow size 14
+    display text "Next" at (230, 90) color white size 16
+    for each cell in nextCells {
+        draw filled rectangle at (230 + cell.x * 16, 120 + cell.y * 16) size (14, 14) color yellow
+    }
+}
+
+on tick {
+    if key R tapped {
+        restart game
+    }
+
+    if not gameOver {
+        if key left pressed {
+            move piece left
+        }
+        if key right pressed {
+            move piece right
+        }
+        if key up tapped {
+            rotate piece
+        }
+        if key down pressed {
+            move piece down
+        }
+
+        fell = move piece down
+
+        if not fell {
+            lock piece
+            clear lines
+            blocked = spawn piece
+            if blocked {
+                gameOver = true
+            }
+            if gameOver {
+                show game over
+            }
+        }
+
+        if not gameOver {
+            draw game
+        }
+    }
+}

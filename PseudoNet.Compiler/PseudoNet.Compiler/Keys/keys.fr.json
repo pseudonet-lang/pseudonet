@@ -1,0 +1,16 @@
+{
+  "haut": "Up",
+  "bas": "Down",
+  "gauche": "Left",
+  "droite": "Right",
+  "espace": "Space",
+  "entrée": "Enter",
+  "entree": "Enter",
+  "retour": "Enter",
+  "échap": "Escape",
+  "echap": "Escape",
+  "retour arrière": "Back",
+  "retour arriere": "Back",
+  "suppr": "Delete",
+  "supprimer": "Delete"
+}

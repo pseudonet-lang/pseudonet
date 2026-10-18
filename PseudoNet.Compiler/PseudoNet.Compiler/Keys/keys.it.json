@@ -1,0 +1,16 @@
+{
+  "su": "Up",
+  "alto": "Up",
+  "giù": "Down",
+  "giu": "Down",
+  "basso": "Down",
+  "sinistra": "Left",
+  "destra": "Right",
+  "spazio": "Space",
+  "invio": "Enter",
+  "esc": "Escape",
+  "backspace": "Back",
+  "canc": "Delete",
+  "maiusc": "ShiftKey",
+  "ctrl": "ControlKey"
+}

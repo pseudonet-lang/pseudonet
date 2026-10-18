@@ -1,0 +1,208 @@
+﻿{
+  "kind": "Program",
+  "body": [
+    {
+      "kind": "Assign",
+      "target": "primes",
+      "value": {
+        "kind": "NewList"
+      }
+    },
+    {
+      "kind": "FunctionDecl",
+      "name": "isPrime",
+      "params": [
+        {
+          "kind": "Identifier",
+          "name": "counter"
+        }
+      ],
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "isPrime",
+          "value": {
+            "kind": "Literal",
+            "value": true
+          }
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "BinaryOp",
+            "op": "<",
+            "left": {
+              "kind": "Identifier",
+              "name": "counter"
+            },
+            "right": {
+              "kind": "Literal",
+              "value": 2
+            }
+          },
+          "then": [
+            {
+              "kind": "Assign",
+              "target": "isPrime",
+              "value": {
+                "kind": "Literal",
+                "value": false
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Loop",
+          "variable": "divisor",
+          "from_": {
+            "kind": "Literal",
+            "value": 2
+          },
+          "to": {
+            "kind": "Literal",
+            "value": 50
+          },
+          "body": [
+            {
+              "kind": "If",
+              "condition": {
+                "kind": "BinaryOp",
+                "op": "<",
+                "left": {
+                  "kind": "Identifier",
+                  "name": "divisor"
+                },
+                "right": {
+                  "kind": "Identifier",
+                  "name": "counter"
+                }
+              },
+              "then": [
+                {
+                  "kind": "Assign",
+                  "target": "remainder",
+                  "value": {
+                    "kind": "BinaryOp",
+                    "op": "%",
+                    "left": {
+                      "kind": "Identifier",
+                      "name": "counter"
+                    },
+                    "right": {
+                      "kind": "Identifier",
+                      "name": "divisor"
+                    }
+                  }
+                },
+                {
+                  "kind": "If",
+                  "condition": {
+                    "kind": "BinaryOp",
+                    "op": "=",
+                    "left": {
+                      "kind": "Identifier",
+                      "name": "remainder"
+                    },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 0
+                    }
+                  },
+                  "then": [
+                    {
+                      "kind": "Assign",
+                      "target": "isPrime",
+                      "value": {
+                        "kind": "Literal",
+                        "value": false
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "Return",
+          "value": {
+            "kind": "Identifier",
+            "name": "isPrime"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "Loop",
+      "variable": "counter",
+      "from_": {
+        "kind": "Literal",
+        "value": 2
+      },
+      "to": {
+        "kind": "Literal",
+        "value": 50
+      },
+      "body": [
+        {
+          "kind": "Assign",
+          "target": "candidate",
+          "value": {
+            "kind": "FunctionCallExpr",
+            "name": "isPrime",
+            "args": [
+              {
+                "kind": "Identifier",
+                "name": "counter"
+              }
+            ]
+          }
+        },
+        {
+          "kind": "If",
+          "condition": {
+            "kind": "Identifier",
+            "name": "candidate"
+          },
+          "then": [
+            {
+              "kind": "MethodCall",
+              "target": "primes",
+              "method": "Add",
+              "args": [
+                {
+                  "kind": "Identifier",
+                  "name": "counter"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "Print",
+      "value": {
+        "kind": "Literal",
+        "value": "Prime numbers up to 50:"
+      }
+    },
+    {
+      "kind": "ForEach",
+      "variable": "number",
+      "collection": {
+        "kind": "Identifier",
+        "name": "primes"
+      },
+      "body": [
+        {
+          "kind": "Print",
+          "value": {
+            "kind": "Identifier",
+            "name": "number"
+          }
+        }
+      ]
+    }
+  ]
+}

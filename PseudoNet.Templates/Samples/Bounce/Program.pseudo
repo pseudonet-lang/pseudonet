@@ -1,0 +1,18 @@
+window 400 by 300
+title "Bounce"
+background black
+
+ballX = 200
+ballY = 150
+speedX = 3
+speedY = 2
+ballRadius = 15
+
+every 30 milliseconds {
+    ballX = ballX + speedX
+    ballY = ballY + speedY
+    if ballX - ballRadius < 0 or ballX + ballRadius > width then speedX = -speedX
+    if ballY - ballRadius < 0 or ballY + ballRadius > height then speedY = -speedY
+    clear
+    draw filled circle at (ballX, ballY) radius ballRadius color red
+}
