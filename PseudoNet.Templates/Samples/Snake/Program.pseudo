@@ -52,10 +52,26 @@ on tick {
     }
 
     if not gameOver {
-        if key up pressed and direction <> 1 then direction = 3
-        if key down pressed and direction <> 3 then direction = 1
-        if key left pressed and direction <> 0 then direction = 2
-        if key right pressed and direction <> 2 then direction = 0
+        if key up pressed {
+            if direction <> 1 {
+                direction = 3
+            }
+        }
+        if key down pressed {
+            if direction <> 3 {
+                direction = 1
+            }
+        }
+        if key left pressed {
+            if direction <> 0 {
+                direction = 2
+            }
+        }
+        if key right pressed {
+            if direction <> 2 {
+                direction = 0
+            }
+        }
 
         moveX = 0
         moveY = 0

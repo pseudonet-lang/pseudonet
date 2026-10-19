@@ -120,7 +120,12 @@ let private genStmts (fieldNames: string list) (level: int) (initialEnv: TypeEnv
             sprintf "%s%s%s = %s;" ind prefix target code
 
         | IndexedAssign (target, index, value) ->
-            sprintf "%s%s[%s] = %s;" ind target (genExpr env index) (genExpr env value)
+            // Cible connue pour être un nombre : "total[0] = ..." n'a aucun sens en C# et traduit en pratique
+            // "ajoute x au total" mal formé par le modèle. On garde l'intention (affectation simple), sans
+            // jamais regarder les mots du pseudocode : seul le type de la variable décide.
+            match Map.tryFind target env with
+            | Some TInt | Some TFloat -> sprintf "%s%s = %s;" ind target (genExpr env value)
+            | _ -> sprintf "%s%s[%s] = %s;" ind target (genExpr env index) (genExpr env value)
 
         | Read (target, prompt) ->
             let sb = System.Text.StringBuilder()
@@ -233,6 +238,9 @@ let private genStmts (fieldNames: string list) (level: int) (initialEnv: TypeEnv
 
         // Verbes de collection réservés — List<object> n'a pas de RemoveFirst/
         // RemoveLast/InsertFirst natifs, il faut les traduire vers RemoveAt/Insert.
+        // "ajoute x au total" avec un total numérique : accumulation, pas ajout à une liste.
+        | MethodCall (Some t, "Add", [ arg ]) when (match Map.tryFind t env with Some TInt | Some TFloat -> true | _ -> false) ->
+            sprintf "%s%s = %s + %s;" ind t t (genExpr env arg)
         | MethodCall (Some t, "Add", args) ->
             let args_ = args |> List.map (genExpr env) |> String.concat ", "
             sprintf "%s%s.Add(%s);" ind t args_

@@ -57,9 +57,38 @@ let validate (root: JsonNode) : string list =
             children o k
         | _ -> ()   // scalaires nus, objets sans kind (couleurs...) : acceptés par le désérialiseur
 
+    // Un résultat arithmétique (+ - * / %) n'est pas une condition : il faut le COMPARER (reste = 0, x > 3...).
+    // Écrire "(n % 3) or (n % 5)" donne en C# un "int || int" invalide, ou un sens inversé.
+    and arithmeticOp (n: JsonNode) : string option =
+        match n with
+        | :? JsonObject as c when kindOf c = "BinaryOp" ->
+            match c.TryGetPropertyValue("op") with
+            | true, v when not (isNull v) && v.GetValueKind() = System.Text.Json.JsonValueKind.String ->
+                let op = v.GetValue<string>()
+                if List.contains op [ "+"; "-"; "*"; "/"; "%" ] then Some op else None
+            | _ -> None
+        | _ -> None
+
+    and checkLogicalOperands (o: JsonObject) (where: string) =
+        match o.TryGetPropertyValue("op") with
+        | true, v when not (isNull v) && v.GetValueKind() = System.Text.Json.JsonValueKind.String
+                       && List.contains (v.GetValue<string>().ToLowerInvariant()) [ "and"; "or"; "&&"; "||" ] ->
+            for side in [ "left"; "right" ] do
+                match o.TryGetPropertyValue(side) with
+                | true, operand when not (isNull operand) ->
+                    match arithmeticOp operand with
+                    | Some op ->
+                        add (sprintf "%s: the %s operand of \"%s\" is an arithmetic result (op \"%s\"), which is a number, not a condition. Compare it, for instance a remainder test is {\"op\":\"=\",\"left\":<the \"%%\" expression>,\"right\":0}" where side (v.GetValue<string>()) op)
+                    | None -> ()
+                | _ -> ()
+        | _ -> ()
+
     and checkCondition (o: JsonObject) (k: string) =
         match o.TryGetPropertyValue("condition") with
         | true, c when not (isNull c) ->
+            match arithmeticOp c with
+            | Some op -> add (sprintf "%s condition is an arithmetic result (op \"%s\"), which is a number, not a condition: compare it (for instance a remainder with 0)" k op)
+            | None -> ()
             match c with
             | :? JsonValue as v when v.GetValueKind() = System.Text.Json.JsonValueKind.String ->
                 let text = v.GetValue<string>()
@@ -75,6 +104,7 @@ let validate (root: JsonNode) : string list =
 
     and children (o: JsonObject) (k: string) =
         if k = "If" || k = "WhileLoop" then checkCondition o k
+        if k = "BinaryOp" then checkLogicalOperands o k
         for kv in o do
             if stmtListKeys.Contains kv.Key then
                 match kv.Value with

@@ -20,10 +20,10 @@
     <Project TargetFileName="$safeprojectname$.csproj" File="Snake.csproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="false" TargetFileName="Program.pseudo" OpenInEditor="true">Program.pseudo</ProjectItem>
       <Folder Name="pseudo-cache" TargetFolderName="pseudo-cache">
-        <ProjectItem ReplaceParameters="false" TargetFileName="ca0b679fc3a46cd166e4f1a4b2a2d10988f6043f86ff370c5e8abcc6fc2fae3f.json">ca0b679fc3a46cd166e4f1a4b2a2d10988f6043f86ff370c5e8abcc6fc2fae3f.json</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="0060a581a1636be3ea301579c3c6f94be658c086bb41eadd112d22613aae280f.json">0060a581a1636be3ea301579c3c6f94be658c086bb41eadd112d22613aae280f.json</ProjectItem>
       </Folder>
       <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
-        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.1.nupkg">PseudoNet.Build.0.3.1.nupkg</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.2.nupkg">PseudoNet.Build.0.3.2.nupkg</ProjectItem>
       </Folder>
     </Project>
   </TemplateContent>

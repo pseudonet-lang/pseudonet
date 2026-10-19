@@ -1,0 +1,5 @@
+total = 0
+para cada número desde 1 hasta 99
+	si el número es divisible entre 3 o entre 5 entonces
+		total = total + número
+mostrar total

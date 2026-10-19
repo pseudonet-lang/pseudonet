@@ -1,0 +1,1 @@
+Empieza con un total de cero. Recorre los números del 1 al 99 y, cuando uno sea múltiplo de 3 o de 5, súmalo al total. Al final, muestra el total.

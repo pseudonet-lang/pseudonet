@@ -1,0 +1,5 @@
+total = 0
+repeat number from 1 to 99
+	if number modulo 3 is equal to 0 or number modulo 5 is equal to 0 then
+		total = total + number
+print total

@@ -20,10 +20,10 @@
     <Project TargetFileName="$safeprojectname$.csproj" File="GuessTheNumber.csproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="false" TargetFileName="Program.pseudo" OpenInEditor="true">Program.pseudo</ProjectItem>
       <Folder Name="pseudo-cache" TargetFolderName="pseudo-cache">
-        <ProjectItem ReplaceParameters="false" TargetFileName="434f4893184493594c091716bca9cd72dee466ce0a18e4ea4e28d15ae5fd9ddc.json">434f4893184493594c091716bca9cd72dee466ce0a18e4ea4e28d15ae5fd9ddc.json</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="4486ff4184dd3c20ff742c43b9f0f73f015cba82c3715828017d9b1f5288fa40.json">4486ff4184dd3c20ff742c43b9f0f73f015cba82c3715828017d9b1f5288fa40.json</ProjectItem>
       </Folder>
       <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
-        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.1.nupkg">PseudoNet.Build.0.3.1.nupkg</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.2.nupkg">PseudoNet.Build.0.3.2.nupkg</ProjectItem>
       </Folder>
     </Project>
   </TemplateContent>

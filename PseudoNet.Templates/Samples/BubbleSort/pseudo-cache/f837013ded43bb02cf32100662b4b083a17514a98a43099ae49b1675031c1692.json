@@ -1,6 +1,6 @@
 ﻿{
   "kind": "Program",
-  "statements": [
+  "body": [
     {
       "kind": "Assign",
       "target": "numbers",
@@ -84,10 +84,7 @@
     {
       "kind": "ForEach",
       "variable": "n",
-      "collection": {
-        "kind": "Identifier",
-        "name": "numbers"
-      },
+      "collection": "numbers",
       "body": [
         {
           "kind": "Print",
@@ -129,10 +126,7 @@
                 "op": ">",
                 "left": {
                   "kind": "ArrayAccess",
-                  "array": {
-                    "kind": "Identifier",
-                    "name": "numbers"
-                  },
+                  "array": "numbers",
                   "index": {
                     "kind": "Identifier",
                     "name": "i"
@@ -140,10 +134,7 @@
                 },
                 "right": {
                   "kind": "ArrayAccess",
-                  "array": {
-                    "kind": "Identifier",
-                    "name": "numbers"
-                  },
+                  "array": "numbers",
                   "index": {
                     "kind": "BinaryOp",
                     "op": "+",
@@ -164,10 +155,7 @@
                   "target": "temp",
                   "value": {
                     "kind": "ArrayAccess",
-                    "array": {
-                      "kind": "Identifier",
-                      "name": "numbers"
-                    },
+                    "array": "numbers",
                     "index": {
                       "kind": "Identifier",
                       "name": "i"
@@ -183,10 +171,7 @@
                   },
                   "value": {
                     "kind": "ArrayAccess",
-                    "array": {
-                      "kind": "Identifier",
-                      "name": "numbers"
-                    },
+                    "array": "numbers",
                     "index": {
                       "kind": "BinaryOp",
                       "op": "+",
@@ -208,14 +193,14 @@
                     "kind": "BinaryOp",
                     "op": "+",
                     "left": {
-                        "kind": "Identifier",
-                        "name": "i"
-                      },
-                      "right": {
-                        "kind": "Literal",
-                        "value": 1
-                      }
+                      "kind": "Identifier",
+                      "name": "i"
                     },
+                    "right": {
+                      "kind": "Literal",
+                      "value": 1
+                    }
+                  },
                   "value": {
                     "kind": "Identifier",
                     "name": "temp"
@@ -237,10 +222,7 @@
     {
       "kind": "ForEach",
       "variable": "n",
-      "collection": {
-        "kind": "Identifier",
-        "name": "numbers"
-      },
+      "collection": "numbers",
       "body": [
         {
           "kind": "Print",

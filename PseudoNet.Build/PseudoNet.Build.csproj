@@ -5,7 +5,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>PseudoNet.Build</PackageId>
-    <Version>0.3.1</Version>
+    <Version>0.3.2</Version>
     <Authors>Malek AIT OUARET</Authors>
     <Copyright>Copyright (c) 2026 Malek AIT OUARET</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

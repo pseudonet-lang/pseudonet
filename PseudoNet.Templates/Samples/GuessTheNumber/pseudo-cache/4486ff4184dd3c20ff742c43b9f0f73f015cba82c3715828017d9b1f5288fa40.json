@@ -1,6 +1,6 @@
 ﻿{
   "kind": "Program",
-  "statements": [
+  "body": [
     {
       "kind": "Assign",
       "target": "secret",

@@ -98,11 +98,14 @@ function Test-Sample($dir) {
     if ($meta.kind -eq 'console') {
         $dll = Join-Path $tfmDir.FullName "$name.dll"
         $stdin = ((@($meta.input) | Where-Object { $null -ne $_ }) -join "`n") + "`n"
-        $psi = New-Object System.Diagnostics.ProcessStartInfo 'dotnet', "`"$dll`""
-        $psi.RedirectStandardInput = $true; $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true
+        # The input goes through a file redirected by cmd.exe: Windows PowerShell 5.1 prepends a UTF-8 BOM to anything
+        # it writes to a child's stdin (pipe or StandardInput), which breaks the very first int.Parse.
+        $stdinFile = Join-Path $work "stdin-$name.txt"
+        [IO.File]::WriteAllText($stdinFile, $stdin, (New-Object System.Text.UTF8Encoding($false)))
+        $psi = New-Object System.Diagnostics.ProcessStartInfo 'cmd.exe', ('/c dotnet "{0}" < "{1}"' -f $dll, $stdinFile)
+        $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true
         $psi.UseShellExecute = $false; $psi.StandardOutputEncoding = [Text.Encoding]::UTF8
         $proc = [Diagnostics.Process]::Start($psi)
-        $proc.StandardInput.Write($stdin); $proc.StandardInput.Close()
         $stdout = $proc.StandardOutput.ReadToEndAsync(); $stderr = $proc.StandardError.ReadToEndAsync()
         if (-not $proc.WaitForExit(30000)) { $proc.Kill(); $problems.Add('program did not finish within 30 s') }
         else {

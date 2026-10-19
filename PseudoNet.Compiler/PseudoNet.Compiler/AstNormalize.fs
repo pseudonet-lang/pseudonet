@@ -8,6 +8,27 @@ open System.Text.Json.Nodes
 // passe récursive, AVANT la désérialisation typée (Deserializer.fs) qui, elle,
 // n'attend plus qu'une forme canonique unique par champ.
 
+/// Lit le JSON du modèle en acceptant les clés dupliquées (la dernière gagne). JsonNode.Parse (net8) lève une
+/// exception sur {"kind":"If", ..., "kind":"If"}, ce que les petits modèles produisent parfois ; JsonDocument
+/// les tolère, on reconstruit donc l'arbre mutable à partir de lui. Forme de la sortie du modèle, pas du pseudocode.
+let parseLenient (json: string) : JsonNode =
+    use doc = System.Text.Json.JsonDocument.Parse(json)
+    let rec convert (e: System.Text.Json.JsonElement) : JsonNode =
+        match e.ValueKind with
+        | System.Text.Json.JsonValueKind.Object ->
+            let o = JsonObject()
+            for p in e.EnumerateObject() do
+                o.[p.Name] <- convert p.Value
+            o :> JsonNode
+        | System.Text.Json.JsonValueKind.Array ->
+            let a = JsonArray()
+            for x in e.EnumerateArray() do
+                a.Add(convert x)
+            a :> JsonNode
+        | System.Text.Json.JsonValueKind.Null -> null
+        | _ -> JsonNode.Parse(e.GetRawText())
+    convert doc.RootElement
+
 /// Wrapper explicite sur la surcharge (string, byref<JsonNode>) — évite
 /// l'ambiguïté de surcharge que le sucre syntaxique tuple provoque ici.
 let private tryGetNode (o: JsonObject) (key: string) : JsonNode option =
@@ -226,6 +247,14 @@ and private normalizeObject (o: JsonObject) : unit =
                 o.["op"]      <- JsonValue.Create("not")
                 o.["operand"] <- operandNode
             | None -> ()
+
+    // L'opérateur reste est parfois écrit "mod" / "modulo" (hors de la liste d'opérateurs enseignée au
+    // modèle) : simple alias de forme vers "%", sans lien avec les mots du pseudocode de l'utilisateur.
+    if kind = "BinaryOp" then
+        match tryGetString o "op" with
+        | Some op when List.contains (op.Trim().ToLowerInvariant()) [ "mod"; "modulo" ] ->
+            o.["op"] <- JsonValue.Create("%")
+        | _ -> ()
 
     // Le LLM utilise parfois une affectation composée ("score += 1") écrite
     // comme un BinaryOp brut directement en position de statement, au lieu de

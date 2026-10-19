@@ -109,6 +109,11 @@ NEGATION: Any logical negation of a condition ("not X", "non X", "si non X",
             "si non partieTerminee" → {"kind":"UnaryOp","op":"not","operand":{"kind":"Identifier","name":"partieTerminee"}}
   Never express a negation as a comparison with true/false.
 
+DIVISIBILITY: "n is divisible by 3", "n est multiple de 3", "n es múltiplo de 3", "n modulo 3 is 0" →
+  a COMPARISON of the remainder with 0, never the remainder alone:
+  {"kind":"BinaryOp","op":"=","left":{"kind":"BinaryOp","op":"%","left":{"kind":"Identifier","name":"n"},"right":{"kind":"Literal","value":3}},"right":{"kind":"Literal","value":0}}
+  "divisible by 3 or by 5" = two such comparisons joined by op "or". A remainder is a number, never a condition.
+
 LIST ELEMENT: Reading an element of a list ("the first element of Y", "numbers[i]") →
   kind=ArrayAccess, array=<list name>, index=<expr>   (first element: index 0)
   Writing one ("numbers[i] = x") → kind=IndexedAssign, target=<list name>, index=<expr>, value=<expr>

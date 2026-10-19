@@ -5,6 +5,6 @@
     <PseudoProjectType>console</PseudoProjectType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="PseudoNet.Build" Version="0.3.1" PrivateAssets="all" />
+    <PackageReference Include="PseudoNet.Build" Version="0.3.2" PrivateAssets="all" />
   </ItemGroup>
 </Project>

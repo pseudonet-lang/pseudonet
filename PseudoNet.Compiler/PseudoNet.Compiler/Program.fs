@@ -101,7 +101,7 @@ let private compile (opts: Options) (file: string) : int =
         let cacheKey = LlmCache.keyFor OllamaClient.fingerprint pseudocode
 
         let normalizeAndCheck (json: string) =
-            let node = AstNormalize.normalize (JsonNode.Parse(json))
+            let node = AstNormalize.normalize (AstNormalize.parseLenient json)
             node, AstValidate.validate node
 
         // The model's answer may contain structural slips (unknown node kinds, a condition written

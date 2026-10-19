@@ -20,10 +20,10 @@
     <Project TargetFileName="$safeprojectname$.csproj" File="BubbleSort.csproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="false" TargetFileName="Program.pseudo" OpenInEditor="true">Program.pseudo</ProjectItem>
       <Folder Name="pseudo-cache" TargetFolderName="pseudo-cache">
-        <ProjectItem ReplaceParameters="false" TargetFileName="c68846d7301c10e726dcf363b30c7a0376559fd5ce95ccfa244b754991f0a666.json">c68846d7301c10e726dcf363b30c7a0376559fd5ce95ccfa244b754991f0a666.json</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="f837013ded43bb02cf32100662b4b083a17514a98a43099ae49b1675031c1692.json">f837013ded43bb02cf32100662b4b083a17514a98a43099ae49b1675031c1692.json</ProjectItem>
       </Folder>
       <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
-        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.1.nupkg">PseudoNet.Build.0.3.1.nupkg</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.2.nupkg">PseudoNet.Build.0.3.2.nupkg</ProjectItem>
       </Folder>
     </Project>
   </TemplateContent>

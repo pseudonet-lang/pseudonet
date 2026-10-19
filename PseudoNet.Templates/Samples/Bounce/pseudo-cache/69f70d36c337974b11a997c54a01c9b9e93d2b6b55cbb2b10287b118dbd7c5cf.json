@@ -98,7 +98,10 @@
                   "name": "ballRadius"
                 }
               },
-              "right": 0
+              "right": {
+                "kind": "Literal",
+                "value": 0
+              }
             },
             "right": {
               "kind": "BinaryOp",
@@ -132,7 +135,10 @@
                   "kind": "Identifier",
                   "name": "speedX"
                 },
-                "right": -1
+                "right": {
+                  "kind": "Literal",
+                  "value": -1
+                }
               }
             }
           ]
@@ -157,7 +163,10 @@
                   "name": "ballRadius"
                 }
               },
-              "right": 0
+              "right": {
+                "kind": "Literal",
+                "value": 0
+              }
             },
             "right": {
               "kind": "BinaryOp",
@@ -191,7 +200,10 @@
                   "kind": "Identifier",
                   "name": "speedY"
                 },
-                "right": -1
+                "right": {
+                  "kind": "Literal",
+                  "value": -1
+                }
               }
             }
           ]

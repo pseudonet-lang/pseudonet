@@ -4,7 +4,7 @@
   <PropertyGroup>
     <PackageType>Template</PackageType>
     <PackageId>PseudoNet.Templates</PackageId>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Title>Pseudo.NET templates</Title>
     <Authors>Malek AIT OUARET</Authors>
     <Copyright>Copyright (c) 2026 Malek AIT OUARET</Copyright>
