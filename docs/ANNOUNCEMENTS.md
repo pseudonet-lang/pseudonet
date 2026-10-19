@@ -147,6 +147,36 @@ Happy to discuss the trade-offs, including why this is probably a bad idea for a
 
 ---
 
+## 3b. r/LocalLLaMA (angle: a 7B local model as a parser; lessons and questions; read the rules first)
+
+The r/ProgrammingLanguages post was removed by its AutoModerator (AI-related posts need an active member). This one targets the local-model audience, where the project is on topic. Disclose the AI assistance, do not post the same day as another Reddit post, and expect a young account to be filtered.
+
+**Title:** Using a 7B local model (qwen2.5-coder via Ollama) as the parser of a language with no fixed grammar: what I learned
+
+I have been building Pseudo.NET, a free and open-source tool where you write pseudocode with no fixed syntax (any wording, any language) and a local model turns it into a program. The model never writes the final code: it produces a JSON AST, and everything after that is ordinary code (validator, type inference, C# backend). Setup: qwen2.5-coder:7b through Ollama, JSON mode, temperature 0. I built it with the help of an AI coding assistant, for what it is worth.
+
+What I learned about making a 7B model reliable at this:
+
+- **Bare booleans get dropped.** `"tapped": true` was silently omitted often enough that games behaved randomly. Named values fixed it (`"press": "held"` or `"press": "just_pressed"`), and field order mattered too.
+- **Concrete JSON examples beat abstract rules**, but every addition to the prompt made the model forget something else. I now regenerate a set of sample programs from scratch after any prompt change.
+- **Only repair the shape of the output**, never the user's wording. A validator sends structural problems back to the model for up to two self-correction rounds, and an invalid answer is never cached.
+- **Determinism comes from the cache**, keyed on a hash of (model, prompt, text), not from trusting temperature 0.
+- **Automatic checks are not enough.** A regenerated Snake silently lost three lines (the new head, the score increment, the no-U-turn guards) and still passed every regex. I only caught it by playing it. Now a human plays every window sample before release.
+
+A concrete failure: "divisible by 3 or by 5" was translated as `(n % 3) || (n % 5)` in all six phrasings I tried (English, Spanish, French), with the comparison to zero dropped, as if C truthiness applied. One short example in the prompt plus a validator rule fixed it. It was a good reminder that a common pattern can be broken for every phrasing at once.
+
+Questions for people who know more than I do:
+
+1. I use Ollama's JSON mode only, not a JSON schema or a grammar. For a 7B model, has constrained decoding (schema or GBNF) been worth it for structured output like this?
+2. Which small local model is the most faithful on long structured outputs? I have not tried anything beyond the qwen coder family yet.
+3. Does anyone run self-correction loops like this on small models, and how many rounds actually help?
+
+Windows only for now (it builds on .NET and Visual Studio / `dotnet new`). Samples run without the model because their answers are cached. A gallery with pseudocode, running result and generated C# side by side: https://pseudonet-lang.github.io/gallery/
+
+Source (MIT): https://github.com/pseudonet-lang/pseudonet
+
+---
+
 ## 4. Show HN
 
 **Title:** Show HN: Pseudo.NET, pseudocode with no fixed syntax that compiles to C# via a local LLM
