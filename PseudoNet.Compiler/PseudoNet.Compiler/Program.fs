@@ -101,6 +101,10 @@ let private compile (opts: Options) (file: string) : int =
         let cacheKey = LlmCache.keyFor OllamaClient.fingerprint pseudocode
 
         let normalizeAndCheck (json: string) =
+            // Diagnostic: PSEUDONET_DUMP_AST=<path> saves each raw model answer (before normalisation) next to that path.
+            match Environment.GetEnvironmentVariable("PSEUDONET_DUMP_AST") with
+            | null | "" -> ()
+            | dumpPath -> (try System.IO.File.AppendAllText(dumpPath, json + "\n---\n") with _ -> ())
             let node = AstNormalize.normalize (AstNormalize.parseLenient json)
             node, AstValidate.validate node
 

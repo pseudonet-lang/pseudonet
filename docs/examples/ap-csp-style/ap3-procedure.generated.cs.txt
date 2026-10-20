@@ -6,7 +6,7 @@ using System.Collections.Generic;
 class Program
 {
     private static int count;
-    private static string numbers;
+    private static List<object> numbers;
     static bool IsEven(double n)
     {
         return ((n % 2) == 0);
@@ -14,7 +14,7 @@ class Program
     static void Main(string[] args)
     {
         count = 0;
-        numbers = "";
+        numbers = new List<object>();
         foreach (var x in numbers)
         {
             if (IsEven(x))

@@ -1,0 +1,4 @@
+n = 1
+repetir hasta que n sea mayor que 100
+	n = n * 2
+mostrar n

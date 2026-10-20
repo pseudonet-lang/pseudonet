@@ -235,13 +235,15 @@ and private normalizeObject (o: JsonObject) : unit =
         let opVal = tryGetString o "op" |> Option.defaultValue ""
         if opVal = "!" || opVal.ToLowerInvariant() = "not" then
             let operandKey =
-                if not (o.ContainsKey("right")) && o.ContainsKey("left") then Some "left"
+                if o.ContainsKey("operand") then Some "operand"   // {"kind":"BinaryOp","op":"not","operand":{...}}
+                elif not (o.ContainsKey("right")) && o.ContainsKey("left") then Some "left"
                 elif not (o.ContainsKey("left")) && o.ContainsKey("right") then Some "right"
                 else None
             match operandKey |> Option.bind (tryGetNode o) with
             | Some operandNode ->
                 o.Remove("left") |> ignore
                 o.Remove("right") |> ignore
+                o.Remove("operand") |> ignore
                 o.Remove("op") |> ignore
                 o.["kind"]    <- JsonValue.Create("UnaryOp")
                 o.["op"]      <- JsonValue.Create("not")

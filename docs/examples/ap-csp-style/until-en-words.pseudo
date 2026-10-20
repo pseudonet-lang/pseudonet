@@ -1,0 +1,1 @@
+Start with n equal to 1. Repeat until n is greater than 100: double n. At the end, print n.

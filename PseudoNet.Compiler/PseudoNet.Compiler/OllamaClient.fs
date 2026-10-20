@@ -62,6 +62,9 @@ CONDITIONAL: Any if/then/else construct →
 
 WHILE LOOP: Any loop with a condition →
   kind=WhileLoop, condition=<expr>, body=[...statements...]
+  "repeat UNTIL C" / "répéter jusqu'à ce que C" / "repetir hasta que C" keeps looping while C is NOT yet true →
+  condition = the NEGATION of C. "repeat until n = 100" →
+  {"kind":"WhileLoop","condition":{"kind":"UnaryOp","op":"not","operand":{"kind":"BinaryOp","op":"=","left":{"kind":"Identifier","name":"n"},"right":{"kind":"Literal","value":100}}},"body":[...]}
 
 COUNT LOOP: Any loop iterating over a range →
   kind=Loop, variable=<name>, from_=<start>, to=<end>, body=[...statements...]
