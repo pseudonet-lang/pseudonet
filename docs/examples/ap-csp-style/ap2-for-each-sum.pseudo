@@ -1,0 +1,6 @@
+numbers ← [4, 8, 15, 16, 23, 42]
+sum ← 0
+FOR EACH value IN numbers {
+   sum ← sum + value
+}
+DISPLAY(sum)

@@ -1,0 +1,13 @@
+n ← 15
+IF (n MOD 15 = 0) {
+   DISPLAY("FizzBuzz")
+} ELSE {
+   IF (n MOD 3 = 0) {
+      DISPLAY("Fizz")
+   } ELSE {
+      DISPLAY(n)
+   }
+}
+IF (NOT (n ≠ 15)) {
+   DISPLAY("fifteen")
+}

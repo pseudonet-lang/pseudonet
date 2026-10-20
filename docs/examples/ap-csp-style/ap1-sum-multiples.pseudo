@@ -1,0 +1,9 @@
+total ← 0
+n ← 1
+REPEAT UNTIL (n = 100) {
+   IF (n MOD 3 = 0 OR n MOD 5 = 0) {
+      total ← total + n
+   }
+   n ← n + 1
+}
+DISPLAY(total)

@@ -1,0 +1,12 @@
+PROCEDURE isEven(n) {
+   RETURN(n MOD 2 = 0)
+}
+
+count ← 0
+numbers ← [3, 8, 12, 7, 10, 5]
+FOR EACH x IN numbers {
+   IF (isEven(x)) {
+      count ← count + 1
+   }
+}
+DISPLAY(count)

@@ -1,0 +1,6 @@
+scores ← [70, 85]
+APPEND(scores, 92)
+INSERT(scores, 1, 60)
+DISPLAY(LENGTH(scores))
+DISPLAY(scores[1])
+DISPLAY(scores[4])

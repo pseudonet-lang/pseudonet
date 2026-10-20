@@ -1,0 +1,5 @@
+total ← 0
+REPEAT 5 TIMES {
+   total ← total + 2
+}
+DISPLAY(total)
