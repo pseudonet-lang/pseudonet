@@ -6,6 +6,8 @@ Pseudo.NET compiles *free-form* pseudocode to C# using a **local** language mode
 There is no imposed syntax: write in English, French, Spanish, Chinese… with braces, with indentation only, or just
 sentences. No account, no API key, nothing leaves your machine.
 
+> **Note:** the extension does not include the language model that reads your pseudocode. It needs [Ollama](https://ollama.com) and a model of about 5 GB installed on your computer. The ready-made samples run without them.
+
 [Français](README.fr.md) · [Samples gallery](https://pseudonet-lang.github.io/gallery/) · [Marketplace](https://marketplace.visualstudio.com/items?itemName=pseudonet-lang.pseudonet) · [Website](https://pseudonet-lang.github.io/) · [Support the project](#support)
 
 ![Tetris written in pseudocode](docs/demo-tetris.gif)
