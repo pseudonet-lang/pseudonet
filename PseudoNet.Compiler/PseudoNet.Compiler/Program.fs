@@ -126,18 +126,20 @@ let private compile (opts: Options) (file: string) : int =
 
         let rawJson, node, problems, fromLlm =
             if not (String.IsNullOrEmpty(replayPath)) then
-                printfn "%s" (t "info.replay" "Replaying JSON from {0} (no Ollama call)..." [ box replayPath ])
+                printfn "%s" (t "info.replay" "Replaying JSON from {0} (no model call)..." [ box replayPath ])
                 let json = File.ReadAllText(replayPath, Encoding.UTF8)
                 let n, p = normalizeAndCheck json
                 json, n, p, false
             else
                 match cached with
                 | Some c ->
-                    printfn "%s" (t "info.cacheHit" "LLM cache: reused (no Ollama call)." [])
+                    printfn "%s" (t "info.cacheHit" "LLM cache: reused (no model call)." [])
                     let n, p = normalizeAndCheck c
                     c, n, p, false
                 | None ->
-                    printfn "%s" (t "info.analysing" "Analysing the pseudocode (Ollama)..." [])
+                    if OllamaClient.sendsOffMachine then
+                        eprintfn "%s: warning PSEUDO008: %s" file (OllamaClient.destinationNotice ())
+                    printfn "%s" (t "info.analysing" "Analysing the pseudocode ({0})..." [ box OllamaClient.providerLabel ])
                     let first = (OllamaClient.parseAsync pseudocode).GetAwaiter().GetResult()
                     let json, n, p = settle first 0
                     json, n, p, true
@@ -205,7 +207,12 @@ let main argv =
         1
     | Ok opts when opts.CheckOllama ->
         match (OllamaClient.checkAvailableAsync ()).GetAwaiter().GetResult() with
-        | None -> printfn "%s" (t "info.ollamaReady" "Ollama is ready (model {0})." [ box OllamaClient.modelName ]); 0
+        | None when OllamaClient.provider = OllamaClient.Ollama ->
+            printfn "%s" (t "info.ollamaReady" "Ollama is ready (model {0})." [ box OllamaClient.modelName ]); 0
+        | None ->
+            printfn "%s" (t "info.remoteReady" "{0} is configured (model {1}). Nothing was sent: only the configuration is checked." [ box OllamaClient.providerLabel; box OllamaClient.modelName ])
+            if OllamaClient.sendsOffMachine then printfn "%s" (OllamaClient.destinationNotice ())
+            0
         | Some problem -> eprintfn "PseudoNet.Compiler: error PSEUDO002: %s" problem; 2
     | Ok { Input = None } ->
         eprintfn "PseudoNet.Compiler: error PSEUDO000: %s" (t "err.noInput" "no .pseudo file given" [])

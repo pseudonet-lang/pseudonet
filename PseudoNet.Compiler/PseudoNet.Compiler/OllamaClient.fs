@@ -8,16 +8,81 @@ open System.Text.Json.Nodes
 open System.Threading.Tasks
 
 // ── Configuration ────────────────────────────────────────────────────────────
+// Par défaut : Ollama, en local. Un fournisseur distant (Anthropic, ou toute API compatible OpenAI) est un
+// choix explicite et facultatif : le pseudocode de l'utilisateur quitte alors l'ordinateur.
+
+type Provider = Ollama | OpenAi | Anthropic
+
+let private env (name: string) =
+    match Environment.GetEnvironmentVariable(name) with
+    | null -> ""
+    | value -> value.Trim()
+
+let private requestedProvider = (env "PSEUDONET_PROVIDER").ToLowerInvariant()
+let provider =
+    match requestedProvider with
+    | "anthropic" | "claude" -> Anthropic
+    | "openai" -> OpenAi
+    | _ -> Ollama
+let private unknownProvider =
+    match requestedProvider with
+    | "" | "ollama" | "anthropic" | "claude" | "openai" -> None
+    | other -> Some other
+
+let providerLabel =
+    match provider with
+    | Ollama -> "Ollama"
+    | Anthropic -> "Anthropic"
+    | OpenAi -> "OpenAI-compatible API"
 
 let private ollamaBase =
-    match Environment.GetEnvironmentVariable("PSEUDONET_OLLAMA_URL") with
-    | null | "" -> "http://localhost:11434"
+    match env "PSEUDONET_OLLAMA_URL" with
+    | "" -> "http://localhost:11434"
     | url -> url.TrimEnd('/')
 let private ollamaUrl = ollamaBase + "/api/chat"
+
 let modelName =
-    match Environment.GetEnvironmentVariable("PSEUDONET_MODEL") with
-    | null | "" -> "qwen2.5-coder:7b"
-    | name -> name
+    match env "PSEUDONET_MODEL", provider with
+    | "", Ollama -> "qwen2.5-coder:7b"
+    | "", Anthropic -> "claude-haiku-5-5"
+    | "", OpenAi -> ""
+    | name, _ -> name
+
+/// Base de l'API distante. Anthropic : https://api.anthropic.com ; OpenAI-compatible : l'URL jusqu'à /v1
+/// (exemple Groq : https://api.groq.com/openai/v1).
+let private remoteBase =
+    match env "PSEUDONET_API_URL", provider with
+    | "", Anthropic -> "https://api.anthropic.com"
+    | "", _ -> "https://api.openai.com/v1"
+    | url, _ -> url.TrimEnd('/')
+
+let private keyEnvName =
+    match provider with
+    | Anthropic -> "ANTHROPIC_API_KEY"
+    | OpenAi -> "OPENAI_API_KEY"
+    | Ollama -> ""
+/// La clé ne vit que dans l'environnement : jamais écrite dans un fichier, un cache ou un message.
+let private apiKey =
+    match env "PSEUDONET_API_KEY" with
+    | "" when keyEnvName <> "" -> env keyEnvName
+    | key -> key
+
+let remoteHost =
+    try Uri(remoteBase).Host with _ -> remoteBase
+
+/// Vrai quand le pseudocode part vers un service qui n'est pas sur cet ordinateur.
+let sendsOffMachine =
+    provider <> Ollama && not (List.contains remoteHost [ "localhost"; "127.0.0.1"; "::1"; "[::1]" ])
+
+/// Un message actionnable si la configuration distante est inutilisable, sinon None.
+let private configProblem () : string option =
+    match unknownProvider with
+    | Some p -> Some (Messages.t "remote.unknownProvider" "Unknown PSEUDONET_PROVIDER '{0}' - use ollama, anthropic or openai." [ box p ])
+    | None when provider = Ollama -> None
+    | None when modelName = "" -> Some (Messages.t "remote.modelMissing" "The {0} provider needs a model: set PSEUDONET_MODEL." [ box providerLabel ])
+    | None when apiKey = "" && sendsOffMachine ->
+        Some (Messages.t "remote.keyMissing" "The {0} provider needs an API key: set PSEUDONET_API_KEY (or {1})." [ box providerLabel; box keyEnvName ])
+    | None -> None
 
 let private numPredict = 16000
 let private numCtx = 28000
@@ -234,13 +299,15 @@ NO Node suffix. NO explanation. NO markdown.
 /// lui-même : modèle, prompt système, préfixe utilisateur, options. Sert de
 /// clé de cache avec le texte du pseudocode.
 let fingerprint : string =
-    let material = String.Join("|", [ modelName; systemPrompt; userPrefix; string numPredict; string numCtx; "temp=0" ])
+    // Ollama: unchanged material, so the answers shipped with the samples stay valid.
+    let remote = match provider with Ollama -> [] | p -> [ string p ]
+    let material = String.Join("|", remote @ [ modelName; systemPrompt; userPrefix; string numPredict; string numCtx; "temp=0" ])
     Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(material)))
 
 // ── Disponibilité ────────────────────────────────────────────────────────────
 
 /// None si Ollama répond et possède le modèle ; sinon un message actionnable.
-let checkAvailableAsync () : Task<string option> =
+let private checkOllamaAsync () : Task<string option> =
     task {
         try
             use cts = new System.Threading.CancellationTokenSource(TimeSpan.FromSeconds(5.0))
@@ -258,9 +325,32 @@ let checkAvailableAsync () : Task<string option> =
             return Some (Messages.t "ollama.checkUnreachable" "Ollama is unreachable at {0} - run: ollama serve" [ box ollamaBase ])
     }
 
-// ── Appel Ollama ─────────────────────────────────────────────────────────────
+/// Remote providers are not pinged (a request would cost money): only the configuration is checked.
+let checkAvailableAsync () : Task<string option> =
+    match configProblem () with
+    | Some problem -> Task.FromResult(Some problem)
+    | None when provider = Ollama -> checkOllamaAsync ()
+    | None -> Task.FromResult(None)
 
-let private chatAsync (messages: JsonArray) : Task<string> =
+/// One line telling where the pseudocode goes; shown by --check-ollama and before every remote call.
+let destinationNotice () : string =
+    Messages.t "remote.notice" "The pseudocode is sent to {0} ({1}, model {2}), outside this computer. This happens only because PSEUDONET_PROVIDER is set." [ box remoteHost; box providerLabel; box modelName ]
+
+// ── Appel du modèle ──────────────────────────────────────────────────────────
+
+let private message (role: string) (content: string) : JsonObject =
+    let m = JsonObject()
+    m.["role"] <- JsonValue.Create(box role)
+    m.["content"] <- JsonValue.Create(box content)
+    m
+
+let private baseMessages (pseudocode: string) : JsonArray =
+    let messages = JsonArray()
+    messages.Add(message "system" systemPrompt)
+    messages.Add(message "user" (userPrefix + pseudocode))
+    messages
+
+let private ollamaChatAsync (messages: JsonArray) : Task<string> =
     task {
         let options = JsonObject()
         options.["temperature"]  <- JsonValue.Create(0.0)
@@ -298,17 +388,92 @@ let private chatAsync (messages: JsonArray) : Task<string> =
                 Messages.t "ollama.timeout" "Timed out waiting for Ollama at {0} - the model may be slow, try again." [ box ollamaBase ]))
     }
 
-let private message (role: string) (content: string) : JsonObject =
-    let m = JsonObject()
-    m.["role"] <- JsonValue.Create(box role)
-    m.["content"] <- JsonValue.Create(box content)
-    m
+/// Remote models sometimes wrap the JSON in a ``` fence or an introductory sentence.
+let private extractJson (text: string) : string =
+    let t = text.Trim()
+    let first = t.IndexOf('{')
+    let last = t.LastIndexOf('}')
+    if first >= 0 && last > first then t.Substring(first, last - first + 1) else t
 
-let private baseMessages (pseudocode: string) : JsonArray =
-    let messages = JsonArray()
-    messages.Add(message "system" systemPrompt)
-    messages.Add(message "user" (userPrefix + pseudocode))
-    messages
+/// POST JSON to a remote service. Some models refuse `temperature` or `response_format`:
+/// retry without the refused option (once each).
+let private remoteChatAsync (url: string) (headers: (string * string) list) (build: Set<string> -> JsonObject) (extract: JsonElement -> string) : Task<string> =
+    task {
+        try
+            let rec attempt (dropped: Set<string>) =
+                task {
+                    use req = new HttpRequestMessage(HttpMethod.Post, url)
+                    for (k, v) in headers do req.Headers.TryAddWithoutValidation(k, v) |> ignore
+                    req.Content <- new StringContent((build dropped).ToJsonString(), Encoding.UTF8, "application/json")
+                    let! response = httpClient.SendAsync(req)
+                    let! body = response.Content.ReadAsStringAsync()
+                    let refused = [ "temperature"; "response_format" ] |> List.tryFind (fun o -> not (dropped.Contains o) && body.Contains o)
+                    match refused with
+                    | Some o when response.StatusCode = Net.HttpStatusCode.BadRequest -> return! attempt (dropped.Add o)
+                    | _ -> return (response, body)
+                }
+            let! (response, body) = attempt Set.empty
+            if not response.IsSuccessStatusCode then
+                return raise (OllamaUnavailable(
+                    Messages.t "remote.http" "{0} returned {1}: {2}" [ box providerLabel; box response.StatusCode; box body ]))
+            else
+                use doc = JsonDocument.Parse(body)
+                return extractJson (extract doc.RootElement)
+        with
+        | :? HttpRequestException as ex ->
+            return raise (OllamaUnavailable(
+                Messages.t "remote.unreachable" "{0} is unreachable at {1}. {2}" [ box providerLabel; box remoteBase; box ex.Message ]))
+        | :? TaskCanceledException ->
+            return raise (OllamaUnavailable(
+                Messages.t "remote.timeout" "Timed out waiting for {0} at {1} - try again." [ box providerLabel; box remoteBase ]))
+    }
+
+let private anthropicChatAsync (messages: JsonArray) : Task<string> =
+    let build (dropped: Set<string>) =
+        let o = JsonObject()
+        o.["model"] <- JsonValue.Create(box modelName)
+        o.["max_tokens"] <- JsonValue.Create(numPredict)
+        if not (dropped.Contains "temperature") then o.["temperature"] <- JsonValue.Create(0.0)
+        // The Anthropic API takes the system prompt apart from the conversation.
+        let text (m: JsonNode) (field: string) = m.[field].GetValue<string>()
+        o.["system"] <- JsonValue.Create(box (text messages.[0] "content"))
+        let conversation = JsonArray()
+        for m in messages |> Seq.skip 1 do conversation.Add(message (text m "role") (text m "content"))
+        o.["messages"] <- conversation
+        o
+    let extract (root: JsonElement) =
+        root.GetProperty("content").EnumerateArray()
+        |> Seq.filter (fun b -> b.GetProperty("type").GetString() = "text")
+        |> Seq.map (fun b -> b.GetProperty("text").GetString())
+        |> String.concat ""
+    remoteChatAsync (remoteBase + "/v1/messages") [ "x-api-key", apiKey; "anthropic-version", "2023-06-01" ] build extract
+
+let private openAiChatAsync (messages: JsonArray) : Task<string> =
+    let build (dropped: Set<string>) =
+        let o = JsonObject()
+        o.["model"] <- JsonValue.Create(box modelName)
+        if not (dropped.Contains "temperature") then o.["temperature"] <- JsonValue.Create(0.0)
+        if not (dropped.Contains "response_format") then
+            let f = JsonObject()
+            f.["type"] <- JsonValue.Create(box "json_object")
+            o.["response_format"] <- f
+        let conversation = JsonArray()
+        for m in messages do conversation.Add(message (m.["role"].GetValue<string>()) (m.["content"].GetValue<string>()))
+        o.["messages"] <- conversation
+        o
+    let extract (root: JsonElement) =
+        root.GetProperty("choices").[0].GetProperty("message").GetProperty("content").GetString()
+    let headers = if apiKey = "" then [] else [ "Authorization", "Bearer " + apiKey ]
+    remoteChatAsync (remoteBase + "/chat/completions") headers build extract
+
+let private chatAsync (messages: JsonArray) : Task<string> =
+    match configProblem () with
+    | Some problem -> raise (OllamaUnavailable problem)
+    | None ->
+        match provider with
+        | Ollama -> ollamaChatAsync messages
+        | Anthropic -> anthropicChatAsync messages
+        | OpenAi -> openAiChatAsync messages
 
 let parseAsync (pseudocode: string) : Task<string> =
     chatAsync (baseMessages pseudocode)

@@ -94,6 +94,30 @@ Noms courts : `pseudocode`, `pseudrawcode` (Windows), et les exemples `pseudo-sn
 - Les noms de couleurs et de touches (`rouge`, `gauche`, `红色`…) sont dans des tables JSON par langue : ajouter la
   vôtre revient à écrire un fichier.
 
+## Facultatif : un modèle distant à la place d'Ollama
+
+Par défaut, rien ne quitte votre ordinateur. Si vous préférez ne pas installer Ollama (pour essayer le langage, par
+exemple avec un abonnement d'API que vous avez déjà), le compilateur peut interroger un modèle distant.
+
+> **Votre pseudocode est alors envoyé à ce service.** Tout le contenu du fichier `.pseudo` quitte votre ordinateur et
+> relève des conditions du fournisseur. Si ce sont des élèves qui écrivent les programmes, décidez si c'est acceptable
+> pour eux avant d'activer cette option. Le compilateur affiche un avertissement (`PSEUDO008`) qui nomme la destination
+> chaque fois qu'il envoie réellement quelque chose ; une réponse déjà en cache n'est pas renvoyée.
+
+Définissez ces variables d'environnement, puis redémarrez Visual Studio pour qu'il les voie :
+
+| Variable | Rôle |
+|---|---|
+| `PSEUDONET_PROVIDER` | `anthropic` (API Claude) ou `openai` (OpenAI, ou toute API compatible OpenAI). Absente = Ollama. |
+| `PSEUDONET_API_KEY` | votre clé d'API (ou `ANTHROPIC_API_KEY` / `OPENAI_API_KEY`). Lue dans l'environnement uniquement, jamais écrite nulle part. |
+| `PSEUDONET_MODEL` | le nom du modèle. Par défaut `claude-haiku-5-5` avec `anthropic` ; obligatoire avec `openai`. |
+| `PSEUDONET_API_URL` | URL de base facultative ; pour un service compatible OpenAI, jusqu'à `/v1` (ex. `https://api.groq.com/openai/v1`). |
+
+Chaque appel est facturé par le fournisseur. `PseudoNet.Compiler --check-ollama` vérifie la configuration sans rien
+envoyer. Les réponses sont mises en cache séparément par fournisseur et par modèle. Nous avons mesuré la qualité du
+modèle local par défaut (`qwen2.5-coder:7b`) et de quelques autres modèles Ollama, mais **pas encore celle des modèles
+distants**.
+
 ## Limites assumées
 
 - Un modèle local de 7 milliards de paramètres est bon, pas parfait : un programme très long ou ambigu peut demander

@@ -98,6 +98,29 @@ Short names: `pseudocode`, `pseudrawcode` (Windows), and the samples `pseudo-sna
   [`PseudoNet.Compiler/PseudoNet.Compiler/Colors`](PseudoNet.Compiler/PseudoNet.Compiler/Colors) and
   `Keys`: adding your own language is a JSON file.
 
+## Optional: a remote model instead of Ollama
+
+By default nothing leaves your computer. If you would rather not install Ollama (to try the language, for instance
+with an API subscription you already have), the compiler can ask a remote model instead.
+
+> **Your pseudocode is then sent to that service.** Everything in the `.pseudo` file leaves your computer, and is
+> subject to the provider's own terms. If students write the programs, decide whether that is acceptable for
+> them before turning this on. The compiler prints a warning (`PSEUDO008`) naming the destination each time it
+> actually sends something; answers already in the cache are not sent again.
+
+Set these environment variables, then restart Visual Studio so it sees them:
+
+| Variable | Meaning |
+|---|---|
+| `PSEUDONET_PROVIDER` | `anthropic` (Claude API) or `openai` (OpenAI, or any OpenAI-compatible API). Unset = Ollama. |
+| `PSEUDONET_API_KEY` | your API key (or `ANTHROPIC_API_KEY` / `OPENAI_API_KEY`). Only read from the environment, never written anywhere. |
+| `PSEUDONET_MODEL` | the model name. Default `claude-haiku-5-5` with `anthropic`; required with `openai`. |
+| `PSEUDONET_API_URL` | optional base URL; for an OpenAI-compatible service, up to `/v1` (e.g. `https://api.groq.com/openai/v1`). |
+
+You pay the provider for each call. `PseudoNet.Compiler --check-ollama` checks the configuration without sending
+anything. Answers are cached separately per provider and model. We have measured the quality of the default local
+model (`qwen2.5-coder:7b`) and of a few other Ollama models, but **not yet of the remote ones**.
+
 ## Repository layout
 
 | Folder | Contents |
