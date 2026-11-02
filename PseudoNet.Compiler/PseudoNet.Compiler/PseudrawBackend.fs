@@ -572,6 +572,8 @@ let private genFunction (fieldNames: string list) (env: TypeEnv) (fn: StmtNode) 
         if not hoisted.IsEmpty then
             sb.AppendLine(genHoistedDecls localEnv hoisted) |> ignore
         sb.AppendLine(genStmts (fieldNames @ params_ @ hoisted) 2 localEnv body) |> ignore
+        if returnType <> "void" && not (TypeInferrer.alwaysReturns body) then
+            sb.AppendLine("        return default;") |> ignore
         sb.AppendLine("    }") |> ignore
         sb.ToString()
     | _ -> ""

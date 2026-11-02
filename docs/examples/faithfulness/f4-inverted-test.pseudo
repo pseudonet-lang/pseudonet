@@ -1,0 +1,7 @@
+// Goal: a person is an adult when aged 18 or more
+age = 20
+if age is less than 18 {
+  print "adult"
+} else {
+  print "minor"
+}

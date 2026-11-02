@@ -197,9 +197,19 @@ let inferParamType (paramName: string) (body: StmtNode list) : InferredType =
             scanExpr cond
             |> Option.orElse (thenB |> List.tryPick scanStmt)
             |> Option.orElse (elseB |> Option.defaultValue [] |> List.tryPick scanStmt)
+        // A parameter used as a loop bound is an iteration count: `repeat i from 1 to n`.
+        | Loop (_, from_, to_, _, body) when from_ = Identifier paramName || to_ = Identifier paramName ->
+            Some TInt
         | WhileLoop (_, body)
         | ForEach (_, _, body)
         | Loop (_, _, _, _, body)     -> body |> List.tryPick scanStmt
         | _                           -> None
 
     body |> List.tryPick scanStmt |> Option.defaultValue TObject
+
+/// True when every path through `stmts` ends in a `return` (C# refuses a value-returning method otherwise, CS0161).
+let rec alwaysReturns (stmts: StmtNode list) : bool =
+    match List.tryLast stmts with
+    | Some (Return _)               -> true
+    | Some (If (_, thenB, Some elseB)) -> alwaysReturns thenB && alwaysReturns elseB
+    | _                             -> false

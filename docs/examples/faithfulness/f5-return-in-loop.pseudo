@@ -1,0 +1,9 @@
+// Goal: sumTo(n) returns 1 + 2 + ... + n
+define sumTo(n) {
+  total = 0
+  repeat i from 1 to n {
+    total = total + i
+    return total
+  }
+}
+print sumTo(4)

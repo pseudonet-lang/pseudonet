@@ -1,0 +1,6 @@
+// Goal: print the sum of the numbers from 1 to 5
+total = 0
+repeat i from 1 to 4 {
+  total = total + i
+}
+print total

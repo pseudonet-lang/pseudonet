@@ -1,0 +1,8 @@
+// Goal: print the sum of each row of a 3 x 3 table whose rows are 1 2 3
+total = 0
+repeat row from 1 to 3 {
+  repeat col from 1 to 3 {
+    total = total + col
+  }
+  print total
+}

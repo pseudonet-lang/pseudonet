@@ -297,6 +297,15 @@ let csharpTypeName (t: InferredType) : string =
     | TList   -> "List<object>"
     | _       -> "object"
 
+let rec private hasAnyReturn (stmts: StmtNode list) : bool =
+    stmts |> List.exists (fun stmt ->
+        match stmt with
+        | Return _ -> true
+        | If (_, thenB, elseB) ->
+            hasAnyReturn thenB || (elseB |> Option.map hasAnyReturn |> Option.defaultValue false)
+        | WhileLoop (_, body) | ForEach (_, _, body) | Loop (_, _, _, _, body) -> hasAnyReturn body
+        | _ -> false)
+
 let private inferredReturnTypeName (env: TypeEnv) (body: StmtNode list) : string =
     TypeInferrer.inferReturnType env body |> csharpTypeName
 
@@ -365,7 +374,8 @@ let private genFunction (fieldNames: string list) (env: TypeEnv) (fn: StmtNode) 
         // Infère aussi sur le CORPS de la fonction, sinon les variables locales
         // (estPremier, ok, etc.) restent non typées et le retour tombe en "object".
         let localEnvFull = TypeInferrer.inferStmts localEnv body
-        let returnType = inferredReturnTypeName localEnvFull body
+        let hasReturn = hasAnyReturn body
+        let returnType = if hasReturn then inferredReturnTypeName localEnvFull body else "void"
         let paramsStr =
             params_
             |> List.map (fun p ->
@@ -383,6 +393,9 @@ let private genFunction (fieldNames: string list) (env: TypeEnv) (fn: StmtNode) 
         sb.AppendLine(sprintf "    static %s %s(%s)" returnType (toPascal name) paramsStr) |> ignore
         sb.AppendLine("    {") |> ignore
         sb.AppendLine(genStmts fieldNames 2 localEnv body) |> ignore
+        // A return inside a loop (or an if without else) leaves a path without a value: C# would reject the method.
+        if hasReturn && not (TypeInferrer.alwaysReturns body) then
+            sb.AppendLine("        return default;") |> ignore
         sb.AppendLine("    }") |> ignore
         sb.ToString()
     | _ -> ""
