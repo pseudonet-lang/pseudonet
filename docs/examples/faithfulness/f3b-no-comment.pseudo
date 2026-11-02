@@ -1,0 +1,7 @@
+total = 0
+repeat row from 1 to 3 {
+  repeat col from 1 to 3 {
+    total = total + col
+  }
+  print total
+}
