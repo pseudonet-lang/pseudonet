@@ -6,8 +6,14 @@
       "target": "secret",
       "value": {
         "kind": "RandomNumber",
-        "min": 1,
-        "max": 100
+        "min": {
+          "kind": "Literal",
+          "value": 1
+        },
+        "max": {
+          "kind": "Literal",
+          "value": 100
+        }
       }
     },
     {
@@ -20,7 +26,10 @@
     {
       "kind": "Assign",
       "target": "guess",
-      "value": 0
+      "value": {
+        "kind": "Literal",
+        "value": 0
+      }
     },
     {
       "kind": "WhileLoop",

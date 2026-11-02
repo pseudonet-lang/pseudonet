@@ -52,20 +52,32 @@
     {
       "kind": "Assign",
       "target": "score",
-      "value": 0
+      "value": {
+        "kind": "Literal",
+        "value": 0
+      }
     },
     {
       "kind": "Assign",
       "target": "gameOver",
-      "value": false
+      "value": {
+        "kind": "Literal",
+        "value": false
+      }
     },
     {
       "kind": "Assign",
       "target": "currentShape",
       "value": {
         "kind": "RandomNumber",
-        "min": 0,
-        "max": 6
+        "min": {
+          "kind": "Literal",
+          "value": 0
+        },
+        "max": {
+          "kind": "Literal",
+          "value": 6
+        }
       }
     },
     {
@@ -73,24 +85,39 @@
       "target": "nextShape",
       "value": {
         "kind": "RandomNumber",
-        "min": 0,
-        "max": 6
+        "min": {
+          "kind": "Literal",
+          "value": 0
+        },
+        "max": {
+          "kind": "Literal",
+          "value": 6
+        }
       }
     },
     {
       "kind": "Assign",
       "target": "currentRotation",
-      "value": 0
+      "value": {
+        "kind": "Literal",
+        "value": 0
+      }
     },
     {
       "kind": "Assign",
       "target": "pieceX",
-      "value": 4
+      "value": {
+        "kind": "Literal",
+        "value": 4
+      }
     },
     {
       "kind": "Assign",
       "target": "pieceY",
-      "value": 0
+      "value": {
+        "kind": "Literal",
+        "value": 0
+      }
     },
     {
       "kind": "FunctionCallStmt",
@@ -194,7 +221,10 @@
         {
           "kind": "Assign",
           "target": "ok",
-          "value": true
+          "value": {
+            "kind": "Literal",
+            "value": true
+          }
         },
         {
           "kind": "ForEach",
@@ -223,7 +253,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -246,7 +279,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -269,7 +305,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -299,7 +338,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             }
@@ -407,7 +449,10 @@
         {
           "kind": "Assign",
           "target": "ok",
-          "value": true
+          "value": {
+            "kind": "Literal",
+            "value": true
+          }
         },
         {
           "kind": "ForEach",
@@ -436,7 +481,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -459,7 +507,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -482,7 +533,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -512,7 +566,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             }
@@ -620,7 +677,10 @@
         {
           "kind": "Assign",
           "target": "ok",
-          "value": true
+          "value": {
+            "kind": "Literal",
+            "value": true
+          }
         },
         {
           "kind": "ForEach",
@@ -649,7 +709,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -672,7 +735,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -695,7 +761,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -725,7 +794,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             }
@@ -833,7 +905,10 @@
         {
           "kind": "Assign",
           "target": "ok",
-          "value": true
+          "value": {
+            "kind": "Literal",
+            "value": true
+          }
         },
         {
           "kind": "ForEach",
@@ -862,7 +937,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -885,7 +963,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -908,7 +989,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             },
@@ -938,7 +1022,10 @@
                 {
                   "kind": "Assign",
                   "target": "ok",
-                  "value": false
+                  "value": {
+                    "kind": "Literal",
+                    "value": false
+                  }
                 }
               ]
             }
@@ -1041,13 +1128,22 @@
         {
           "kind": "Loop",
           "variable": "row",
-          "from_": 0,
-          "to": 19,
+          "from_": {
+            "kind": "Literal",
+            "value": 0
+          },
+          "to": {
+            "kind": "Literal",
+            "value": 19
+          },
           "body": [
             {
               "kind": "Assign",
               "target": "countInRow",
-              "value": 0
+              "value": {
+                "kind": "Literal",
+                "value": 0
+              }
             },
             {
               "kind": "ForEach",
@@ -1253,8 +1349,14 @@
                 },
                 {
                   "kind": "PseudrawPlayTone",
-                  "frequency": 800,
-                  "durationMs": 100
+                  "frequency": {
+                    "kind": "Literal",
+                    "value": 800
+                  },
+                  "durationMs": {
+                    "kind": "Literal",
+                    "value": 100
+                  }
                 }
               ]
             }
@@ -1280,24 +1382,39 @@
           "target": "nextShape",
           "value": {
             "kind": "RandomNumber",
-            "min": 0,
-            "max": 6
+            "min": {
+              "kind": "Literal",
+              "value": 0
+            },
+            "max": {
+              "kind": "Literal",
+              "value": 6
+            }
           }
         },
         {
           "kind": "Assign",
           "target": "currentRotation",
-          "value": 0
+          "value": {
+            "kind": "Literal",
+            "value": 0
+          }
         },
         {
           "kind": "Assign",
           "target": "pieceX",
-          "value": 4
+          "value": {
+            "kind": "Literal",
+            "value": 4
+          }
         },
         {
           "kind": "Assign",
           "target": "pieceY",
-          "value": 0
+          "value": {
+            "kind": "Literal",
+            "value": 0
+          }
         },
         {
           "kind": "FunctionCallStmt",
@@ -1354,7 +1471,10 @@
         {
           "kind": "Assign",
           "target": "blocked",
-          "value": false
+          "value": {
+            "kind": "Literal",
+            "value": false
+          }
         },
         {
           "kind": "ForEach",
@@ -1390,7 +1510,10 @@
                 {
                   "kind": "Assign",
                   "target": "blocked",
-                  "value": true
+                  "value": {
+                    "kind": "Literal",
+                    "value": true
+                  }
                 }
               ]
             }
@@ -1415,19 +1538,43 @@
         },
         {
           "kind": "PseudrawDrawText",
-          "value": "Game Over",
-          "x": 60,
-          "y": 180,
+          "value": {
+            "kind": "Literal",
+            "value": "Game Over"
+          },
+          "x": {
+            "kind": "Literal",
+            "value": 60
+          },
+          "y": {
+            "kind": "Literal",
+            "value": 180
+          },
           "color": "red",
-          "fontSize": 28
+          "fontSize": {
+            "kind": "Literal",
+            "value": 28
+          }
         },
         {
           "kind": "PseudrawDrawText",
-          "value": "Score :",
-          "x": 90,
-          "y": 230,
+          "value": {
+            "kind": "Literal",
+            "value": "Score :"
+          },
+          "x": {
+            "kind": "Literal",
+            "value": 90
+          },
+          "y": {
+            "kind": "Literal",
+            "value": 230
+          },
           "color": "white",
-          "fontSize": 18
+          "fontSize": {
+            "kind": "Literal",
+            "value": 18
+          }
         },
         {
           "kind": "PseudrawDrawText",
@@ -1435,23 +1582,50 @@
             "kind": "Identifier",
             "name": "score"
           },
-          "x": 170,
-          "y": 230,
+          "x": {
+            "kind": "Literal",
+            "value": 170
+          },
+          "y": {
+            "kind": "Literal",
+            "value": 230
+          },
           "color": "white",
-          "fontSize": 18
+          "fontSize": {
+            "kind": "Literal",
+            "value": 18
+          }
         },
         {
           "kind": "PseudrawDrawText",
-          "value": "Press R to restart",
-          "x": 60,
-          "y": 270,
+          "value": {
+            "kind": "Literal",
+            "value": "Press R to restart"
+          },
+          "x": {
+            "kind": "Literal",
+            "value": 60
+          },
+          "y": {
+            "kind": "Literal",
+            "value": 270
+          },
           "color": "gray",
-          "fontSize": 14
+          "fontSize": {
+            "kind": "Literal",
+            "value": 14
+          }
         },
         {
           "kind": "PseudrawPlayTone",
-          "frequency": 150,
-          "durationMs": 500
+          "frequency": {
+            "kind": "Literal",
+            "value": 150
+          },
+          "durationMs": {
+            "kind": "Literal",
+            "value": 500
+          }
         }
       ]
     },
@@ -1470,20 +1644,32 @@
         {
           "kind": "Assign",
           "target": "score",
-          "value": 0
+          "value": {
+            "kind": "Literal",
+            "value": 0
+          }
         },
         {
           "kind": "Assign",
           "target": "gameOver",
-          "value": false
+          "value": {
+            "kind": "Literal",
+            "value": false
+          }
         },
         {
           "kind": "Assign",
           "target": "currentShape",
           "value": {
             "kind": "RandomNumber",
-            "min": 0,
-            "max": 6
+            "min": {
+              "kind": "Literal",
+              "value": 0
+            },
+            "max": {
+              "kind": "Literal",
+              "value": 6
+            }
           }
         },
         {
@@ -1491,24 +1677,39 @@
           "target": "nextShape",
           "value": {
             "kind": "RandomNumber",
-            "min": 0,
-            "max": 6
+            "min": {
+              "kind": "Literal",
+              "value": 0
+            },
+            "max": {
+              "kind": "Literal",
+              "value": 6
+            }
           }
         },
         {
           "kind": "Assign",
           "target": "currentRotation",
-          "value": 0
+          "value": {
+            "kind": "Literal",
+            "value": 0
+          }
         },
         {
           "kind": "Assign",
           "target": "pieceX",
-          "value": 4
+          "value": {
+            "kind": "Literal",
+            "value": 4
+          }
         },
         {
           "kind": "Assign",
           "target": "pieceY",
-          "value": 0
+          "value": {
+            "kind": "Literal",
+            "value": 0
+          }
         },
         {
           "kind": "FunctionCallStmt",
@@ -1550,7 +1751,7 @@
             },
             {
               "kind": "Literal",
-              "value": 0
+            "value": 0
             },
             {
               "kind": "Literal",
@@ -1564,13 +1765,25 @@
         },
         {
           "kind": "PseudrawPlayTone",
-          "frequency": 440,
-          "durationMs": 100
+          "frequency": {
+            "kind": "Literal",
+            "value": 440
+          },
+          "durationMs": {
+            "kind": "Literal",
+            "value": 100
+          }
         },
         {
           "kind": "PseudrawPlayTone",
-          "frequency": 660,
-          "durationMs": 150
+          "frequency": {
+            "kind": "Literal",
+            "value": 660
+          },
+          "durationMs": {
+            "kind": "Literal",
+            "value": 150
+          }
         }
       ]
     },
@@ -1585,10 +1798,22 @@
         {
           "kind": "PseudrawDrawRect",
           "style": "filled",
-          "x": 0,
-          "y": 0,
-          "w": 200,
-          "h": 400,
+          "x": {
+            "kind": "Literal",
+            "value": 0
+          },
+          "y": {
+            "kind": "Literal",
+            "value": 0
+          },
+          "w": {
+            "kind": "Literal",
+            "value": 200
+          },
+          "h": {
+            "kind": "Literal",
+            "value": 400
+          },
           "color": "gray"
         },
         {
@@ -1628,8 +1853,14 @@
                   "value": 20
                 }
               },
-              "w": 18,
-              "h": 18,
+              "w": {
+                "kind": "Literal",
+                "value": 18
+              },
+              "h": {
+                "kind": "Literal",
+                "value": 18
+              },
               "color": "steelblue"
             }
           ]
@@ -1643,7 +1874,10 @@
               "kind": "Identifier",
               "name": "currentShape"
             },
-            "right": 0
+            "right": {
+              "kind": "Literal",
+              "value": 0
+            }
           },
           "then": [
             {
@@ -1683,8 +1917,14 @@
                       "value": 20
                     }
                   },
-                  "w": 18,
-                  "h": 18,
+                  "w": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
+                  "h": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
                   "color": "cyan"
                 }
               ]
@@ -1700,7 +1940,10 @@
               "kind": "Identifier",
               "name": "currentShape"
             },
-            "right": 1
+            "right": {
+              "kind": "Literal",
+              "value": 1
+            }
           },
           "then": [
             {
@@ -1740,8 +1983,14 @@
                       "value": 20
                     }
                   },
-                  "w": 18,
-                  "h": 18,
+                  "w": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
+                  "h": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
                   "color": "yellow"
                 }
               ]
@@ -1757,7 +2006,10 @@
               "kind": "Identifier",
               "name": "currentShape"
             },
-            "right": 2
+            "right": {
+              "kind": "Literal",
+              "value": 2
+            }
           },
           "then": [
             {
@@ -1797,8 +2049,14 @@
                       "value": 20
                     }
                   },
-                  "w": 18,
-                  "h": 18,
+                  "w": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
+                  "h": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
                   "color": "purple"
                 }
               ]
@@ -1814,7 +2072,10 @@
               "kind": "Identifier",
               "name": "currentShape"
             },
-            "right": 3
+            "right": {
+              "kind": "Literal",
+              "value": 3
+            }
           },
           "then": [
             {
@@ -1854,8 +2115,14 @@
                       "value": 20
                     }
                   },
-                  "w": 18,
-                  "h": 18,
+                  "w": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
+                  "h": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
                   "color": "green"
                 }
               ]
@@ -1871,7 +2138,10 @@
               "kind": "Identifier",
               "name": "currentShape"
             },
-            "right": 4
+            "right": {
+              "kind": "Literal",
+              "value": 4
+            }
           },
           "then": [
             {
@@ -1911,8 +2181,14 @@
                       "value": 20
                     }
                   },
-                  "w": 18,
-                  "h": 18,
+                  "w": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
+                  "h": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
                   "color": "red"
                 }
               ]
@@ -1928,7 +2204,10 @@
               "kind": "Identifier",
               "name": "currentShape"
             },
-            "right": 5
+            "right": {
+              "kind": "Literal",
+              "value": 5
+            }
           },
           "then": [
             {
@@ -1968,8 +2247,14 @@
                       "value": 20
                     }
                   },
-                  "w": 18,
-                  "h": 18,
+                  "w": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
+                  "h": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
                   "color": "blue"
                 }
               ]
@@ -1985,7 +2270,10 @@
               "kind": "Identifier",
               "name": "currentShape"
             },
-            "right": 6
+            "right": {
+              "kind": "Literal",
+              "value": 6
+            }
           },
           "then": [
             {
@@ -2025,8 +2313,14 @@
                       "value": 20
                     }
                   },
-                  "w": 18,
-                  "h": 18,
+                  "w": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
+                  "h": {
+                    "kind": "Literal",
+                    "value": 18
+                  },
                   "color": "orange"
                 }
               ]
@@ -2035,11 +2329,23 @@
         },
         {
           "kind": "PseudrawDrawText",
-          "value": "Score",
-          "x": 230,
-          "y": 20,
+          "value": {
+            "kind": "Literal",
+            "value": "Score"
+          },
+          "x": {
+            "kind": "Literal",
+            "value": 230
+          },
+          "y": {
+            "kind": "Literal",
+            "value": 20
+          },
           "color": "white",
-          "fontSize": 16
+          "fontSize": {
+            "kind": "Literal",
+            "value": 16
+          }
         },
         {
           "kind": "PseudrawDrawText",
@@ -2047,18 +2353,39 @@
             "kind": "Identifier",
             "name": "score"
           },
-          "x": 230,
-          "y": 45,
+          "x": {
+            "kind": "Literal",
+            "value": 230
+          },
+          "y": {
+            "kind": "Literal",
+            "value": 45
+          },
           "color": "yellow",
-          "fontSize": 14
+          "fontSize": {
+            "kind": "Literal",
+            "value": 14
+          }
         },
         {
           "kind": "PseudrawDrawText",
-          "value": "Next",
-          "x": 230,
-          "y": 90,
+          "value": {
+            "kind": "Literal",
+            "value": "Next"
+          },
+          "x": {
+            "kind": "Literal",
+            "value": 230
+          },
+          "y": {
+            "kind": "Literal",
+            "value": 90
+          },
           "color": "white",
-          "fontSize": 16
+          "fontSize": {
+            "kind": "Literal",
+            "value": 16
+          }
         },
         {
           "kind": "ForEach",
@@ -2113,8 +2440,14 @@
                   }
                 }
               },
-              "w": 14,
-              "h": 14,
+              "w": {
+                "kind": "Literal",
+                "value": 14
+              },
+              "h": {
+                "kind": "Literal",
+                "value": 14
+              },
               "color": "yellow"
             }
           ]
@@ -2250,7 +2583,10 @@
                     {
                       "kind": "Assign",
                       "target": "gameOver",
-                      "value": true
+                      "value": {
+                        "kind": "Literal",
+                        "value": true
+                      }
                     }
                   ]
                 },

@@ -84,7 +84,10 @@
     {
       "kind": "ForEach",
       "variable": "n",
-      "collection": "numbers",
+      "collection": {
+        "kind": "Identifier",
+        "name": "numbers"
+      },
       "body": [
         {
           "kind": "Print",
@@ -126,7 +129,10 @@
                 "op": ">",
                 "left": {
                   "kind": "ArrayAccess",
-                  "array": "numbers",
+                  "array": {
+                    "kind": "Identifier",
+                    "name": "numbers"
+                  },
                   "index": {
                     "kind": "Identifier",
                     "name": "i"
@@ -134,7 +140,10 @@
                 },
                 "right": {
                   "kind": "ArrayAccess",
-                  "array": "numbers",
+                  "array": {
+                    "kind": "Identifier",
+                    "name": "numbers"
+                  },
                   "index": {
                     "kind": "BinaryOp",
                     "op": "+",
@@ -155,7 +164,10 @@
                   "target": "temp",
                   "value": {
                     "kind": "ArrayAccess",
-                    "array": "numbers",
+                    "array": {
+                      "kind": "Identifier",
+                      "name": "numbers"
+                    },
                     "index": {
                       "kind": "Identifier",
                       "name": "i"
@@ -171,7 +183,10 @@
                   },
                   "value": {
                     "kind": "ArrayAccess",
-                    "array": "numbers",
+                    "array": {
+                      "kind": "Identifier",
+                      "name": "numbers"
+                    },
                     "index": {
                       "kind": "BinaryOp",
                       "op": "+",
@@ -222,7 +237,10 @@
     {
       "kind": "ForEach",
       "variable": "n",
-      "collection": "numbers",
+      "collection": {
+        "kind": "Identifier",
+        "name": "numbers"
+      },
       "body": [
         {
           "kind": "Print",

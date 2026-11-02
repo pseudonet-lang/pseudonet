@@ -337,8 +337,9 @@
           },
           "then": [
             {
-              "kind": "Call",
-              "name": "restart game"
+              "kind": "FunctionCallStmt",
+              "name": "restart game",
+              "args": []
             }
           ]
         },
@@ -738,8 +739,9 @@
                   "value": true
                 },
                 {
-                  "kind": "Call",
-                  "name": "show game over"
+                  "kind": "FunctionCallStmt",
+                  "name": "show game over",
+                  "args": []
                 }
               ]
             },
@@ -852,7 +854,8 @@
                     {
                       "kind": "MethodCall",
                       "target": "snake",
-                      "method": "RemoveFirst"
+                      "method": "RemoveFirst",
+                      "args": []
                     }
                   ]
                 },
@@ -879,8 +882,9 @@
                   "value": "ny"
                 },
                 {
-                  "kind": "Call",
-                  "name": "draw game"
+                  "kind": "FunctionCallStmt",
+                  "name": "draw game",
+                  "args": []
                 }
               ]
             }

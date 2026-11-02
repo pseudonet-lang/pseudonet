@@ -20,10 +20,10 @@
     <Project TargetFileName="$safeprojectname$.csproj" File="Tetris.csproj" ReplaceParameters="true">
       <ProjectItem ReplaceParameters="false" TargetFileName="Program.pseudo" OpenInEditor="true">Program.pseudo</ProjectItem>
       <Folder Name="pseudo-cache" TargetFolderName="pseudo-cache">
-        <ProjectItem ReplaceParameters="false" TargetFileName="e6f58acb2b09aa032b72b8e3f00a14f9292930125d80342b7256e7c6e1261581.json">e6f58acb2b09aa032b72b8e3f00a14f9292930125d80342b7256e7c6e1261581.json</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="08e52f4b411fcedb4ca2d91c5cb75115146b12fe2cc41ff997a3b6cbe480d176.json">08e52f4b411fcedb4ca2d91c5cb75115146b12fe2cc41ff997a3b6cbe480d176.json</ProjectItem>
       </Folder>
       <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
-        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.2.nupkg">PseudoNet.Build.0.3.2.nupkg</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.3.nupkg">PseudoNet.Build.0.3.3.nupkg</ProjectItem>
       </Folder>
     </Project>
   </TemplateContent>
