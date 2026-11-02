@@ -5,6 +5,15 @@
 param([string[]]$Only)
 $ErrorActionPreference = 'Continue'
 $here = $PSScriptRoot
+# A generated program can loop forever (small models do): never wait more than 30 s for it.
+function Invoke-App([string]$dll) {
+    $psi = New-Object Diagnostics.ProcessStartInfo 'dotnet', ('"' + $dll + '"')
+    $psi.RedirectStandardOutput = $true; $psi.RedirectStandardError = $true; $psi.UseShellExecute = $false
+    $p = [Diagnostics.Process]::Start($psi)
+    $o = $p.StandardOutput.ReadToEndAsync(); $e = $p.StandardError.ReadToEndAsync()
+    if (-not $p.WaitForExit(30000)) { $p.Kill(); return 'TIMEOUT (30 s)' }
+    return $o.Result + $e.Result
+}
 $repo = (Resolve-Path (Join-Path $here '..\..\..')).Path
 $pack = Get-ChildItem (Join-Path $repo 'PseudoNet.DotnetNew\artifacts') -Filter 'PseudoNet.Templates.*.nupkg' | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 $feedDir = Join-Path $repo 'PseudoNet.Build\artifacts\feed'
@@ -43,7 +52,7 @@ foreach ($f in $files) {
         $why = 'build failed: ' + (($log -split "`r?`n" | Where-Object { $_ -match ' error | warning PSEUDO' } | Select-Object -First 2 | ForEach-Object { ($_ -replace '^.*?(error|warning)', '$1') }) -join ' | ')
     } else {
         $dll = Get-ChildItem (Join-Path $proj 'bin') -Recurse -Filter 'App.dll' | Select-Object -First 1
-        $out = ((& dotnet $dll.FullName 2>&1 | Out-String) -replace "`r", '').Trim()
+        $out = ((Invoke-App $dll.FullName | Out-String) -replace "`r", '').Trim()
         if ($out -eq $expected) { $status = 'PASS' } else { $why = "expected [" + ($expected -replace "`n", ' / ') + "] but got [" + ($out -replace "`n", ' / ') + "]" }
     }
     Write-Host ('{0,-5} {1}  ({2:N0}s) {3}' -f $status, $id, $sw.Elapsed.TotalSeconds, $why)

@@ -362,6 +362,11 @@ and private normalizeObject (o: JsonObject) : unit =
             o.["target"] <- JsonValue.Create(arrName)
             if not (isNull indexNode) then o.["index"] <- indexNode
             o.["kind"] <- JsonValue.Create("IndexedAssign")
+        // Larger models write the target as an Identifier object instead of a bare name.
+        | Some targetObj when (tryGetString targetObj "kind" |> Option.defaultValue "") = "Identifier" ->
+            let name = tryGetString targetObj "name" |> Option.defaultValue ""
+            o.Remove("target") |> ignore
+            o.["target"] <- JsonValue.Create(name)
         | _ -> ()
 
     // FunctionCallStmt utilisant un verbe de collection réservé (add, remove

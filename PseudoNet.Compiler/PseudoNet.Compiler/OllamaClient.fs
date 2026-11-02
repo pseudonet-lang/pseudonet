@@ -14,7 +14,10 @@ let private ollamaBase =
     | null | "" -> "http://localhost:11434"
     | url -> url.TrimEnd('/')
 let private ollamaUrl = ollamaBase + "/api/chat"
-let modelName = "qwen2.5-coder:7b"
+let modelName =
+    match Environment.GetEnvironmentVariable("PSEUDONET_MODEL") with
+    | null | "" -> "qwen2.5-coder:7b"
+    | name -> name
 
 let private numPredict = 16000
 let private numCtx = 28000
