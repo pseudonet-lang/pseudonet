@@ -122,6 +122,16 @@ distants**.
 
 - Un modèle local de 7 milliards de paramètres est bon, pas parfait : un programme très long ou ambigu peut demander
   une reformulation.
+- **Un programme faux est le plus souvent conservé faux, mais pas toujours.** Pseudo.NET doit transcrire la logique de
+  l'élève, bogues compris, pour que l'élève voie l'erreur s'exécuter. Nous l'avons testé avec
+  [six programmes volontairement faux](docs/examples/faithfulness) (boucle décalée d'un cran, mauvaise comparaison, test
+  inversé, `return` dans une boucle, priorité des opérateurs...). Le modèle par défaut a conservé l'erreur dans cinq
+  d'entre eux. Dans le sixième, un total jamais remis à zéro, un commentaire énonçant le but (« afficher 6, 12, 18 »)
+  a poussé le modèle à réparer le code en silence ; le même programme sans ce commentaire est resté faux (un septième test). Pour un
+  exercice de débogage, **n'écrivez donc pas le résultat attendu dans un commentaire**, et si la sortie surprend, lisez
+  le C# généré (l'option qui le rend visible). Le modèle plus gros `qwen2.5-coder:14b` (9 Go, plus lent ;
+  `PSEUDONET_MODEL=qwen2.5-coder:14b`) a conservé toutes les erreurs. C'est une seule exécution d'un petit test, pas une
+  garantie.
 - Windows et Visual Studio uniquement pour l'instant.
 - La première génération d'un *nouveau* programme prend de quelques secondes à quelques minutes selon la machine.
 

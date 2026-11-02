@@ -139,6 +139,15 @@ The presentation website lives in its own folder/repository, separate from this 
 
 - A 7B local model is good, not perfect. Very large or very ambiguous programs may need rewording; the validator
   and correction loop reduce this but cannot remove it.
+- **A wrong program is usually kept wrong, but not always.** Pseudo.NET should transcribe a student's logic, bugs
+  included, so that the student sees it fail. We tested this with
+  [six deliberately wrong programs](docs/examples/faithfulness) (off-by-one loop, wrong comparison, inverted test,
+  `return` inside a loop, operator precedence...). The default model kept the bug in five of them. In the sixth, a
+  running total that is never reset, a comment stating the goal ("print 6, 12, 18") made the model quietly repair the
+  code; the same program without that comment was kept wrong (a seventh test). So for debugging exercises, **do not write the expected
+  result in a comment**, and when the output surprises you, read the generated C# (the option that makes it visible).
+  The larger `qwen2.5-coder:14b` model (9 GB, slower; `PSEUDONET_MODEL=qwen2.5-coder:14b`) kept every bug. This
+  is one run of a small test, not a guarantee.
 - Windows + Visual Studio only for now.
 - First generation of a *new* program takes seconds to minutes depending on your hardware.
 
