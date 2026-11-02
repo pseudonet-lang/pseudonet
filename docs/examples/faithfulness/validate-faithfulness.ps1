@@ -1,5 +1,6 @@
 # Fidelity test: each program below is DELIBERATELY WRONG (off-by-one, wrong comparison, accumulator not reset, inverted
-# test, return inside the loop, operator precedence). The comment on top states the student's goal; the .expected file holds
+# test, return inside the loop, operator precedence, a function that forgets to return on one path: that one must crash
+# at run time with a clear message, see <id>.crashes). The comment on top states the student's goal; the .expected file holds
 # what the program REALLY prints. The compiler must transcribe the bug, never fix it: the student has to see it run.
 # Compiles with the REAL compiler and the REAL model (fresh answer, empty LLM cache), runs, compares with <id>.expected.
 param([string[]]$Only)
@@ -53,7 +54,11 @@ foreach ($f in $files) {
     } else {
         $dll = Get-ChildItem (Join-Path $proj 'bin') -Recurse -Filter 'App.dll' | Select-Object -First 1
         $out = ((Invoke-App $dll.FullName | Out-String) -replace "`r", '').Trim()
-        if ($out -eq $expected) { $status = 'PASS' } else { $why = "expected [" + ($expected -replace "`n", ' / ') + "] but got [" + ($out -replace "`n", ' / ') + "]" }
+        $crashFile = Join-Path $here "$id.crashes"   # a program that must FAIL at run time: prints $expected, then crashes with this message
+        if (Test-Path $crashFile) {
+            $fragment = (Get-Content $crashFile -Raw -Encoding UTF8).Trim()
+            if ($out.StartsWith($expected) -and $out.Contains($fragment)) { $status = 'PASS' } else { $why = "expected [" + ($expected -replace "`n", ' / ') + "] then a crash saying [$fragment] but got [" + ($out -replace "`n", ' / ') + "]" }
+        } elseif ($out -eq $expected) { $status = 'PASS' } else { $why = "expected [" + ($expected -replace "`n", ' / ') + "] but got [" + ($out -replace "`n", ' / ') + "]" }
     }
     Write-Host ('{0,-5} {1}  ({2:N0}s) {3}' -f $status, $id, $sw.Elapsed.TotalSeconds, $why)
     $g = Get-ChildItem (Join-Path $proj 'obj') -Recurse -Filter 'Program.g.cs' -ErrorAction SilentlyContinue | Select-Object -First 1

@@ -297,10 +297,17 @@ let csharpTypeName (t: InferredType) : string =
     | TList   -> "List<object>"
     | _       -> "object"
 
+/// A path that leaves a value-returning function without a `return` is the student's bug: fail where it
+/// happens (with a readable message) instead of inventing a value.
+let missingReturnStatement (indent: string) (functionName: string) : string =
+    let message = Messages.t "backend.noReturn" "The function {0} ended without returning a value." [ box functionName ]
+    sprintf "%sthrow new System.InvalidOperationException(\"%s\");" indent (message.Replace("\\", "\\\\").Replace("\"", "\\\""))
+
+/// True when the function returns a VALUE somewhere (a bare `return` is only an early exit).
 let rec private hasAnyReturn (stmts: StmtNode list) : bool =
     stmts |> List.exists (fun stmt ->
         match stmt with
-        | Return _ -> true
+        | Return (Some _) -> true
         | If (_, thenB, elseB) ->
             hasAnyReturn thenB || (elseB |> Option.map hasAnyReturn |> Option.defaultValue false)
         | WhileLoop (_, body) | ForEach (_, _, body) | Loop (_, _, _, _, body) -> hasAnyReturn body
@@ -395,7 +402,7 @@ let private genFunction (fieldNames: string list) (env: TypeEnv) (fn: StmtNode) 
         sb.AppendLine(genStmts fieldNames 2 localEnv body) |> ignore
         // A return inside a loop (or an if without else) leaves a path without a value: C# would reject the method.
         if hasReturn && not (TypeInferrer.alwaysReturns body) then
-            sb.AppendLine("        return default;") |> ignore
+            sb.AppendLine(missingReturnStatement "        " name) |> ignore
         sb.AppendLine("    }") |> ignore
         sb.ToString()
     | _ -> ""

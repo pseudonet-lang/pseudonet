@@ -13,7 +13,7 @@ class Program
             total = (total + i);
             return total;
         }
-        return default;
+        throw new System.InvalidOperationException("The function sumTo ended without returning a value.");
     }
     static void Main(string[] args)
     {

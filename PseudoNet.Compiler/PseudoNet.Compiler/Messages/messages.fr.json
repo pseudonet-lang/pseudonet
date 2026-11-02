@@ -17,6 +17,7 @@
   "remote.http": "{0} a répondu {1} : {2}",
   "remote.unreachable": "{0} est injoignable sur {1}. {2}",
   "remote.timeout": "Délai dépassé en attendant {0} sur {1} — réessayez.",
+  "backend.noReturn": "La fonction {0} s'est terminée sans renvoyer de valeur.",
   "info.analysing": "Analyse du pseudocode ({0})...",
   "warn.cacheNotWritten": "cache non écrit ({0})",
   "info.projectType": "Type de projet détecté : {0}",

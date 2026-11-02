@@ -521,10 +521,11 @@ let private genStmts (fieldNames: string list) (level: int) (initialEnv: TypeEnv
 
 // ── Fonctions utilisateur (méthodes d'instance) ──────────────────────────────
 
+/// True when the function returns a VALUE somewhere (a bare `return` is only an early exit).
 let rec private hasAnyReturn (stmts: StmtNode list) : bool =
     stmts |> List.exists (fun stmt ->
         match stmt with
-        | Return _ -> true
+        | Return (Some _) -> true
         | If (_, thenB, elseB) ->
             hasAnyReturn thenB || (elseB |> Option.map hasAnyReturn |> Option.defaultValue false)
         | WhileLoop (_, body) | ForEach (_, _, body) | Loop (_, _, _, _, body) -> hasAnyReturn body
@@ -573,7 +574,7 @@ let private genFunction (fieldNames: string list) (env: TypeEnv) (fn: StmtNode) 
             sb.AppendLine(genHoistedDecls localEnv hoisted) |> ignore
         sb.AppendLine(genStmts (fieldNames @ params_ @ hoisted) 2 localEnv body) |> ignore
         if returnType <> "void" && not (TypeInferrer.alwaysReturns body) then
-            sb.AppendLine("        return default;") |> ignore
+            sb.AppendLine(Backend.missingReturnStatement "        " name) |> ignore
         sb.AppendLine("    }") |> ignore
         sb.ToString()
     | _ -> ""

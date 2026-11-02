@@ -1,0 +1,8 @@
+// Goal: sign(x) returns 1 for a positive number, -1 for a negative one and 0 for zero
+define sign(x) {
+  if x > 0 then return 1
+  if x < 0 then return -1
+}
+print sign(5)
+print sign(-3)
+print sign(0)
