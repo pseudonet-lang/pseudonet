@@ -418,7 +418,17 @@ let private remoteChatAsync (url: string) (headers: (string * string) list) (bui
                     Messages.t "remote.http" "{0} returned {1}: {2}" [ box providerLabel; box response.StatusCode; box body ]))
             else
                 use doc = JsonDocument.Parse(body)
-                return extractJson (extract doc.RootElement)
+                // Some gateways (OpenRouter) report an upstream failure as HTTP 200 with an "error" object.
+                match doc.RootElement.TryGetProperty("error") with
+                | true, error ->
+                    let message =
+                        match error.ValueKind, error.TryGetProperty("message") with
+                        | JsonValueKind.Object, (true, m) -> m.ToString()
+                        | _ -> error.ToString()
+                    return raise (OllamaUnavailable(
+                        Messages.t "remote.http" "{0} returned {1}: {2}" [ box providerLabel; box "an error"; box message ]))
+                | _ ->
+                    return extractJson (extract doc.RootElement)
         with
         | :? HttpRequestException as ex ->
             return raise (OllamaUnavailable(
