@@ -23,7 +23,7 @@
         <ProjectItem ReplaceParameters="false" TargetFileName="9e9bd7bb72a3b703f4f3ccdc95928d17b167dfa184f3401d026bf89ca8496250.json">9e9bd7bb72a3b703f4f3ccdc95928d17b167dfa184f3401d026bf89ca8496250.json</ProjectItem>
       </Folder>
       <Folder Name="nuget-feed" TargetFolderName="nuget-feed">
-        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.3.nupkg">PseudoNet.Build.0.3.3.nupkg</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="PseudoNet.Build.0.3.4.nupkg">PseudoNet.Build.0.3.4.nupkg</ProjectItem>
       </Folder>
     </Project>
   </TemplateContent>
